@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+	<meta charset="UTF-8">
+	
+	<title>Embed Behance</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="favicon.ico">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" media="all" href="css/styles.css"/>
+
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="js/embed.behance.js"></script>
+
+</head>
+
+<body>
+
+	<div class="container">
+
+		<div class="content">
+			
+			<h1>EMBED YOUR BEHANCE</h1>
+
+			<!-- <div class="outer">
+				<iframe src="https://www.behance.net/gallery/41622413/Restyling-Dotcom?iframe=1#appreciation" scrolling="no"></iframe>
+			</div> -->
+
+			<!-- THE BEHANCE PORTFOLIO WILL BE PRINTED IN HERE -->
+
+			<div class="behance-container"></div>
+
+		</div>
+	</div>
+
+	<script>
+
+		$(document).ready(function(){
+
+			$('.behance-container').embedYourBehance({
+
+				apiKey: 'Zb0XWEqAvBua4lmCbfb6derptH2tp4cc',
+				userName: 'rolfo85'
+
+			});
+			
+		});
+
+	</script>
+
+</body>
+
+</html>

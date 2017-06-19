@@ -1,0 +1,124 @@
+/* SETUP */
+html, body{
+	height: 100%;
+}
+body{
+	font-family: 'Lato', sans-serif;
+	min-height:100%;
+	position:relative;
+	line-height:1em;
+	font-size:100%;
+	-webkit-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+	text-size-adjust: none;
+	background-color: #f5f5f5;
+}
+*{
+	outline:none;
+	padding:0px;
+	margin:0px;
+	border:0px;
+	-webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+h1, h2{
+	line-height: normal;
+}
+h1{
+	font-size: 2em;
+	font-weight: 300;
+}
+h2{
+	font-size: 1.2em;
+	font-weight: 700;
+}
+ul, li{
+	list-style: none;
+}
+img{
+	width: 100%;
+	height: auto;
+}
+.loadingicon{
+	width: 40px;
+	height: 40px;
+	background: url('../images/loading.svg') no-repeat top center;
+	background-size: contain;
+	position: fixed;
+	top: 0;
+	bottom:0;
+	left: 0;
+	right: 0;
+	display: block;
+	margin:auto !important;
+	z-index: 350;
+	margin-top: 12px;
+	-moz-animation: spin .4s 1 linear;
+    -o-animation: spin .4s 1 linear;
+    -webkit-animation: spin .4s 1 linear;
+    animation: spin .4s 1 linear;
+}
+
+
+/* LAYOUT */
+.container{
+	padding: 5%;
+}
+.content{
+	max-width: 75em;
+	margin: 0 auto;
+}
+ul.wrap-projects{
+	background-color: #fff;
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+}
+ul.wrap-projects li{
+	flex-basis: 30%;
+	margin-bottom: 2em;
+}
+ul.wrap-projects li .wrap-stats{margin-bottom: 0.3em;}
+ul.wrap-projects li .wrap-cover{margin-bottom: 0.3em;}
+ul.wrap-projects li .wrap-title{margin-bottom: 0.5em;}
+ul.wrap-projects li .wrap-published-date{margin-bottom: 0.3em;}
+ul.wrap-projects li .wrap-fields{}
+
+/*
+.outer{
+	width: 75px;
+    height: 75px;
+    overflow: hidden;
+    border-radius: 50%;
+    background-color: white;
+}
+
+iframe{
+	width: 200px;
+    height: 200px;
+    position: relative;
+    left: -88px;
+    top: -64px;
+}
+*/
+.outer{
+	width: 100%;
+    max-width: 1400px;
+    overflow: hidden;
+    background-color: white;
+    height: 150px;
+    position: relative;
+}
+
+iframe{
+	width: inherit;
+    max-width: inherit;
+    height: 185px;
+    position: absolute;
+    left: 0;
+    top: -13px;
+    right: 0;
+    margin: 0 auto;
+}
+
+
