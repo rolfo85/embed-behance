@@ -52,12 +52,13 @@ $.fn.embedYourBehance = function( options ) {
 
 	function printAppreciateButton() {
 
-		var projectUrl = dataExtracted[0]['projectUrl'];
+		var urlProjectAppreciation = $(dataExtracted[0]['rawProjectUrl']).text();
+
+		var iframe = $('<iframe>').attr({'src': urlProjectAppreciation + '?iframe=1#appreciation', 'scrolling': 'no'}).css({'width': 'inherit', 'max-width': 'inherit', 'height': 185, 'position': 'absolute', 'left': 0, 'top': -13, 'right': 0, 'margin': '0 auto'});
+		var iframeOuter = '<div style="width: 100%; max-width: 1400px; overflow: hidden; background-color: white; height: 150px; position: relative;">' + iframe[0]['outerHTML'] + '</div>';
 		
-		var dioporco = $('<iframe>').attr({'src': 'https:www.yahoo.it',	'scrolling': 'no'}).css({'width': 'inherit', 'max-width': 'inherit', 'height': 185, 'position': 'absolute', 'left': 0, 'top': -13, 'right': 0, 'margin': '0 auto'});
-		var output = dioporco[0]['outerHTML'];
-		$('.wrap-works-outer').append(output);
-		console.log(output);
+		return iframeOuter;
+		
 	}
 
 	function pagination(urlListNext) {
@@ -225,7 +226,7 @@ $.fn.embedYourBehance = function( options ) {
 
 			html = '';
 
-			html += value['id'];
+			html += value['rawId'];
 			html += value['owners'];
 			html += value['appreciations'];
 			html += value['views'];
@@ -269,9 +270,16 @@ $.fn.embedYourBehance = function( options ) {
 		switch(token) {
 
 			//id
-			case 'id':
+			case 'rawId':
 
-			dataWrapper = '<div class="project-id" style="display: none;">' + value.id + '</div>';
+			dataWrapper = '<div class="raw-project-id" style="display: none;">' + value.id + '</div>';
+
+			break;
+
+			//id
+			case 'rawProjectUrl':
+
+			dataWrapper += '<div class="raw-project-url" style="display: none;">' + value.url + '</div>';
 
 			break;
 
@@ -493,7 +501,8 @@ $.fn.embedYourBehance = function( options ) {
 		dataExtracted[token] = {
 
 			// fetch data from json
-			id: 			designTemplate('id', value),
+			rawId: 			designTemplate('rawId', value),
+			rawProjectUrl:	designTemplate('rawProjectUrl', value),
 			owners: 		designTemplate('owners', value),
 			works: 			designTemplate('works', value),
 			appreciations: 	designTemplate('appreciations', value),
@@ -629,7 +638,7 @@ $.fn.embedYourBehance = function( options ) {
 	//detail
 	$(behanceContainer).on('click', '.wrap-project', function(){
 
-		var projectId = $(this).find('.project-id').text();
+		var projectId = $(this).find('.raw-project-id').text();
 		var urlDetail = 'http://www.behance.net/v2/projects/' + projectId + '?api_key=' + settings.apiKey;
 		
 		isDetail = 1;

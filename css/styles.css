@@ -101,24 +101,4 @@ iframe{
     top: -64px;
 }
 */
-.outer{
-	width: 100%;
-    max-width: 1400px;
-    overflow: hidden;
-    background-color: white;
-    height: 150px;
-    position: relative;
-}
-
-iframe{
-	width: inherit;
-    max-width: inherit;
-    height: 185px;
-    position: absolute;
-    left: 0;
-    top: -13px;
-    right: 0;
-    margin: 0 auto;
-}
-
 
