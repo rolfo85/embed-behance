@@ -24,7 +24,9 @@ $.fn.embedYourBehance = function( options ) {
 		infiniteScrolling: false,
 		imageCaption: true,
 		ownerLink: true,
-		appreciateIt: true
+		appreciateIt: true,
+		description: true,
+		tags: true
 
 	}, options );
 	
@@ -180,7 +182,8 @@ $.fn.embedYourBehance = function( options ) {
 		// main column
 		html += '<div class="box-inner-main">';
 
-			dataExtracted[0]['title'];
+			html += dataExtracted[0]['title'];
+			html += dataExtracted[0]['description'];
 			html += dataExtracted[0]['works'];
 			html += printAppreciateButton();
 
@@ -197,6 +200,7 @@ $.fn.embedYourBehance = function( options ) {
 				html += dataExtracted[0]['appreciations'];
 				html += dataExtracted[0]['projectUrl'];
 				html += dataExtracted[0]['fields'];
+				html += dataExtracted[0]['tags'];
 				html += dataExtracted[0]['appreciateIt'];
 				html += dataExtracted[0]['publishedDate'];
 
@@ -477,6 +481,30 @@ $.fn.embedYourBehance = function( options ) {
 			break;
 
 
+
+			// tags
+			case 'tags':
+
+			if(settings.tags == true) {
+
+				dataWrapper += '<div class="wrap-label">Tags:</div>';
+				dataWrapper += '<ul class="wrap-values">';
+
+					$.each(value.tags, function(key, value) {
+						dataWrapper += '<li class="single">' + value + '</li>';
+					});
+
+				dataWrapper += '</ul>';
+				dataWrapper =  '<div class="wrap-tags-outer">' + dataWrapper + '</div>';
+
+				sidebarData = 1;
+
+			}
+
+			break;
+
+
+
 			// appreciate button on the sidebar
 			case 'appreciateIt':
 
@@ -486,6 +514,17 @@ $.fn.embedYourBehance = function( options ) {
 				dataWrapper =  '<div class="wrap-appreciateit">' + dataWrapper + '</div>';
 
 				sidebarData = 1;
+
+			}
+
+			break;
+
+			// description
+			case 'description':
+
+			if(settings.description == true) {
+
+				dataWrapper += '<div class="wrap-description">' + value.description + '</div>';
 
 			}
 
@@ -512,7 +551,9 @@ $.fn.embedYourBehance = function( options ) {
 			publishedDate: 	designTemplate('publishedDate', value),
 			projectUrl: 	designTemplate('projectUrl', value),
 			fields: 		designTemplate('fields', value),
-			appreciateIt: 	designTemplate('appreciateIt', value)
+			appreciateIt: 	designTemplate('appreciateIt', value),
+			description: 	designTemplate('description', value),
+			tags: 			designTemplate('tags', value)
 			
 		};
 
