@@ -1,49 +1,98 @@
-/* SETUP */
-html, body{
+/* setup */
+html, body {
 	height: 100%;
 }
-body{
+body {
 	font-family: 'Lato', sans-serif;
 	min-height:100%;
 	position:relative;
 	line-height:1em;
 	font-size:100%;
-	-webkit-text-size-adjust: none;
-	-ms-text-size-adjust: none;
-	text-size-adjust: none;
-	background-color: #f5f5f5;
+	color: #666;
 }
-*{
+
+/* layout structure */
+.container {
+	padding: 5%;
+}
+.content {
+	max-width: 90em;
+	margin: 0 auto;
+}
+.titles{
+	margin-bottom: 8em;
+	text-align: center;
+	position: relative;
+}
+.titles:after{
+	content: '';
+	display: block;
+	width: 2em;
+	height: 3px;
+	background-color: #2183ee;
+	margin-top: 1.5em;
+	position: absolute;
+	bottom: -1.8em;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+}
+h1.page-title {
+	font-weight: 300;
+	font-size: 2.5em;
+	color: #666;
+}
+h2.sub-title{
+	font-weight: 700;
+	color: #2183ee;
+	font-size: 1.2em;
+	margin-top: 0.6em;
+}
+h1, h2, h3{
+	line-height: normal;
+	font-weight: normal;
+	color: #333;
+	margin: 0;
+}
+
+/* :::::::::::::::::::: plugin styles :::::::::::::::::::: */
+
+/* setup */
+.embed-behance-container * {
 	outline:none;
-	padding:0px;
-	margin:0px;
-	border:0px;
+	padding:0;
+	margin:0;
+	border:0;
+	text-decoration: none;
 	-webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+	text-size-adjust: none;
 }
-h1, h2{
-	line-height: normal;
+
+.bh-pagination-button{
+	margin-top: 2em;
 }
-h1{
-	font-size: 2em;
-	font-weight: 300;
-}
-h2{
-	font-size: 1.2em;
+
+.bh-pagination-button{
+	border-radius: 5px;
+	padding: 0.5em 2em;
+	text-align: center;
+	background-color: #2183ee;
+	border: 1px solid #016ee5;
 	font-weight: 700;
+	text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+	color: #fff;
+	cursor: pointer;
+	transition: background-color 0.3s;
 }
-ul, li{
-	list-style: none;
-}
-img{
-	width: 100%;
-	height: auto;
-}
-.loadingicon{
+
+.embed-behance-container .loadingicon{
 	width: 40px;
 	height: 40px;
-	background: url('../images/loading.svg') no-repeat top center;
-	background-size: contain;
+	background: url('../images/loading.svg') no-repeat center center;
+	background-size: 40px;
 	position: fixed;
 	top: 0;
 	bottom:0;
@@ -53,52 +102,304 @@ img{
 	margin:auto !important;
 	z-index: 350;
 	margin-top: 12px;
-	-moz-animation: spin .4s 1 linear;
-    -o-animation: spin .4s 1 linear;
-    -webkit-animation: spin .4s 1 linear;
-    animation: spin .4s 1 linear;
+	padding: 1em;
+	background-color: rgba(0,0,0,0.2);
+	border-radius: 50%;
 }
 
+.embed-behance-container h1, .embed-behance-container h2 {
+	line-height: normal;
+}
 
-/* LAYOUT */
-.container{
-	padding: 5%;
+.embed-behance-container h1 {
+	font-size: 2em;
+	font-weight: 300;
 }
-.content{
-	max-width: 75em;
-	margin: 0 auto;
+
+.embed-behance-container h2 {
+	font-size: 1.2em;
+	font-weight: 900;
 }
-ul.wrap-projects{
-	background-color: #fff;
+.embed-behance-container li, .embed-behance-container ul li {
+	list-style: none;
+}
+
+.embed-behance-container img {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+.embed-behance-container a {
+	color: #2183ee;
+	transition: color 0.3s;
+}
+
+/* floating data */
+.embed-behance-container .wrap-appreciations-outer .wrap-label,
+.embed-behance-container .wrap-appreciations-outer .wrap-value,
+.embed-behance-container .wrap-views-outer .wrap-label,
+.embed-behance-container .wrap-views-outer .wrap-value, 
+.embed-behance-container .wrap-projects li .wrap-appreciations-outer,
+.embed-behance-container .wrap-projects li .wrap-views-outer {
+	display: inline-block;
+	vertical-align: top;	
+}
+
+/* icons spacing */
+.embed-behance-container .wrap-appreciations-outer .wrap-label,
+.embed-behance-container .wrap-appreciations-outer .wrap-value,
+.embed-behance-container .wrap-views-outer .wrap-label,
+.embed-behance-container .wrap-views-outer .wrap-value, 
+.embed-behance-container .wrap-owners-outer .wrap-label,
+.embed-behance-container .wrap-owners-outer .single .owner-full-name {
+	padding-top: 0.3em;
+	padding-bottom: 0.3em;
+}
+
+.embed-behance-container .wrap-appreciations-outer .wrap-label,
+.embed-behance-container .wrap-views-outer .wrap-label {
+	padding-left: 1.7em;
+}
+
+/* list */
+.embed-behance-container .wrap-projects {
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
-	justify-content: space-around;
+	-ms-flex-wrap: wrap;
 	flex-wrap: wrap;
 }
-ul.wrap-projects li{
-	flex-basis: 30%;
-	margin-bottom: 2em;
-}
-ul.wrap-projects li .wrap-stats{margin-bottom: 0.3em;}
-ul.wrap-projects li .wrap-cover{margin-bottom: 0.3em;}
-ul.wrap-projects li .wrap-title{margin-bottom: 0.5em;}
-ul.wrap-projects li .wrap-published-date{margin-bottom: 0.3em;}
-ul.wrap-projects li .wrap-fields{}
 
-/*
-.outer{
-	width: 75px;
-    height: 75px;
-    overflow: hidden;
-    border-radius: 50%;
-    background-color: white;
+.embed-behance-container .wrap-projects > li {
+	-ms-flex-preferred-size: 100%;
+	flex-basis: 100%;
+	cursor: pointer;
 }
 
-iframe{
-	width: 200px;
-    height: 200px;
-    position: relative;
-    left: -88px;
-    top: -64px;
+.embed-behance-container .wrap-projects > li,
+.embed-behance-container .wrap-projects:not(:last-child) {
+	margin-bottom: 2.3em;
+	padding-bottom: 2.3em;
+	border-bottom: 1px solid #eee;
 }
-*/
+
+.embed-behance-container .wrap-projects > li:last-child {
+	margin-bottom: 0;
+	padding-bottom: 0;
+	border-bottom: 0;
+}
+
+.embed-behance-container .wrap-projects li .wrap-views-outer,
+.embed-behance-container .wrap-projects li .wrap-appreciations-outer,
+.embed-behance-container .wrap-projects li .wrap-title,
+.embed-behance-container .wrap-owners-outer {
+	margin-bottom: 0.5em;
+}
+
+.embed-behance-container .wrap-projects li > *:last-child {
+	margin-bottom: 0;
+}
+
+/* list: apprecitions & views */
+.embed-behance-container .wrap-projects li .wrap-appreciations-outer{
+	margin-right: 2em;
+}
+
+.embed-behance-container .wrap-projects li .wrap-appreciations-outer .wrap-label,
+.embed-behance-container .wrap-projects li .wrap-views-outer .wrap-label {
+	text-indent: -9999px;
+}
+
+/* list: cover  */
+.embed-behance-container .wrap-projects li .wrap-cover{
+	margin-bottom: 1.3em;
+	overflow: hidden;
+	clear: both;
+	border: 1px solid #eee; 
+	background-color: #000;
+	position: relative;
+}
+
+.embed-behance-container .wrap-projects li .wrap-cover img{
+	transition: all 0.3s;
+}
+
+.embed-behance-container .wrap-projects li .wrap-cover .fields-in-cover{
+	position: absolute;
+    color: #fff;
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: 700;
+    line-height: normal;
+    width: 100%;
+    top: 1em;
+    height: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-line-pack: center;
+    align-content: center;
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.embed-behance-container .wrap-projects li .wrap-cover .fields-in-cover > li:first-child{
+	background: url(../images/tag-icon.svg) no-repeat top center / 1.5em auto;
+	padding-top: 2em; 
+}
+
+.embed-behance-container .wrap-projects li .wrap-cover .fields-in-cover > li{
+	-ms-flex-preferred-size:100%;
+	flex-basis:100%;
+	margin: 0.2em 0;
+}
+
+.embed-behance-container .wrap-projects li .wrap-title{
+	transition: color 0.3s;
+}
+
+/* list: owners */
+.embed-behance-container .wrap-owners-outer .wrap-label{
+	margin-right: 0.5em;
+}
+
+.embed-behance-container .wrap-projects li .wrap-owners-outer .single .owner-full-name {
+	background: url(../images/owner-icon.svg) no-repeat left center / 0.8em auto;
+	padding-left: 1em;
+}
+
+/* global: appreciations & views */
+.embed-behance-container .wrap-appreciations-outer .wrap-label {
+	background: url(../images/like-icon.svg) no-repeat left center / 1.3em auto;
+}
+
+.embed-behance-container .wrap-views-outer .wrap-label {
+	background: url(../images/view-icon.svg) no-repeat left center / 1.3em auto;
+}
+
+/* global: owner */
+.embed-behance-container .wrap-owners-outer {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+}
+
+.embed-behance-container .wrap-owners-outer .single .owner-full-name a{
+	background: url(../images/chevron-icon.svg) no-repeat right 0.5em / 0.8em auto;
+	padding-right: 1em;
+}
+
+
+
+/* :::::::::::::::::::: media queries :::::::::::::::::::: */
+
+/* from 480px */
+@media screen and (min-width: 30em) {
+
+	.bh-pagination-button {
+		width: 10em;
+		margin: 0 auto;
+	}
+
+}
+
+/* from 720px */
+@media screen and (min-width: 45em) {
+
+	/* remove separator borders */
+	.embed-behance-container .wrap-projects > li,
+	.embed-behance-container .wrap-projects:not(:last-child) {
+		padding-bottom: 0;
+		margin-bottom: 0; 
+		border-bottom: 0;
+	}
+
+	.embed-behance-container .wrap-projects > li{
+		margin-bottom: 6em;
+	}
+
+	/* enable hover on links */
+	.embed-behance-container a:hover {
+		color: #3b95f7;
+	}
+
+	/* enable hover effects */
+	.embed-behance-container .wrap-projects li:hover .wrap-cover .fields-in-cover{
+		opacity: 1;
+		top: 0;
+	}
+
+	.embed-behance-container .wrap-projects li:hover .wrap-title{
+		color: #3b95f7;
+	}
+	
+	.embed-behance-container .wrap-projects li:hover .wrap-cover img{
+		transform: scale(1.3);
+		filter: blur(5px);
+		opacity: 0.7;
+	}
+
+	.bh-pagination-button:hover{
+		background-color: #3b95f7;
+	}
+
+	/* 2 columns */
+	.embed-behance-container .wrap-projects > li {
+		-ms-flex-preferred-size: 47%;
+		flex-basis: 47%;
+	}
+
+	.embed-behance-container .wrap-projects > li {
+		margin-right: 6%;
+	}
+
+	.embed-behance-container .wrap-projects > li:nth-child(2n) {
+		margin-right: 0;
+	} 
+
+}
+
+/* from 960px */
+@media screen and (min-width: 75em) {
+
+	/* 3 columns */
+	.embed-behance-container .wrap-projects > li {
+		-ms-flex-preferred-size: 30%;
+		flex-basis: 31.3%;
+	}
+
+	.embed-behance-container .wrap-projects > li,
+	.embed-behance-container .wrap-projects > li:nth-child(2n) {
+		margin-right: 3%;
+	}
+
+	.embed-behance-container .wrap-projects > li:nth-child(3n) {
+		margin-right: 0;
+	} 
+
+}
+
+/* from 1200px */
+@media screen and (min-width: 135em) {
+
+	/* 4 columns */
+	.embed-behance-container .wrap-projects > li {
+		-ms-flex-preferred-size: 22%;
+		flex-basis: 22.6%;
+	}
+
+	.embed-behance-container .wrap-projects > li,
+	.embed-behance-container .wrap-projects > li:nth-child(2n),
+	.embed-behance-container .wrap-projects > li:nth-child(3n) {
+		margin-right: 3%;
+	}
+
+	.embed-behance-container .wrap-projects > li:nth-child(4n) {
+		margin-right: 0;
+	} 
+
+}
 

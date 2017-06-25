@@ -4,26 +4,24 @@
 $.fn.embedYourBehance = function( options ) {
 
 	// get the HTML selector where the plugin will be initialized
-	var behanceContainer = $(this).css({
-		'position': 'relative'
-	});
+	var behanceContainer = $(this).wrap($('<div>').addClass('embed-behance-container').css({'position': 'relative'}));
 
 	// options allowed
 	var settings = $.extend({
 		
 		// default option values										
-		owners: false,
+		owners: true,
 		appreciations: true,
-		views: false,
+		views: true,
 		publishedDate:true,
-		projectUrl: false,
-		fields: false,
+		projectUrl: true,
+		fields: true,
 		apiKey: '',
 		itemsPerPage: '6',
 		userName: '',
 		infiniteScrolling: false,
 		imageCaption: true,
-		ownerLink: true,
+		ownerLink: false,
 		appreciateIt: true,
 		description: true,
 		tags: true
@@ -231,14 +229,11 @@ $.fn.embedYourBehance = function( options ) {
 			html = '';
 
 			html += value['rawId'];
-			html += value['owners'];
 			html += value['appreciations'];
 			html += value['views'];
 			html += value['cover'];
 			html += value['title'];
-			html += value['publishedDate'];
-			html += value['projectUrl'];
-			html += value['fields'];
+			html += value['owners'];
 
 			// wrap all the data belongs to one project and append the wrapper
 			html = '<li class="wrap-project">' + html + '</li>';
@@ -414,7 +409,22 @@ $.fn.embedYourBehance = function( options ) {
 			// cover
 			case 'cover':
 
-			dataWrapper += '<div class="wrap-cover"><img src="' + value.covers['404'] + '" alt="' + value.name + '" /></div>';
+			dataWrapper += '<div class="wrap-cover">';
+				dataWrapper += '<img src="' + value.covers['404'] + '" alt="' + value.name + '" />';
+
+				if(settings.fields == true) {
+
+					dataWrapper += '<ul class="fields-in-cover">';
+
+					$.each(value.fields, function(key, value) {
+						dataWrapper += '<li class="single">' + value + '</li>';
+					});
+
+					dataWrapper += '</ul>';
+
+				}
+
+			dataWrapper += '</div>';
 			
 			break;
 
