@@ -22,7 +22,7 @@ $.fn.embedYourBehance = function( options ) {
 		infiniteScrolling: false,
 		imageCaption: true,
 		ownerLink: false,
-		appreciateIt: true,
+		appreciateIt: false,
 		description: true,
 		tags: true
 
@@ -50,12 +50,12 @@ $.fn.embedYourBehance = function( options ) {
 
 	}
 
-	function printAppreciateButton() {
+	function mainContentDetail() {
 
 		var urlProjectAppreciation = $(dataExtracted[0]['rawProjectUrl']).text();
 
-		var iframe = $('<iframe>').attr({'src': urlProjectAppreciation + '?iframe=1#appreciation', 'scrolling': 'no'}).css({'width': 'inherit', 'max-width': 'inherit', 'height': 185, 'position': 'absolute', 'left': 0, 'top': -13, 'right': 0, 'margin': '0 auto'});
-		var iframeOuter = '<div style="width: 100%; max-width: 1400px; overflow: hidden; background-color: white; height: 150px; position: relative;">' + iframe[0]['outerHTML'] + '</div>';
+		var iframe = $('<iframe>').attr({'src': urlProjectAppreciation + '?iframe=1', 'scrolling': 'yes', 'border': 0});
+		var iframeOuter = '<div class="wrap-iframe">' + iframe[0]['outerHTML'] + '</div>';
 		
 		return iframeOuter;
 		
@@ -182,8 +182,8 @@ $.fn.embedYourBehance = function( options ) {
 
 			html += dataExtracted[0]['title'];
 			html += dataExtracted[0]['description'];
-			html += dataExtracted[0]['works'];
-			html += printAppreciateButton();
+			//html += dataExtracted[0]['works'];
+			html += mainContentDetail();
 
 		html += '</div>';
 
@@ -333,7 +333,7 @@ $.fn.embedYourBehance = function( options ) {
 			break;
 
 			// works
-			case 'works':
+			/*case 'works':
 
 			dataWrapper += '<ul class="wrap-values">';
 
@@ -371,7 +371,7 @@ $.fn.embedYourBehance = function( options ) {
 			dataWrapper += '</ul>';
 			dataWrapper =  '<div class="wrap-works-outer">' + dataWrapper + '</div>';
 			
-			break;
+			break;*/
 
 
 			// appreciations
@@ -553,7 +553,7 @@ $.fn.embedYourBehance = function( options ) {
 			rawId: 			designTemplate('rawId', value),
 			rawProjectUrl:	designTemplate('rawProjectUrl', value),
 			owners: 		designTemplate('owners', value),
-			works: 			designTemplate('works', value),
+			//works: 			designTemplate('works', value),
 			appreciations: 	designTemplate('appreciations', value),
 			views: 			designTemplate('views', value),
 			cover: 			designTemplate('cover', value),
