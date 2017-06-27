@@ -1,63 +1,4 @@
 /* setup */
-html, body {
-	height: 100%;
-}
-body {
-	font-family: 'Lato', sans-serif;
-	min-height:100%;
-	position:relative;
-	line-height:1em;
-	font-size:100%;
-	color: #666;
-}
-
-/* layout structure */
-.container {
-	padding: 5%;
-}
-.content {
-	max-width: 90em;
-	margin: 0 auto;
-}
-.titles{
-	margin-bottom: 8em;
-	text-align: center;
-	position: relative;
-}
-.titles:after{
-	content: '';
-	display: block;
-	width: 2em;
-	height: 3px;
-	background-color: #2183ee;
-	margin-top: 1.5em;
-	position: absolute;
-	bottom: -1.8em;
-	left: 0;
-	right: 0;
-	margin: 0 auto;
-}
-h1.page-title {
-	font-weight: 300;
-	font-size: 2.5em;
-	color: #666;
-}
-h2.sub-title{
-	font-weight: 700;
-	color: #2183ee;
-	font-size: 1.2em;
-	margin-top: 0.6em;
-}
-h1, h2, h3{
-	line-height: normal;
-	font-weight: normal;
-	color: #333;
-	margin: 0;
-}
-
-/* :::::::::::::::::::: plugin styles :::::::::::::::::::: */
-
-/* setup */
 .embed-behance-container * {
 	outline:none;
 	padding:0;
@@ -75,7 +16,7 @@ h1, h2, h3{
 	margin-top: 2em;
 }
 
-.bh-pagination-button{
+.bh-pagination-button, .embed-behance-container aside .wrap-project-url a{
 	border-radius: 5px;
 	padding: 0.5em 2em;
 	text-align: center;
@@ -85,6 +26,7 @@ h1, h2, h3{
 	text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
 	color: #fff;
 	cursor: pointer;
+	display: block;
 	transition: background-color 0.3s;
 }
 
@@ -152,14 +94,18 @@ h1, h2, h3{
 .embed-behance-container .wrap-views-outer .wrap-label,
 .embed-behance-container .wrap-views-outer .wrap-value, 
 .embed-behance-container .wrap-owners-outer .wrap-label,
-.embed-behance-container .wrap-owners-outer .single .owner-full-name {
+.embed-behance-container .wrap-owners-outer .single .owner-full-name,
+.embed-behance-container .wrap-fields-outer .wrap-label,
+.embed-behance-container .wrap-tags-outer .wrap-label {
 	padding-top: 0.3em;
 	padding-bottom: 0.3em;
 }
 
 .embed-behance-container .wrap-appreciations-outer .wrap-label,
-.embed-behance-container .wrap-views-outer .wrap-label {
-	padding-left: 1.7em;
+.embed-behance-container .wrap-views-outer .wrap-label,
+.embed-behance-container .wrap-fields-outer .wrap-label,
+.embed-behance-container .wrap-tags-outer .wrap-label {
+	padding-left: 2em;
 }
 
 /* list */
@@ -271,6 +217,16 @@ h1, h2, h3{
 	padding-left: 1em;
 }
 
+/* global: tags */
+.embed-behance-container .wrap-tags-outer .wrap-label {
+	background: url(../images/tag-icon.svg) no-repeat left top 4px / 1.3em auto;
+}
+
+/* global: fields */
+.embed-behance-container .wrap-fields-outer .wrap-label {
+	background: url(../images/field-icon.svg) no-repeat left -1px top 6px / 1.5em auto;
+}
+
 /* global: appreciations & views */
 .embed-behance-container .wrap-appreciations-outer .wrap-label {
 	background: url(../images/like-icon.svg) no-repeat left center / 1.3em auto;
@@ -287,12 +243,229 @@ h1, h2, h3{
 	display: flex;
 }
 
-.embed-behance-container .wrap-owners-outer .single .owner-full-name a{
+.embed-behance-container .wrap-owners-outer .single .owner-full-name a {
 	background: url(../images/chevron-icon.svg) no-repeat right 0.5em / 0.8em auto;
 	padding-right: 1em;
 }
 
 
+/* :::::::::::::::::::: detail :::::::::::::::::::: */
+
+.bh-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.7);
+}
+
+.embed-behance-container.project-detail-outer {
+	width: 94%;
+	height: 96%;
+	position: fixed;
+	top: 2%;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	z-index: 10;
+	background-color: #fff;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.embed-behance-container.project-detail-outer .box-project {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-wrap:wrap;
+	flex-wrap:wrap;
+}
+
+.embed-behance-container.project-detail-outer .box-project aside,
+.embed-behance-container.project-detail-outer .box-project .wrap-headings {
+	-webkit-box-ordinal-group: 0;
+	-ms-flex-order: -1;
+	order: -1;
+	
+}
+
+/* headigns */
+.embed-behance-container .wrap-headings {
+	margin-bottom: 2em;
+	width:90%;
+	padding: 3% 3% 0 3%;
+}
+
+.embed-behance-container .wrap-headings h2 {
+	font-size: 1.8em;
+	font-weight: 300;
+	margin-bottom: 0.2em;
+}
+
+.embed-behance-container .wrap-headings h3 {
+	font-weight: 700;
+	font-size: 1em;
+	color: #c3c3c3;
+}
+
+/* aside */
+.embed-behance-container aside {
+    border-radius: 15px;
+    box-shadow: 1px 4px 20px rgba(0,0,0,0.1);
+    margin: 0 auto 2em auto;
+    width: 94%;
+    height: 15em;
+    position: relative;
+    overflow: hidden;
+    background-color: #f9f9f9;
+}
+
+.embed-behance-container aside > div.box-overflow {
+	overflow-y: auto;
+	height: calc(100% - 2.5em);
+	background-color: #fff;
+}
+
+.embed-behance-container aside > div.box-overflow > div.box-overflow-inner {
+	padding-top: 2em;
+}
+
+.embed-behance-container aside > div.box-overflow > div.box-overflow-inner > div:last-child:not(.wrap-project-url) {
+	margin-bottom: 2em;
+}
+
+.embed-behance-container aside .wrap-owners-outer {
+	padding: 0 3%;
+	border-bottom: 1px solid #eee;
+	margin-bottom: 1em;
+}
+
+.embed-behance-container aside .wrap-owners-outer .wrap-label {
+	display: none;
+}
+
+.embed-behance-container aside .wrap-owners-outer .single {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-wrap:wrap;
+	flex-wrap:wrap;
+	-webkit-box-pack: start;
+	-ms-flex-pack: start;
+	justify-content: flex-start;
+	width: 100%;
+	margin-bottom: 0.5em;
+}
+
+.embed-behance-container aside .wrap-owners-outer .single:last-child {
+	margin-bottom: 0;
+}
+
+.embed-behance-container aside .wrap-owners-outer .single:last-child .profile-pic {
+	border-bottom: 2px solid #2183ee;
+	padding-bottom: 1em;
+}
+
+.embed-behance-container aside .wrap-owners-outer .single .profile-pic {
+	width: 15%;
+	margin-right: 1em;
+}
+
+.embed-behance-container aside .wrap-owners-outer .profile-pic img {
+	width: 100%;
+	height: auto;
+	border-radius: 50%; 
+}
+
+.embed-behance-container aside .wrap-owners-outer .owner-full-name {
+	margin-top: 0.7em;
+	font-weight: 700;
+}
+
+.embed-behance-container aside .wrap-appreciations-outer,
+.embed-behance-container aside .wrap-views-outer,
+.embed-behance-container aside .wrap-fields-outer,
+.embed-behance-container aside .wrap-tags-outer {
+	margin: 0.7em 6%;
+}
+
+.embed-behance-container aside .wrap-appreciations-outer .wrap-value,
+.embed-behance-container aside .wrap-views-outer .wrap-value {
+	margin-left: 0.3em;
+	font-weight: 700;
+}
+
+.embed-behance-container aside .wrap-fields-outer,
+.embed-behance-container aside .wrap-tags-outer {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+}
+
+.embed-behance-container aside .wrap-fields-outer .wrap-label,
+.embed-behance-container aside .wrap-tags-outer .wrap-label {
+	width: 2.5em;
+	margin-right: 1em;
+}
+
+.embed-behance-container aside .wrap-fields-outer .wrap-values .single,
+.embed-behance-container aside .wrap-tags-outer .wrap-values .single {
+	padding: 0.3em 0.7em 0.5em 0.7em;
+    border-radius: 50px;
+    background-color: #eee;
+    margin: 0.3em;
+    font-size: 0.8em;
+    text-align: center;
+    line-height: normal;
+    display: inline-block;
+}
+
+.embed-behance-container aside .wrap-project-url {
+	padding-top: 2em;
+	border-top: 1px solid #eee;
+}
+
+.embed-behance-container aside .wrap-project-url a {
+    margin: 0 6% 2em;
+}
+
+.embed-behance-container aside .wrap-published-date-outer {
+	padding: 1em 6%;
+	border-top: 1px solid #eee;
+	text-align: center;
+	font-size: 0.8em;
+	position: absolute;
+	bottom: 0;
+	width: 88%;
+	background-color: #f9f9f9;
+}
+
+.embed-behance-container aside .wrap-published-date-outer .wrap-label {
+	margin-right: 0.5em;
+}
+
+.embed-behance-container aside .wrap-published-date-outer > div {
+	display: inline-block;
+	vertical-align: top;
+}
+
+/* main */
+.embed-behance-container main {
+	width: 100%;
+	height: 20em;
+}
+
+.embed-behance-container main .wrap-iframe{
+	width: inherit;
+	height: inherit;
+}
+
+.embed-behance-container main .wrap-iframe iframe{
+	width: inherit;
+	height: inherit;
+	border: 0;
+}
 
 /* :::::::::::::::::::: media queries :::::::::::::::::::: */
 
@@ -317,7 +490,7 @@ h1, h2, h3{
 		border-bottom: 0;
 	}
 
-	.embed-behance-container .wrap-projects > li{
+	.embed-behance-container .wrap-projects > li {
 		margin-bottom: 6em;
 	}
 

@@ -10,21 +10,21 @@ $.fn.embedYourBehance = function( options ) {
 	var settings = $.extend({
 		
 		// default option values										
-		owners: true,
-		appreciations: true,
-		views: true,
-		publishedDate:true,
-		projectUrl: true,
-		fields: true,
+		owners: false,
+		appreciations: false,
+		views: false,
+		publishedDate: false,
+		projectUrl: false,
+		fields: false,
 		apiKey: '',
 		itemsPerPage: '6',
 		userName: '',
 		infiniteScrolling: false,
 		imageCaption: true,
-		ownerLink: false,
+		ownerLink: true,
 		appreciateIt: false,
 		description: true,
-		tags: true
+		tags: false
 
 	}, options );
 	
@@ -41,6 +41,11 @@ $.fn.embedYourBehance = function( options ) {
 	var html = '';
 	var sidebarData = 0;
 
+	function openDetailAnimation() {
+
+		$('body').append( $('<div>').addClass('bh-overlay') );
+
+	}
 
 	function dateConversion(token) {
 
@@ -176,16 +181,20 @@ $.fn.embedYourBehance = function( options ) {
 	function printContentForDetail() {
 
 		html = '';
-		
-		// main column
-		html += '<div class="box-inner-main">';
 
+		html += '<div class="wrap-headings">';
 			html += dataExtracted[0]['title'];
 			html += dataExtracted[0]['description'];
+		html += '</div>';
+		
+		// main column
+		html += '<main class="box-inner-main">';
+
+			
 			//html += dataExtracted[0]['works'];
 			html += mainContentDetail();
 
-		html += '</div>';
+		html += '</main>';
 
 		// check if one of the sidebar fields is printed
 		if(sidebarData == true) {
@@ -193,13 +202,18 @@ $.fn.embedYourBehance = function( options ) {
 			// sidebar
 			html += '<aside class="box-inner-sidebar">';
 
-				html += dataExtracted[0]['owners'];
-				html += dataExtracted[0]['views'];
-				html += dataExtracted[0]['appreciations'];
-				html += dataExtracted[0]['projectUrl'];
-				html += dataExtracted[0]['fields'];
-				html += dataExtracted[0]['tags'];
-				html += dataExtracted[0]['appreciateIt'];
+				html += '<div class="box-overflow"><div class="box-overflow-inner">';
+
+					html += dataExtracted[0]['owners'];
+					html += dataExtracted[0]['views'];
+					html += dataExtracted[0]['appreciations'];
+					html += dataExtracted[0]['fields'];
+					html += dataExtracted[0]['tags'];
+					html += dataExtracted[0]['projectUrl'];
+					html += dataExtracted[0]['appreciateIt'];
+
+				html += '</div></div>';
+
 				html += dataExtracted[0]['publishedDate'];
 
 			html += '</aside>';
@@ -210,10 +224,10 @@ $.fn.embedYourBehance = function( options ) {
 		html = '<div class="box-project">' + html + '</div>';	
 
 		// print all the content into the div
-		$('body').append(html);
+		$(html).insertBefore($('.bh-overlay'));
 
 		// a further wrapper is applied to all the projects
-		$('.box-project').wrapAll( $('<div>').addClass('project-detail-outer').css('display', 'none') );
+		$('.box-project').wrapAll( $('<div>').addClass('project-detail-outer embed-behance-container').css('display', 'none') );
 
 		// before displaying the results, I make sure all the images inside, have been loaded
 		loadBeforeShow();
@@ -532,9 +546,9 @@ $.fn.embedYourBehance = function( options ) {
 			// description
 			case 'description':
 
-			if(settings.description == true) {
+			if(settings.description == true && value.description !== '') {
 
-				dataWrapper += '<div class="wrap-description">' + value.description + '</div>';
+				dataWrapper += '<h3 class="wrap-description">' + value.description + '</h3>';
 
 			}
 
@@ -697,6 +711,8 @@ $.fn.embedYourBehance = function( options ) {
 		console.log(urlDetail);
 
 		callBehanceProjectDetail(urlDetail);
+
+		openDetailAnimation();
 
 	});
 
