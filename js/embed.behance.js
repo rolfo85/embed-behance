@@ -10,21 +10,20 @@ $.fn.embedYourBehance = function( options ) {
 	var settings = $.extend({
 		
 		// default option values										
-		owners: false,
-		appreciations: false,
-		views: false,
-		publishedDate: false,
-		projectUrl: false,
-		fields: false,
+		owners: true,
+		appreciations: true,
+		views: true,
+		publishedDate: true,
+		projectUrl: true,
+		fields: true,
 		apiKey: '',
 		itemsPerPage: '6',
 		userName: '',
 		infiniteScrolling: false,
 		imageCaption: true,
-		ownerLink: true,
-		appreciateIt: false,
+		ownerLink: false,
 		description: true,
-		tags: false
+		tags: true
 
 	}, options );
 	
@@ -43,7 +42,8 @@ $.fn.embedYourBehance = function( options ) {
 
 	function openDetailAnimation() {
 
-		$('body').append( $('<div>').addClass('bh-overlay') );
+
+		$('body').css('overflow', 'hidden').append( $('<div>').addClass('bh-overlay') );
 
 	}
 
@@ -53,17 +53,6 @@ $.fn.embedYourBehance = function( options ) {
     	fancyDate = fancyDate.toDateString();
     	return fancyDate;
 
-	}
-
-	function mainContentDetail() {
-
-		var urlProjectAppreciation = $(dataExtracted[0]['rawProjectUrl']).text();
-
-		var iframe = $('<iframe>').attr({'src': urlProjectAppreciation + '?iframe=1', 'scrolling': 'yes', 'border': 0});
-		var iframeOuter = '<div class="wrap-iframe">' + iframe[0]['outerHTML'] + '</div>';
-		
-		return iframeOuter;
-		
 	}
 
 	function pagination(urlListNext) {
@@ -143,6 +132,16 @@ $.fn.embedYourBehance = function( options ) {
 	       		// if I'm loading the detail
 	       		if(isDetail == true) {
 
+	       			// get how height the aside has to be in accordin with the room
+					var detailHeight = $('.project-detail-outer').height();
+					var asideHeight = $('aside').outerHeight(true);
+					var headingsHeight = $('.wrap-headings').outerHeight(true);
+					var mainHeight = detailHeight - headingsHeight - asideHeight;
+
+					console.log(detailHeight, headingsHeight, asideHeight);
+
+					$('.embed-behance-container main.box-inner-main').css('height', mainHeight);
+
 	       			$('div.project-detail-outer').fadeIn();
 
 	       		// if I'm loading the list 
@@ -160,8 +159,15 @@ $.fn.embedYourBehance = function( options ) {
 
 	    }
 	    
-	    // find all images coming from the json call 
-	    var images = $('.wrap-project img');
+
+	    if(isDetail == true) {
+		    // find all images coming from the json call (in the detail)
+		    var images = $('.box-project img');
+		} else {
+
+		    // find all images coming from the json call (in the list)
+		    var images = $('.wrap-project img');
+		}
 	    
 		// initialize the counter
 	    var counter = images.length;
@@ -190,9 +196,7 @@ $.fn.embedYourBehance = function( options ) {
 		// main column
 		html += '<main class="box-inner-main">';
 
-			
-			//html += dataExtracted[0]['works'];
-			html += mainContentDetail();
+			html += dataExtracted[0]['works'];
 
 		html += '</main>';
 
@@ -210,11 +214,11 @@ $.fn.embedYourBehance = function( options ) {
 					html += dataExtracted[0]['fields'];
 					html += dataExtracted[0]['tags'];
 					html += dataExtracted[0]['projectUrl'];
-					html += dataExtracted[0]['appreciateIt'];
+					html += dataExtracted[0]['publishedDate'];
 
 				html += '</div></div>';
 
-				html += dataExtracted[0]['publishedDate'];
+				html += '<a class="bh-show"><span class="label">Show Info</span><span class="icon-chevron"></span></a>'
 
 			html += '</aside>';
 
@@ -347,7 +351,7 @@ $.fn.embedYourBehance = function( options ) {
 			break;
 
 			// works
-			/*case 'works':
+			case 'works':
 
 			dataWrapper += '<ul class="wrap-values">';
 
@@ -385,7 +389,7 @@ $.fn.embedYourBehance = function( options ) {
 			dataWrapper += '</ul>';
 			dataWrapper =  '<div class="wrap-works-outer">' + dataWrapper + '</div>';
 			
-			break;*/
+			break;
 
 
 			// appreciations
@@ -472,7 +476,7 @@ $.fn.embedYourBehance = function( options ) {
 
 			if(settings.projectUrl == true) {
 
-				dataWrapper += '<a href="' + value.url + '" title="' + value.name + '" target="_blank"> Get it on Behance </a>';
+				dataWrapper += '<a href="' + value.url + '" title="' + value.name + '" target="_blank"> Appreciate it in Behance </a>';
 				dataWrapper =  '<div class="wrap-project-url">' + dataWrapper + '</div>';
 
 				sidebarData = 1;
@@ -529,20 +533,6 @@ $.fn.embedYourBehance = function( options ) {
 
 
 
-			// appreciate button on the sidebar
-			case 'appreciateIt':
-
-			if(settings.appreciateIt == true) {
-
-				dataWrapper += '<a href="#"> Appreciate it </a>';
-				dataWrapper =  '<div class="wrap-appreciateit">' + dataWrapper + '</div>';
-
-				sidebarData = 1;
-
-			}
-
-			break;
-
 			// description
 			case 'description':
 
@@ -567,7 +557,7 @@ $.fn.embedYourBehance = function( options ) {
 			rawId: 			designTemplate('rawId', value),
 			rawProjectUrl:	designTemplate('rawProjectUrl', value),
 			owners: 		designTemplate('owners', value),
-			//works: 			designTemplate('works', value),
+			works: 			designTemplate('works', value),
 			appreciations: 	designTemplate('appreciations', value),
 			views: 			designTemplate('views', value),
 			cover: 			designTemplate('cover', value),
@@ -575,7 +565,6 @@ $.fn.embedYourBehance = function( options ) {
 			publishedDate: 	designTemplate('publishedDate', value),
 			projectUrl: 	designTemplate('projectUrl', value),
 			fields: 		designTemplate('fields', value),
-			appreciateIt: 	designTemplate('appreciateIt', value),
 			description: 	designTemplate('description', value),
 			tags: 			designTemplate('tags', value)
 			
@@ -698,7 +687,6 @@ $.fn.embedYourBehance = function( options ) {
 
 	});
 
-	
 
 	//detail
 	$(behanceContainer).on('click', '.wrap-project', function(){
@@ -713,6 +701,61 @@ $.fn.embedYourBehance = function( options ) {
 		callBehanceProjectDetail(urlDetail);
 
 		openDetailAnimation();
+
+	});
+
+	// show / hide info on mobile version
+	var show = 0;
+	$('body').on('click', '.bh-show', function(){
+
+		function showHideInfo(action) {
+
+			// show the info
+			if(action == 'show') {
+
+				// get how height the aside has to be in accordin with the room
+				var detailHeight = $('.project-detail-outer').height();
+				var headingsHeight = $('.wrap-headings').outerHeight(true);
+				var asideHeight = detailHeight - headingsHeight - 20;
+
+				$('.bh-show > .label').text('Hide Info');
+
+				$('.embed-behance-container aside').addClass('open').animate({
+
+					'height': asideHeight,
+					'border-radius': 15
+
+				}, 800);
+
+			// hide the info
+			} else if (action == 'hide') {
+				
+				$('.bh-show > .label').text('Show Info');
+				
+				$('aside').removeClass('open').animate({
+
+					'height': '2.4em',
+					'border-radius': 50
+
+				}, 800);
+
+			}
+
+		}
+
+		if(!show) {
+
+			show = 1;
+
+			showHideInfo('show');
+
+		} else {
+
+			show = 0;
+
+			showHideInfo('hide');
+
+		}
 
 	});
 

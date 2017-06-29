@@ -18,7 +18,7 @@
 
 .bh-pagination-button, .embed-behance-container aside .wrap-project-url a{
 	border-radius: 5px;
-	padding: 0.5em 2em;
+	padding: 1em 2em;
 	text-align: center;
 	background-color: #2183ee;
 	border: 1px solid #016ee5;
@@ -244,7 +244,7 @@
 }
 
 .embed-behance-container .wrap-owners-outer .single .owner-full-name a {
-	background: url(../images/chevron-icon.svg) no-repeat right 0.5em / 0.8em auto;
+	background: url(../images/chevron-icon-rt.svg) no-repeat right 0.5em / 0.8em auto;
 	padding-right: 1em;
 }
 
@@ -261,10 +261,10 @@
 }
 
 .embed-behance-container.project-detail-outer {
-	width: 94%;
-	height: 96%;
+	width: 100%;
+	height: 100%;
 	position: fixed;
-	top: 2%;
+	top: 0;
 	left: 0;
 	right: 0;
 	margin: 0 auto;
@@ -293,8 +293,9 @@
 /* headigns */
 .embed-behance-container .wrap-headings {
 	margin-bottom: 2em;
-	width:90%;
-	padding: 3% 3% 0 3%;
+	width:100%;
+	height: auto;
+	padding: 1em 3% 0 3%;
 }
 
 .embed-behance-container .wrap-headings h2 {
@@ -311,18 +312,18 @@
 
 /* aside */
 .embed-behance-container aside {
-    border-radius: 15px;
+    border-radius: 50px;
     box-shadow: 1px 4px 20px rgba(0,0,0,0.1);
     margin: 0 auto 2em auto;
     width: 94%;
-    height: 15em;
+    height: 2.4em;
     position: relative;
     overflow: hidden;
     background-color: #f9f9f9;
 }
 
 .embed-behance-container aside > div.box-overflow {
-	overflow-y: auto;
+	overflow-y: scroll;
 	height: calc(100% - 2.5em);
 	background-color: #fff;
 }
@@ -427,18 +428,12 @@
 }
 
 .embed-behance-container aside .wrap-project-url a {
-    margin: 0 6% 2em;
+    margin: 0 6% 1em;
 }
 
 .embed-behance-container aside .wrap-published-date-outer {
-	padding: 1em 6%;
-	border-top: 1px solid #eee;
 	text-align: center;
 	font-size: 0.8em;
-	position: absolute;
-	bottom: 0;
-	width: 88%;
-	background-color: #f9f9f9;
 }
 
 .embed-behance-container aside .wrap-published-date-outer .wrap-label {
@@ -450,21 +445,59 @@
 	vertical-align: top;
 }
 
+.embed-behance-container aside .bh-show {
+	text-align: center;
+	padding: 0.75em 0;
+	background-color: #2183ee;
+	color: #fff;
+	cursor: pointer;
+	display: block;
+}
+
+.embed-behance-container aside .bh-show span.icon-chevron {
+	display: inline-block;
+	width: 0.8em;
+	height: 0.5em;
+	margin-left: 0.3em;
+	background-color: #fff;
+	background-size: 0.8em auto;
+	mask-repeat: no-repeat;
+	-webkit-mask-repeat: no-repeat;
+	background-position: right 0.5em;
+	-webkit-mask-image: url(../images/chevron-icon-dw.svg);
+	mask-image: url(../images/chevron-icon-dw.svg);
+
+}
+
+.embed-behance-container aside.open .bh-show {
+	color: inherit;
+	background-color: #f8f8f8;
+}
+
+.embed-behance-container aside.open .bh-show span.icon-chevron {
+	background-color: #2183ee;
+	-webkit-mask-image: url(../images/chevron-icon-up.svg);
+	mask-image: url(../images/chevron-icon-up.svg);
+}
+
+.embed-behance-container aside:not(.open) .bh-show:hover span.label{
+	color: #fff;
+}
+
 /* main */
 .embed-behance-container main {
 	width: 100%;
-	height: 20em;
+	height: auto;
 }
 
-.embed-behance-container main .wrap-iframe{
+.embed-behance-container main .wrap-works-outer{
 	width: inherit;
 	height: inherit;
 }
 
-.embed-behance-container main .wrap-iframe iframe{
-	width: inherit;
-	height: inherit;
-	border: 0;
+.embed-behance-container main .wrap-works-outer img{
+	width: 100%;
+	height: auto;
 }
 
 /* :::::::::::::::::::: media queries :::::::::::::::::::: */
@@ -515,7 +548,8 @@
 		opacity: 0.7;
 	}
 
-	.bh-pagination-button:hover{
+	.bh-pagination-button:hover, 
+	.embed-behance-container aside .wrap-project-url a:hover {
 		background-color: #3b95f7;
 	}
 
