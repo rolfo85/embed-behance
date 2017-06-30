@@ -604,6 +604,8 @@ $.fn.embedYourBehance = function( options ) {
 				/* template function for printing data extracted */
 				printContentForList();
 
+				isPaging = 0;
+
 			},
 			error: function(error) {
 				console.log('ERROR: ', error);
@@ -679,11 +681,18 @@ $.fn.embedYourBehance = function( options ) {
 	}
 
 	// Click on the button pagination to scroll
-	$(behanceContainer).on('click', '.bh-pagination-button', function(){
-		
-		urlList = urlListNext;
-		// another call to load other projects in the list
-		callBehanceProjectsList();
+	var isPaging = 0;
+	$(behanceContainer).on('mousedown', '.bh-pagination-button', function(){
+
+		if (!isPaging) {
+
+			isPaging = 1;
+
+			urlList = urlListNext;
+			// another call to load other projects in the list
+			callBehanceProjectsList();
+
+		}
 
 	});
 
