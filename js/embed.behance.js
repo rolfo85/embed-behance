@@ -132,16 +132,6 @@ $.fn.embedYourBehance = function( options ) {
 	       		// if I'm loading the detail
 	       		if(isDetail == true) {
 
-	       			// get how height the aside has to be in accordin with the room
-					// var detailHeight = $('.project-detail-outer').height();
-					var mainHeight = $('main.box-inner-main').height();
-					var totalDetailHeight = $('.project-detail-outer').height();
-					
-					console.log(mainHeight);
-
-					//$('.embed-behance-container.project-detail-outer').css({'overflow': 'hidden', 'height': totalDetailHeight});
-					//$('.embed-behance-container main.box-inner-main').css('height', mainHeight);
-
 	       			$('div.project-detail-outer').animate({'opacity': 1});
 
 	       		// if I'm loading the list 
