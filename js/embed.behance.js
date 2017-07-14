@@ -43,7 +43,7 @@ $.fn.embedYourBehance = function( options ) {
 	function openDetailAnimation() {
 
 
-		$('body').css('overflow', 'hidden').append( $('<div>').addClass('bh-overlay') );
+		$('body').append( $('<div>').addClass('bh-overlay') );
 
 	}
 
@@ -133,16 +133,16 @@ $.fn.embedYourBehance = function( options ) {
 	       		if(isDetail == true) {
 
 	       			// get how height the aside has to be in accordin with the room
-					var detailHeight = $('.project-detail-outer').height();
-					var asideHeight = $('aside').outerHeight(true);
-					var headingsHeight = $('.wrap-headings').outerHeight(true);
-					var mainHeight = detailHeight - headingsHeight - asideHeight;
+					// var detailHeight = $('.project-detail-outer').height();
+					var mainHeight = $('main.box-inner-main').height();
+					var totalDetailHeight = $('.project-detail-outer').height();
+					
+					console.log(mainHeight);
 
-					console.log(detailHeight, headingsHeight, asideHeight);
+					//$('.embed-behance-container.project-detail-outer').css({'overflow': 'hidden', 'height': totalDetailHeight});
+					//$('.embed-behance-container main.box-inner-main').css('height', mainHeight);
 
-					$('.embed-behance-container main.box-inner-main').css('height', mainHeight);
-
-	       			$('div.project-detail-outer').fadeIn();
+	       			$('div.project-detail-outer').animate({'opacity': 1});
 
 	       		// if I'm loading the list 
 				} else {
@@ -231,7 +231,7 @@ $.fn.embedYourBehance = function( options ) {
 		$(html).insertBefore($('.bh-overlay'));
 
 		// a further wrapper is applied to all the projects
-		$('.box-project').wrapAll( $('<div>').addClass('project-detail-outer embed-behance-container').css('display', 'none') );
+		$('.box-project').wrapAll( $('<div>').addClass('project-detail-outer embed-behance-container').css('opacity', 0) );
 
 		// before displaying the results, I make sure all the images inside, have been loaded
 		loadBeforeShow();
@@ -604,8 +604,6 @@ $.fn.embedYourBehance = function( options ) {
 				/* template function for printing data extracted */
 				printContentForList();
 
-				isPaging = 0;
-
 			},
 			error: function(error) {
 				console.log('ERROR: ', error);
@@ -688,9 +686,16 @@ $.fn.embedYourBehance = function( options ) {
 
 			isPaging = 1;
 
-			urlList = urlListNext;
-			// another call to load other projects in the list
-			callBehanceProjectsList();
+			setTimeout(function(){
+			
+				urlList = urlListNext;
+				// another call to load other projects in the list
+				callBehanceProjectsList();
+
+				isPaging = 0;
+
+			}, 500);
+
 
 		}
 
@@ -723,9 +728,9 @@ $.fn.embedYourBehance = function( options ) {
 			if(action == 'show') {
 
 				// get how height the aside has to be in accordin with the room
-				var detailHeight = $('.project-detail-outer').height();
+				var bodyHeight = $('body').height();
 				var headingsHeight = $('.wrap-headings').outerHeight(true);
-				var asideHeight = detailHeight - headingsHeight - 20;
+				var asideHeight = bodyHeight - headingsHeight - 20;
 
 				$('.bh-show > .label').text('Hide Info');
 
