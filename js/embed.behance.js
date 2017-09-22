@@ -3,6 +3,10 @@
 
 $.fn.embedYourBehance = function( options ) {
 
+	// double wrap the body
+	$('body').wrapInner( $('<div>').addClass('embed-behance-total-inner-container') ).wrapInner( $('<div>').addClass('embed-behance-total-outer-container') );
+
+
 	// get the HTML selector where the plugin will be initialized
 	var behanceContainer = $(this).wrap($('<div>').addClass('embed-behance-container').css({'position': 'relative'}));
 
@@ -42,8 +46,14 @@ $.fn.embedYourBehance = function( options ) {
 
 	function openDetailAnimation() {
 
+		$('body').addClass('detail-modal-active');
+		
+		var scrollPosition = $(document).scrollTop();
+		
+		$('.detail-modal-active .embed-behance-total-outer-container').css('position', 'fixed');
+		$('.detail-modal-active .embed-behance-total-outer-container > .embed-behance-total-inner-container').css({'position': 'relative', 'top': -scrollPosition});
 
-		$('body').append( $('<div>').addClass('bh-overlay') );
+		
 
 	}
 
@@ -132,7 +142,8 @@ $.fn.embedYourBehance = function( options ) {
 	       		// if I'm loading the detail
 	       		if(isDetail == true) {
 
-	       			$('div.project-detail-outer').animate({'opacity': 1});
+	       			$('div.project-detail-outer').animate({'top': 0}, 700);
+	       			$('.embed-behance-total-inner-container').animate({'opacity': 0.3}, 500);
 
 	       		// if I'm loading the list 
 				} else {
@@ -218,10 +229,10 @@ $.fn.embedYourBehance = function( options ) {
 		html = '<div class="box-project">' + html + '</div>';	
 
 		// print all the content into the div
-		$(html).insertBefore($('.bh-overlay'));
+		$(html).insertAfter($('.embed-behance-total-outer-container'));
 
 		// a further wrapper is applied to all the projects
-		$('.box-project').wrapAll( $('<div>').addClass('project-detail-outer embed-behance-container').css('opacity', 0) );
+		$('.box-project').wrapAll( $('<div>').addClass('project-detail-outer embed-behance-container'));
 
 		// before displaying the results, I make sure all the images inside, have been loaded
 		loadBeforeShow();
@@ -582,7 +593,7 @@ $.fn.embedYourBehance = function( options ) {
 			dataType: 'jsonp',
 			success: function(data) {
 
-				$(behanceContainer).append('<div class="loadingicon"></div>');
+				$('body').append('<div class="loadingicon"></div>');
 
 				// json data fetch for list only
 				$.each(data.projects, function(index, value){
