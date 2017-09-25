@@ -34,7 +34,7 @@
 	width: 40px;
 	height: 40px;
 	background: url('../images/loading.svg') no-repeat center center;
-	background-size: 40px;
+	background-size: 25px;
 	position: fixed;
 	top: 0;
 	bottom:0;
@@ -45,7 +45,7 @@
 	z-index: 350;
 	margin-top: 12px;
 	padding: 1em;
-	background-color: rgba(0,0,0,0.2);
+	background-color: rgba(0,0,0,0.7);
 	border-radius: 50%;
 }
 
@@ -256,10 +256,15 @@ body.detail-modal-active{
 }
 
 .detail-modal-active .embed-behance-total-outer-container{
+	position: relative;
 	top: 0;
 	left: 0;
 	min-width: 100%;
 	min-height: 100vh;
+}
+
+.detail-modal-active .embed-behance-total-outer-container > .embed-behance-total-inner-container{
+	position: relative;
 }
 
 .embed-behance-container.project-detail-outer {
@@ -288,6 +293,16 @@ body.detail-modal-active{
 	
 }
 
+.close-project{
+	width: 1.2em;
+	height: 1.2em;
+	background: url(../images/close-icon.svg) no-repeat top center / cover;
+	position: absolute;
+	top: 1.5em;
+	right: 3%;
+	cursor: pointer;
+}
+
 /* headigns */
 .embed-behance-container .wrap-headings {
 	margin-bottom: 2em;
@@ -300,6 +315,7 @@ body.detail-modal-active{
 	font-size: 1.8em;
 	font-weight: 300;
 	margin-bottom: 0.2em;
+	width: calc(100% - 1.5em);
 }
 
 .embed-behance-container .wrap-headings h3 {
@@ -410,14 +426,14 @@ body.detail-modal-active{
 
 .embed-behance-container aside .wrap-fields-outer .wrap-values .single,
 .embed-behance-container aside .wrap-tags-outer .wrap-values .single {
-	padding: 0.3em 0.7em 0.5em 0.7em;
-    border-radius: 50px;
-    background-color: #eee;
-    margin: 0.3em;
-    font-size: 0.8em;
-    text-align: center;
-    line-height: normal;
-    display: inline-block;
+	padding: 0.6em 1em 0.8em;
+	border-radius: 50px;
+	background-color: #eee;
+	margin: 0.3em;
+	font-size: 0.8em;
+	text-align: center;
+	line-height: normal;
+	display: inline-block;
 }
 
 .embed-behance-container aside .wrap-project-url {

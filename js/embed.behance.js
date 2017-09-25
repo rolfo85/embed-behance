@@ -43,15 +43,16 @@ $.fn.embedYourBehance = function( options ) {
 	var isDetail = 0;
 	var html = '';
 	var sidebarData = 0;
+	var scrollPosition;
 
 	function openDetailAnimation() {
 
 		$('body').addClass('detail-modal-active');
 		
-		var scrollPosition = $(document).scrollTop();
+		scrollPosition = $(document).scrollTop();
 		
 		$('.detail-modal-active .embed-behance-total-outer-container').css('position', 'fixed');
-		$('.detail-modal-active .embed-behance-total-outer-container > .embed-behance-total-inner-container').css({'position': 'relative', 'top': -scrollPosition});
+		$('.detail-modal-active .embed-behance-total-outer-container > .embed-behance-total-inner-container').css({'top': -scrollPosition});
 
 		
 
@@ -126,6 +127,25 @@ $.fn.embedYourBehance = function( options ) {
 
 	}
 
+	// function for closing the detail */
+	function closeProject() {
+
+		$('div.project-detail-outer').animate({'top': '100vh'}, 700, function(){
+
+			$(this).remove();
+			$('.detail-modal-active .embed-behance-total-outer-container').css('position', 'relative');
+			$('.detail-modal-active .embed-behance-total-outer-container > .embed-behance-total-inner-container').css('top', 'auto');
+			$(window).scrollTop(scrollPosition);
+			$('body').removeClass('detail-modal-active');
+
+			return isDetail = false;
+
+		});
+
+		$('.embed-behance-total-inner-container').animate({'opacity': 1}, 500);
+
+	}
+
 	// function to load all images before showing the content
 	function loadBeforeShow() {
 
@@ -147,7 +167,7 @@ $.fn.embedYourBehance = function( options ) {
 
 	       		// if I'm loading the list 
 				} else {
-
+					
 					// the content is shown 
 		       		$('ul.wrap-projects').fadeIn();
 
@@ -188,6 +208,8 @@ $.fn.embedYourBehance = function( options ) {
 	function printContentForDetail() {
 
 		html = '';
+
+		html = '<div class="close-project"></div>';
 
 		html += '<div class="wrap-headings">';
 			html += dataExtracted[0]['title'];
@@ -716,6 +738,13 @@ $.fn.embedYourBehance = function( options ) {
 		callBehanceProjectDetail(urlDetail);
 
 		openDetailAnimation();
+
+	});
+
+	// close detail
+	$('body').on('click', '.close-project', function(){
+
+		closeProject();
 
 	});
 
