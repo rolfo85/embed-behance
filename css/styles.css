@@ -310,14 +310,26 @@ body.detail-modal-active{
 .close-project{
 	width: 1.2em;
 	height: 1.2em;
-	background: url(../images/close-icon.svg) no-repeat top center / cover;
+	background: url(../images/close-icon.svg) no-repeat center center / cover;
 	position: absolute;
-	top: 1.5em;
 	right: 3%;
 	cursor: pointer;
 }
 
-/* headigns */
+.close-project.top{
+	top: 1.5em;
+}
+
+.close-project.bottom{
+	bottom: 0.5em;
+	width: 2em;
+	height: 2em;
+	border-radius: 50%;
+	background-size: 50% auto;
+	background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* headings */
 .eb-container .wrap-headings {
 	margin-bottom: 2em;
 	width:100%;
@@ -532,6 +544,35 @@ body.detail-modal-active{
 	width: 100%;
 }
 
+/* detail format */
+.eb-container .box-project .wrap-values > li.single-text,
+.eb-container .box-project .caption{
+	padding-left: 5%;
+	padding-right: 5%;
+}
+
+.eb-container .box-project .wrap-values > li{
+	margin-bottom: 5vh;
+}
+.eb-container .box-project .wrap-values > li:last-child{
+	margin-bottom: 0;
+}
+
+.eb-container .box-project .wrap-values > li.single-text{
+	padding-top: 3vh;
+	padding-bottom: 3vh;
+	line-height: 1.5;
+}
+
+.eb-container .box-project .caption{
+	padding-top: 1em;
+	padding-bottom: 1em;
+	font-style: italic;
+	text-align: left;
+}
+.eb-container .box-project .bold{
+	font-weight: bold;
+}
 
 /* :::::::::::::::::::: media queries :::::::::::::::::::: */
 
@@ -557,7 +598,7 @@ body.detail-modal-active{
 	}
 
 	.eb-container .wrap-projects > li {
-		margin-bottom: 6em;
+		margin-bottom: 10vh;
 	}
 
 	/* enable hover on links */

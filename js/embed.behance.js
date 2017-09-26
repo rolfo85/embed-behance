@@ -211,7 +211,7 @@ $.fn.embedYourBehance = function( options ) {
 
 		html = '';
 
-		html = '<div class="close-project"></div>';
+		html += '<div class="close-project top"></div>';
 
 		html += '<div class="wrap-headings">';
 			html += dataExtracted[0]['title'];
@@ -248,6 +248,8 @@ $.fn.embedYourBehance = function( options ) {
 			html += '</aside>';
 
 		}
+
+		html += '<div class="close-project bottom"></div>';
 
 		// wrap all the data belongs to one project and append the wrapper
 		html = '<div class="box-project">' + html + '</div>';	
@@ -376,7 +378,7 @@ $.fn.embedYourBehance = function( options ) {
 
 					function caption() {
 						if ('caption_plain' in value && settings.imageCaption == true) {
-							return '<div clsss="caption">' + value['caption_plain'] + '</div>';
+							return '<div class="caption">' + value['caption'] + '</div>';
 						} else {
 							return '';
 						}
@@ -569,6 +571,12 @@ $.fn.embedYourBehance = function( options ) {
 	
 	function dataExtractedParams(token = false, value = false) {
 
+		if(isDetail == true) {
+
+			styleData['backgroundColor'] = '#' + value.styles.background.color;
+			styleData['captionColor'] = value.styles.text.caption.color;
+
+		}
 
 		dataExtracted[token] = {
 
@@ -588,12 +596,6 @@ $.fn.embedYourBehance = function( options ) {
 			tags: 			designTemplate('tags', value)
 			
 		};
-
-		if(isDetail == true) {
-
-			styleData['backgroundColor'] = '#' + value.styles.background.color;
-
-		}
 
 	}
 
