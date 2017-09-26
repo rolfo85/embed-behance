@@ -4,11 +4,15 @@
 $.fn.embedYourBehance = function( options ) {
 
 	// double wrap the body
-	$('body').wrapInner( $('<div>').addClass('embed-behance-total-inner-container') ).wrapInner( $('<div>').addClass('embed-behance-total-outer-container') );
+	$('body').wrapInner( $('<div>').addClass('eb-total-inner-container') ).wrapInner( $('<div>').addClass('eb-total-outer-container') );
 
 
 	// get the HTML selector where the plugin will be initialized
-	var behanceContainer = $(this).wrap($('<div>').addClass('embed-behance-container').css({'position': 'relative'}));
+	var behanceContainer = $(this).wrap($('<div>').addClass('eb-container').css({'position': 'relative'}));
+
+	// create the main container that hosts the projects list
+	$(behanceContainer).html('<ul class="wrap-projects"></ul>');
+
 
 	// options allowed
 	var settings = $.extend({
@@ -38,6 +42,7 @@ $.fn.embedYourBehance = function( options ) {
 	// global variables
 	var urlListNext = [];
 	var dataExtracted = [];
+	var styleData = [];
 	var checkNextPage = 1;
 	var page = 1;
 	var isDetail = 0;
@@ -51,11 +56,8 @@ $.fn.embedYourBehance = function( options ) {
 		
 		scrollPosition = $(document).scrollTop();
 		
-		$('.detail-modal-active .embed-behance-total-outer-container').css('position', 'fixed');
-		$('.detail-modal-active .embed-behance-total-outer-container > .embed-behance-total-inner-container').css({'top': -scrollPosition});
-
-		
-
+		$('.detail-modal-active .eb-total-outer-container').css('position', 'fixed');
+		$('.detail-modal-active .eb-total-outer-container > .eb-total-inner-container').css({'top': -scrollPosition});
 	}
 
 	function dateConversion(token) {
@@ -130,11 +132,11 @@ $.fn.embedYourBehance = function( options ) {
 	// function for closing the detail */
 	function closeProject() {
 
-		$('div.project-detail-outer').animate({'top': '100vh'}, 700, function(){
+		$('div.project-detail-outer').animate({'opacity': 0}, 700, function(){
 
 			$(this).remove();
-			$('.detail-modal-active .embed-behance-total-outer-container').css('position', 'relative');
-			$('.detail-modal-active .embed-behance-total-outer-container > .embed-behance-total-inner-container').css('top', 'auto');
+			$('.detail-modal-active .eb-total-outer-container').css('position', 'relative');
+			$('.detail-modal-active .eb-total-outer-container > .eb-total-inner-container').css('top', 'auto');
 			$(window).scrollTop(scrollPosition);
 			$('body').removeClass('detail-modal-active');
 
@@ -142,7 +144,7 @@ $.fn.embedYourBehance = function( options ) {
 
 		});
 
-		$('.embed-behance-total-inner-container').animate({'opacity': 1}, 500);
+		$('.eb-total-inner-container').animate({'opacity': 1}, 500);
 
 	}
 
@@ -162,14 +164,14 @@ $.fn.embedYourBehance = function( options ) {
 	       		// if I'm loading the detail
 	       		if(isDetail == true) {
 
-	       			$('div.project-detail-outer').animate({'top': 0}, 700);
-	       			$('.embed-behance-total-inner-container').animate({'opacity': 0.3}, 500);
+	       			$('div.project-detail-outer').addClass('animate');
+	       			$('.eb-total-inner-container').animate({'opacity': 0.3}, 500);
 
 	       		// if I'm loading the list 
 				} else {
 					
 					// the content is shown 
-		       		$('ul.wrap-projects').fadeIn();
+		       		$('ul.wrap-projects li').animate({'opacity': 1}, 500);
 
 		       		// check if there is another page
 					pagination(urlListNext);	
@@ -217,7 +219,7 @@ $.fn.embedYourBehance = function( options ) {
 		html += '</div>';
 		
 		// main column
-		html += '<main class="box-inner-main">';
+		html += '<main class="box-inner-main" style="background-color: ' + styleData['backgroundColor'] + ';">';
 
 			html += dataExtracted[0]['works'];
 
@@ -251,10 +253,10 @@ $.fn.embedYourBehance = function( options ) {
 		html = '<div class="box-project">' + html + '</div>';	
 
 		// print all the content into the div
-		$(html).insertAfter($('.embed-behance-total-outer-container'));
+		$(html).insertAfter($('.eb-total-outer-container'));
 
 		// a further wrapper is applied to all the projects
-		$('.box-project').wrapAll( $('<div>').addClass('project-detail-outer embed-behance-container'));
+		$('.box-project').wrapAll( $('<div>').addClass('project-detail-outer eb-container'));
 
 		// before displaying the results, I make sure all the images inside, have been loaded
 		loadBeforeShow();
@@ -280,22 +282,10 @@ $.fn.embedYourBehance = function( options ) {
 			html = '<li class="wrap-project">' + html + '</li>';
 
 			// print all the content into the div
-			$(behanceContainer).append(html);
+			$('.wrap-projects').append(html);
 
 		});
-
-		// if wrap-projects exists already
-		if( $('.wrap-projects').length > 0 ) {
-
-			// add another wrap project to the next pagination items
-			$('.wrap-project:not(.wrap-projects > .wrap-project)').wrapAll( $('<ul>').addClass('wrap-projects').css('display', 'none') );
-
-		} else {
-
-			// a further wrapper is applied to all the projects
-			$('.wrap-project').wrapAll( $('<ul>').addClass('wrap-projects').css('display', 'none') );
-
-		}
+		
 
 		// before displaying the results, I make sure all the images inside, have been loaded
 		loadBeforeShow();
@@ -305,7 +295,7 @@ $.fn.embedYourBehance = function( options ) {
 	// core function to design the fields wrapper around the data across list and detail
 	function designTemplate(token, value) {
 
-		var dataWrapper = ''
+		var dataWrapper = '';
 
 		switch(token) {
 
@@ -565,9 +555,15 @@ $.fn.embedYourBehance = function( options ) {
 
 			}
 
+			break;
+
+
 		}
 
+
 		return dataWrapper;
+
+
 	}
 
 	
@@ -593,7 +589,11 @@ $.fn.embedYourBehance = function( options ) {
 			
 		};
 
-		return dataExtracted;
+		if(isDetail == true) {
+
+			styleData['backgroundColor'] = '#' + value.styles.background.color;
+
+		}
 
 	}
 
@@ -703,22 +703,18 @@ $.fn.embedYourBehance = function( options ) {
 
 	// Click on the button pagination to scroll
 	var isPaging = 0;
-	$(behanceContainer).on('mousedown', '.bh-pagination-button', function(){
+	$(behanceContainer).on('click', '.bh-pagination-button:not(.active)', function(event){
+		
+		$(this).addClass('active');
 
 		if (!isPaging) {
 
 			isPaging = 1;
+			urlList = urlListNext;
+			// another call to load other projects in the list
+			callBehanceProjectsList();
 
-			setTimeout(function(){
-			
-				urlList = urlListNext;
-				// another call to load other projects in the list
-				callBehanceProjectsList();
-
-				isPaging = 0;
-
-			}, 500);
-
+			isPaging = 0;
 
 		}
 
@@ -764,7 +760,7 @@ $.fn.embedYourBehance = function( options ) {
 
 				$('.bh-show > .label').text('Hide Info');
 
-				$('.embed-behance-container aside').addClass('open').animate({
+				$('.eb-container aside').addClass('open').animate({
 
 					'height': asideHeight,
 					'border-radius': 15
