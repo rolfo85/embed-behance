@@ -132,7 +132,7 @@ $.fn.embedYourBehance = function( options ) {
 	// function for closing the detail */
 	function closeProject() {
 
-		$('div.project-detail-outer').animate({'opacity': 0}, 700, function(){
+		$('div.project-detail-outer').animate({'opacity': 0, 'top': '10em'}, 700, function(){
 
 			$(this).remove();
 			$('.detail-modal-active .eb-total-outer-container').css('position', 'relative');
@@ -164,7 +164,7 @@ $.fn.embedYourBehance = function( options ) {
 	       		// if I'm loading the detail
 	       		if(isDetail == true) {
 
-	       			$('div.project-detail-outer').addClass('animate');
+	       			$('div.project-detail-outer').animate({'opacity': 1, 'top': 0}, 700);
 	       			$('.eb-total-inner-container').animate({'opacity': 0.3}, 500);
 
 	       		// if I'm loading the list 
