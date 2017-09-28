@@ -131,7 +131,6 @@ $.fn.embedYourBehance = function( options ) {
 
 	// function for closing the detail */
 	function closeProject() {
-
 		$('div.project-detail-outer').animate({'opacity': 0, 'top': '10em'}, 700, function(){
 
 			$(this).remove();
@@ -143,7 +142,6 @@ $.fn.embedYourBehance = function( options ) {
 			return isDetail = false;
 
 		});
-
 		$('.eb-total-inner-container').animate({'opacity': 1}, 500);
 
 	}
@@ -164,8 +162,15 @@ $.fn.embedYourBehance = function( options ) {
 	       		// if I'm loading the detail
 	       		if(isDetail == true) {
 
-	       			$('div.project-detail-outer').animate({'opacity': 1, 'top': 0}, 700);
+	       			$('div.project-detail-outer').animate({'opacity': 1, 'top': 0}, 700, function(){
+	       				$('.sidebar-desktop').css('position', 'fixed');
+	       			});
 	       			$('.eb-total-inner-container').animate({'opacity': 0.3}, 500);
+
+	       			var headingHeight = $('.eb-container .wrap-headings').outerHeight(true);
+	       			$('.eb-container .box-project main').css('margin-top', headingHeight);
+	       			$('.eb-container .box-project aside .wrap-owners-outer').css('min-height', headingHeight);
+
 
 	       		// if I'm loading the list 
 				} else {
@@ -209,9 +214,26 @@ $.fn.embedYourBehance = function( options ) {
 
 	function printContentForDetail() {
 
+		// print the sidebar
+		function printAsideContent() {
+
+			html += '<div class="box-overflow"><div class="box-overflow-inner">';
+
+				html += dataExtracted[0]['owners'];
+				html += dataExtracted[0]['views'];
+				html += dataExtracted[0]['appreciations'];
+				html += dataExtracted[0]['fields'];
+				html += dataExtracted[0]['tags'];
+				html += dataExtracted[0]['projectUrl'];
+				html += dataExtracted[0]['publishedDate'];
+
+			html += '</div></div>';
+
+		}
+
 		html = '';
 
-		html += '<div class="close-project top"></div>';
+		html += '<div class="close-project"></div>';
 
 		html += '<div class="wrap-headings">';
 			html += dataExtracted[0]['title'];
@@ -228,28 +250,23 @@ $.fn.embedYourBehance = function( options ) {
 		// check if one of the sidebar fields is printed
 		if(sidebarData == true) {
 
-			// sidebar
-			html += '<aside class="box-inner-sidebar">';
+			// sidebar for mobile
+			html += '<aside class="box-inner-sidebar sidebar-mobile">';
 
-				html += '<div class="box-overflow"><div class="box-overflow-inner">';
+				printAsideContent();
 
-					html += dataExtracted[0]['owners'];
-					html += dataExtracted[0]['views'];
-					html += dataExtracted[0]['appreciations'];
-					html += dataExtracted[0]['fields'];
-					html += dataExtracted[0]['tags'];
-					html += dataExtracted[0]['projectUrl'];
-					html += dataExtracted[0]['publishedDate'];
+				html += '<a class="bh-show"><span class="label">Show Info</span><span class="icon-chevron"></span></a>';
 
-				html += '</div></div>';
+			html += '</aside>';
 
-				html += '<a class="bh-show"><span class="label">Show Info</span><span class="icon-chevron"></span></a>'
+			// sidebar for desktop
+			html += '<aside class="box-inner-sidebar sidebar-desktop">';
+
+				printAsideContent();
 
 			html += '</aside>';
 
 		}
-
-		html += '<div class="close-project bottom"></div>';
 
 		// wrap all the data belongs to one project and append the wrapper
 		html = '<div class="box-project">' + html + '</div>';	
@@ -748,7 +765,7 @@ $.fn.embedYourBehance = function( options ) {
 
 	// show / hide info on mobile version
 	var show = 0;
-	$('body').on('click', '.bh-show', function(){
+	$('body').on('click', '.sidebar-mobile .bh-show', function(){
 
 		function showHideInfo(action) {
 
@@ -757,12 +774,12 @@ $.fn.embedYourBehance = function( options ) {
 
 				// get how height the aside has to be in accordin with the room
 				var bodyHeight = $('body').height();
-				var headingsHeight = $('.wrap-headings').outerHeight(true);
-				var asideHeight = bodyHeight - headingsHeight - 20;
+				var headingHeight = $('.eb-container .wrap-headings').outerHeight(true);
+				var asideHeight = bodyHeight - headingHeight - 20;
 
-				$('.bh-show > .label').text('Hide Info');
+				$('.sidebar-mobile .bh-show > .label').text('Hide Info');
 
-				$('.eb-container aside').addClass('open').animate({
+				$('.eb-container aside.sidebar-mobile').addClass('open').animate({
 
 					'height': asideHeight,
 					'border-radius': 15
@@ -772,9 +789,9 @@ $.fn.embedYourBehance = function( options ) {
 			// hide the info
 			} else if (action == 'hide') {
 				
-				$('.bh-show > .label').text('Show Info');
+				$('.sidebar-mobile .bh-show > .label').text('Show Info');
 				
-				$('aside').removeClass('open').animate({
+				$('aside.sidebar-mobile').removeClass('open').animate({
 
 					'height': '2.4em',
 					'border-radius': 50
