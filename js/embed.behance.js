@@ -29,7 +29,7 @@ $.fn.embedYourBehance = function( options ) {
 		userName: '',
 		infiniteScrolling: false,
 		imageCaption: true,
-		ownerLink: false,
+		ownerLink: true,
 		description: true,
 		tags: true
 
@@ -73,17 +73,17 @@ $.fn.embedYourBehance = function( options ) {
 		function paginationButton(action) {
 
 			// check if the pagination button already exists
-			if( $('.bh-pagination-button').length > 0 ) {
+			if( $('.eb-pagination-button').length > 0 ) {
 
 				// if yes I remove it
-				$('.bh-pagination-button').remove();
+				$('.eb-pagination-button').remove();
 
 			}
 
 			// if there are other results to load I build the pagination button (if the infiniteScrolling is set to FALSE)
 			if(action == 'show' && settings.infiniteScrolling == false) {
 
-				$(behanceContainer).append('<div class="bh-pagination-button">Load More</div>');
+				$(behanceContainer).append('<div class="eb-pagination-button">Load More</div>');
 
 			} else if (action == 'remove') {
 				
@@ -233,9 +233,10 @@ $.fn.embedYourBehance = function( options ) {
 
 		html = '';
 
-		html += '<div class="close-project"></div>';
-
 		html += '<div class="wrap-headings">';
+
+			html += '<div class="close-project"></div>';
+
 			html += dataExtracted[0]['title'];
 			html += dataExtracted[0]['description'];
 		html += '</div>';
@@ -276,6 +277,15 @@ $.fn.embedYourBehance = function( options ) {
 
 		// a further wrapper is applied to all the projects
 		$('.box-project').wrapAll( $('<div>').addClass('project-detail-outer eb-container'));
+
+		
+		// if there is the sidebar
+		if(sidebarData == true) {
+
+			// add a class to the wrapper if there's the sidebar
+			$('.eb-container .box-project').addClass('has-sidebar');
+
+		}
 
 		// before displaying the results, I make sure all the images inside, have been loaded
 		loadBeforeShow();
@@ -722,7 +732,7 @@ $.fn.embedYourBehance = function( options ) {
 
 	// Click on the button pagination to scroll
 	var isPaging = 0;
-	$(behanceContainer).on('click', '.bh-pagination-button:not(.active)', function(event){
+	$(behanceContainer).on('click', '.eb-pagination-button:not(.active)', function(event){
 		
 		$(this).addClass('active');
 
