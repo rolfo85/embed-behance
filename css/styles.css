@@ -34,7 +34,7 @@
 	transition: background-color 0.3s;
 }
 
-.loadingicon{
+.eb-loadingicon{
 	width: 40px;
 	height: 40px;
 	background: url('../images/loading.svg') no-repeat center center;
@@ -256,11 +256,11 @@
 
 /* :::::::::::::::::::: detail :::::::::::::::::::: */
 
-body.detail-modal-active{
+body.eb-detail-modal-active{
 	overflow-y: scroll;
 }
 
-.detail-modal-active .eb-total-outer-container{
+.eb-detail-modal-active .eb-total-outer-container{
 	position: relative;
 	top: 0;
 	left: 0;
@@ -268,7 +268,7 @@ body.detail-modal-active{
 	min-height: 100vh;
 }
 
-.detail-modal-active .eb-total-outer-container > .eb-total-inner-container{
+.eb-detail-modal-active .eb-total-outer-container > .eb-total-inner-container{
 	position: relative;
 }
 
@@ -671,12 +671,11 @@ body.detail-modal-active{
 		margin-right: 0;
 	}
 
-	
 
 }
 
-/* to 992px */
-@media screen and (max-width: 62em) {
+/* to 960 */
+@media screen and (max-width: 60em) {
 
 	.eb-container .box-project .box-inner-main{
 		margin-top: 0 !important;
@@ -685,10 +684,10 @@ body.detail-modal-active{
 }
 
 
-/* from 992px */
-@media screen and (min-width: 62em) {
+/* from 960 */
+@media screen and (min-width: 60em) {
 	
-	/* detail layout */
+
 	.eb-container.project-detail-outer .box-project{
 		-webkit-box-pack: end;
 		-ms-flex-pack: end;
@@ -724,23 +723,23 @@ body.detail-modal-active{
 		border-left: 1px solid #e8e8e8;
 	}
 
-	.eb-container .box-project aside.sidebar-desktop{
+	.eb-container .box-project aside.sidebar-desktop {
 		width: 20em;
 	}
 
 	.eb-container .box-project:not(.has-sidebar) main,
-	.eb-container .box-project:not(.has-sidebar) .wrap-headings{
+	.eb-container .box-project:not(.has-sidebar) .wrap-headings {
 		width: 100%;
 		margin-right: 0;
 	}
 
-	.eb-container .box-project .box-inner-main{
+	.eb-container .box-project .box-inner-main {
 		width: calc(100% - 20em);
 		margin-right: 20em;
 		padding: 3em 3% 0 3%;
 	}
 
-	.eb-container .box-project .wrap-headings{
+	.eb-container .box-project .wrap-headings {
 		width: calc(100% - 20em);
 		margin-right: 20em;
 		position: fixed;
@@ -753,7 +752,7 @@ body.detail-modal-active{
 	}
 
 	/* owners */
-	.eb-container aside.sidebar-desktop .wrap-owners-outer .wrap-values{
+	.eb-container aside.sidebar-desktop .wrap-owners-outer .wrap-values {
 		display: -webkit-box;
 		display: -ms-flexbox;
 		display: flex;
