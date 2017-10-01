@@ -27,7 +27,7 @@ $.fn.embedYourBehance = function( options ) {
 		apiKey: '',
 		itemsPerPage: '6',
 		userName: '',
-		infiniteScrolling: false,
+		infiniteScrolling: true,
 		imageCaption: true,
 		ownerLink: true,
 		description: true,
@@ -50,6 +50,7 @@ $.fn.embedYourBehance = function( options ) {
 	var sidebarData = 0;
 	var scrollPosition;
 
+	// function triggered immediately after the click on a project, before the actual project is loaded
 	function openDetailAnimation() {
 
 		$('body').addClass('detail-modal-active');
@@ -131,6 +132,7 @@ $.fn.embedYourBehance = function( options ) {
 
 	// function for closing the detail */
 	function closeProject() {
+
 		$('div.project-detail-outer').animate({'opacity': 0, 'top': '10em'}, 700, function(){
 
 			$(this).remove();
@@ -139,7 +141,9 @@ $.fn.embedYourBehance = function( options ) {
 			$(window).scrollTop(scrollPosition);
 			$('body').removeClass('detail-modal-active');
 
-			return isDetail = false;
+			// wait 300ms before isDetail becomes false to prevent an infinitePagination
+			isDetail = false;
+			
 
 		});
 		$('.eb-total-inner-container').animate({'opacity': 1}, 500);
@@ -162,7 +166,7 @@ $.fn.embedYourBehance = function( options ) {
 	       		// if I'm loading the detail
 	       		if(isDetail == true) {
 
-	       			$('div.project-detail-outer').animate({'opacity': 1, 'top': 0}, 700, function(){
+	       			$('div.project-detail-outer').animate({'opacity': 1, 'top': 0}, 500, function(){
 	       				$('.sidebar-desktop').css('position', 'fixed');
 	       			});
 	       			$('.eb-total-inner-container').animate({'opacity': 0.3}, 500);
@@ -179,7 +183,10 @@ $.fn.embedYourBehance = function( options ) {
 		       		$('ul.wrap-projects li').animate({'opacity': 1}, 500);
 
 		       		// check if there is another page
-					pagination(urlListNext);	
+					pagination(urlListNext);
+
+					// flag set to off for checking if an infinitePagination request is onGoing
+					requestOnGoing = 0;
 
 				}
 
@@ -415,7 +422,15 @@ $.fn.embedYourBehance = function( options ) {
 
 						case 'image':
 						dataWrapper += '<li class="single-image">';
-						dataWrapper += '<img src="' + value['sizes']['original'] + '" alt="' + imgAlt + '" />' + caption() + '</li>';
+							
+							dataWrapper += '<picture>';
+								dataWrapper += '<source media="(min-width: 30em)" srcset="' + value['sizes']['original'] + '">';
+								dataWrapper += '<img src="' + value['sizes']['disp'] + '" alt="' + imgAlt + '" />';
+							dataWrapper += '</picture>'; 
+						
+							dataWrapper += caption();
+
+						dataWrapper + '</li>';
 						break;
 
 						case 'text':
@@ -629,6 +644,8 @@ $.fn.embedYourBehance = function( options ) {
 	// ajax call to fetch the behance data to build the projects list
 	var callBehanceProjectsList = function() {
 
+		$('body').append('<div class="loadingicon"></div>');
+
 		// create urlListNext to check for the next pagination
 		urlListNext = urlList;
 
@@ -643,8 +660,6 @@ $.fn.embedYourBehance = function( options ) {
 			url: urlList,
 			dataType: 'jsonp',
 			success: function(data) {
-
-				$('body').append('<div class="loadingicon"></div>');
 
 				// json data fetch for list only
 				$.each(data.projects, function(index, value){
@@ -669,6 +684,8 @@ $.fn.embedYourBehance = function( options ) {
 	// ajax call to fetch the behance data to build the project detail
 	var callBehanceProjectDetail = function(urlDetail) {
 
+		$(behanceContainer).append('<div class="loadingicon"></div>');
+
 		// reset dataextracted
 		dataExtracted = [];
 
@@ -677,8 +694,6 @@ $.fn.embedYourBehance = function( options ) {
 			url: urlDetail,
 			dataType: 'jsonp',
 			success: function(data) {
-				
-				$(behanceContainer).append('<div class="loadingicon"></div>');
 
 				dataExtractedParams(0, data.project, 'template');			
 
@@ -694,34 +709,40 @@ $.fn.embedYourBehance = function( options ) {
 
 	};
 
+	//flag to check if a infinitePaginationRequst has been already made
+	var requestOnGoing = 0;
+
 	// if infiniteScrolling is set
 	if(settings.infiniteScrolling == true) {
 
 		var timeout;
+		
 		$(window).on('scroll', function(){
-			
+
 			// the timeout is cleared every time '(window).on.scroll' is triggered			
-			clearTimeout(timeout);  
+			clearTimeout(timeout); 
 			
-			if(checkNextPage == 1) {
+			if(checkNextPage == 1 && isDetail == 0) {
 
-				 var	divTop = $(behanceContainer).offset().top,
-			       		divHeight = $(behanceContainer).outerHeight(),
-			      		wHeight = $(window).height(),
-			       		windowScrTp = $(this).scrollTop();
+				var	divTop = $(behanceContainer).offset().top,
+				   	divHeight = $(behanceContainer).outerHeight(),
+				  	wHeight = $(window).height(),
+				   	windowScrTp = $(this).scrollTop();
 
-				if (windowScrTp > (divTop+divHeight-wHeight+50)){
-					
+				if (windowScrTp > (divTop+divHeight-wHeight-50) && !requestOnGoing){
+
 					timeout = setTimeout(function() {
+
+						console.log('Il dettaglio è: ' + isDetail);
 						
+						requestOnGoing = 1;
+
 						urlList = urlListNext;
-						
 						
 						//another call to load other projects in the list
 						callBehanceProjectsList();
 
-					}, 100);
-
+					}, 300);
 				}
 
 			}
@@ -751,9 +772,9 @@ $.fn.embedYourBehance = function( options ) {
 
 
 	//detail
-	$(behanceContainer).on('click', '.wrap-project', function(){
+	$(behanceContainer).on('click', '.wrap-project .wrap-cover, .wrap-project .wrap-title', function(){
 
-		var projectId = $(this).find('.raw-project-id').text();
+		var projectId = $(this).parent('.wrap-project').find('.raw-project-id').text();
 		var urlDetail = 'http://www.behance.net/v2/projects/' + projectId + '?api_key=' + settings.apiKey;
 		
 		isDetail = 1;
@@ -794,7 +815,7 @@ $.fn.embedYourBehance = function( options ) {
 					'height': asideHeight,
 					'border-radius': 15
 
-				}, 800);
+				}, 500);
 
 			// hide the info
 			} else if (action == 'hide') {
@@ -806,7 +827,7 @@ $.fn.embedYourBehance = function( options ) {
 					'height': '2.4em',
 					'border-radius': 50
 
-				}, 800);
+				}, 500);
 
 			}
 
