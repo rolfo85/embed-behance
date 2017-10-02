@@ -313,7 +313,7 @@ body.eb-detail-modal-active{
 
 /* headings */
 .eb-container .wrap-headings {
-	width:100%;
+	width: 94%;
 	height: auto;
 	padding: 1em 3% 1.3em 3%;
 	background-color: #fff;
@@ -325,6 +325,7 @@ body.eb-detail-modal-active{
 	font-weight: 300;
 	margin-bottom: 0.2em;
 	width: calc(100% - 1.5em);
+	color: #333;
 }
 
 .eb-container .wrap-headings h3 {
@@ -657,6 +658,14 @@ body.eb-detail-modal-active{
 		background-color: #3b95f7;
 	}
 
+	.eb-container aside.sidebar-desktop .eb-desktop-info:hover {
+		background-color: #3b93f4;
+	}
+
+	.eb-container aside.sidebar-desktop .eb-desktop-info:hover span.icon {
+		left: 5px;
+	}
+
 	/* 2 columns */
 	.eb-container .wrap-projects > li {
 		-ms-flex-preferred-size: 47%;
@@ -680,6 +689,11 @@ body.eb-detail-modal-active{
 	.eb-container .box-project .box-inner-main{
 		margin-top: 0 !important;
 	}
+	.eb-container main, .eb-container .wrap-headings {
+		width: 100% !important;
+		margin-left: 0 !important;
+	}
+
 
 }
 
@@ -714,17 +728,76 @@ body.eb-detail-modal-active{
 		border-radius: 0;
 		position: absolute;
 		top: 0;
-		right: 0;
+		left: 0;
 		-webkit-box-ordinal-group: initial;
 		-ms-flex-order: initial;
 		order: initial;
 		height: 100%;
 		border: 0;
-		border-left: 1px solid #e8e8e8;
+		overflow: visible;
+		border-right: 1px solid #e8e8e8;
+	}
+
+	.eb-container aside.sidebar-desktop .eb-desktop-info {
+		width: 2em;
+		height: auto;
+		position: absolute;
+		top: 0;
+		right: calc(-2em - 1px);
+		text-align: center;
+		cursor: pointer;
+		background-color: #2183ee;
+		transition: background-color 0.3s;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-content: center;
+		justify-content: center;
+	}
+	
+	.eb-container aside.sidebar-desktop .eb-desktop-info span.icon {
+		background-color: #fff;
+		background-size: contain;
+		mask-repeat: no-repeat;
+		-webkit-mask-repeat: no-repeat;
+		-webkit-mask-image: url(../images/chevron-icon-rt.svg);
+		mask-image: url(../images/chevron-icon-rt.svg);
+		width: 1.3em;
+		height: 1em;
+		display: inline-block;
+		transition: left 0.3s;
+		position: relative;
+		left: 0;
+		top: -15%;
+	}	
+
+	.eb-container aside.sidebar-desktop .eb-desktop-info span.label {
+		display: block;
+		transform: rotate(-90deg);
+		line-height: normal;
+		text-transform: uppercase;
+		font-size: 0.8em;
+		letter-spacing: 2px;
+		color: #fff;
+	}
+
+	.eb-container aside.sidebar-desktop.info-open .eb-desktop-info {
+		background-color: #f6f6f6;
+	}
+
+	.eb-container aside.sidebar-desktop.info-open .eb-desktop-info span.icon {
+		background-color: #2183ee;
+		-webkit-mask-image: url(../images/chevron-icon-lt.svg);
+		mask-image: url(../images/chevron-icon-lt.svg);
+	}
+
+	.eb-container aside.sidebar-desktop.info-open .eb-desktop-info span.label {
+		color: #666;
 	}
 
 	.eb-container .box-project aside.sidebar-desktop {
 		width: 20em;
+		left: -20em;
 	}
 
 	.eb-container .box-project:not(.has-sidebar) main,
@@ -734,17 +807,18 @@ body.eb-detail-modal-active{
 	}
 
 	.eb-container .box-project .box-inner-main {
-		width: calc(100% - 20em);
-		margin-right: 20em;
+		width: 100%;
+		margin-left: 0;
 		padding: 3em 3% 0 3%;
 	}
 
 	.eb-container .box-project .wrap-headings {
-		width: calc(100% - 20em);
-		margin-right: 20em;
+		width: 100%;
+		margin-left: 0;
 		position: fixed;
 		left: 0;
 		border-bottom: 1px solid #e8e8e8;
+		padding-left: calc(3% + 2em);
 	}
 
 	.eb-container .box-project main .wrap-values > li:last-child {

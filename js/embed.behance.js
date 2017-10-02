@@ -4,6 +4,7 @@
 $.fn.embedYourBehance = function( options ) {
 
 
+	$.getScript("https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/TweenMax.min.js");
 
 
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
@@ -589,6 +590,8 @@ $.fn.embedYourBehance = function( options ) {
 			// sidebar for desktop
 			html += '<aside class="box-inner-sidebar sidebar-desktop">';
 
+				html += '<div class="eb-desktop-info"><span class="icon"></span><span class="label">Info</span></div>';
+
 				printAsideContent();
 
 			html += '</aside>';
@@ -692,7 +695,7 @@ $.fn.embedYourBehance = function( options ) {
 				} else {
 					
 					// the content is shown 
-		       		$('ul.wrap-projects li').animate({'opacity': 1}, 500);
+		       		TweenMax.to('ul.wrap-projects li', 1,{alpha:1});
 
 		       		// check if there is another page
 					pagination(urlListNext);
@@ -769,22 +772,24 @@ $.fn.embedYourBehance = function( options ) {
 		$('body').addClass('eb-detail-modal-active');
 		
 		scrollBarPosition = $(document).scrollTop();
-		
-		$('.eb-detail-modal-active .eb-total-outer-container').css('position', 'fixed');
+
 		$('.eb-detail-modal-active .eb-total-outer-container > .eb-total-inner-container').css({'top': -scrollBarPosition});
+		$('.eb-detail-modal-active .eb-total-outer-container').css('position', 'fixed');
 	}
 
 
 	// function for opening the detail */
 	function openProject(){
 
-		$('div.project-detail-outer').animate({'opacity': 1, 'top': 0}, 500, function(){
+		TweenMax.to('div.project-detail-outer', 1.5,{'top': 0, alpha:1, ease:Strong.easeOut, onComplete: function(){
 			$('.sidebar-desktop').css('position', 'fixed');
-		});
-		$('.eb-total-inner-container').animate({'opacity': 0.3}, 500);
+		}});
+
+		TweenMax.to('div.eb-total-inner-container', 0.5,{alpha:0.3});
 
 		var headingHeight = $('.eb-container .wrap-headings').outerHeight(true);
 		$('.eb-container .box-project main').css('margin-top', headingHeight);
+		$('.eb-desktop-info').css('height', headingHeight);
 		$('.eb-container .box-project aside .wrap-owners-outer').css('min-height', headingHeight);
 
 	}
@@ -805,20 +810,22 @@ $.fn.embedYourBehance = function( options ) {
 	// function for closing the detail */
 	function closeProject() {
 
-		$('div.project-detail-outer').animate({'opacity': 0, 'top': '10em'}, 700, function(){
+		TweenMax.to('div.project-detail-outer', 0.5,{'top': '10em', alpha:0, ease:Strong.easeIn, onComplete: function(){
+			
+			console.log('chiudo');
 
-			$(this).remove();
+			$('div.project-detail-outer').remove();
 			$('.eb-detail-modal-active .eb-total-outer-container').css('position', 'relative');
 			$('.eb-detail-modal-active .eb-total-outer-container > .eb-total-inner-container').css('top', 'auto');
 			$(window).scrollTop(scrollBarPosition);
-			$('body').removeClass('eb-detail-modal-active');
+			$('body').removeClass('.eb-detail-modal-active');
 
 			// wait 300ms before isDetail becomes false to prevent an infinitePagination
-			isDetail = false;
-			
+			isDetail = false;		
 
-		});
-		$('.eb-total-inner-container').animate({'opacity': 1}, 500);
+		}});
+
+		TweenMax.to('.eb-total-inner-container', 0.5,{alpha:1});
 
 	}
 	
@@ -979,17 +986,16 @@ $.fn.embedYourBehance = function( options ) {
 
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
-	//::::::::::::::::::::::::::::: TOGGLE INFO INSIDE A PROJECT ::::::::::::::::::::::::::::::::://
+	//::::::::::::::::::::::::: TOGGLE INFO INSIDE A PROJECT - MOBILE :::::::::::::::::::::::::::://
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
-
 
 	// show / hide info on mobile version
-	var show = 0;
+	var flagMobileInfo = 0;
 
 	$('body').on('click', '.sidebar-mobile .bh-show', function(){
 
-		function showHideInfo(action) {
+		function showHideMobileInfo(action) {
 
 			// show the info
 			if(action == 'show') {
@@ -1001,40 +1007,34 @@ $.fn.embedYourBehance = function( options ) {
 
 				$('.sidebar-mobile .bh-show > .label').text('Hide Info');
 
-				$('.eb-container aside.sidebar-mobile').addClass('open').animate({
-
-					'height': asideHeight,
-					'border-radius': 15
-
-				}, 500);
+				$('.eb-container aside.sidebar-mobile').addClass('open');
+				
+				TweenMax.to('.eb-container aside.sidebar-mobile', 0.7,{css: {'border-radius': 15, 'height': asideHeight}, ease:Strong.easeOut});
 
 			// hide the info
 			} else if (action == 'hide') {
 				
 				$('.sidebar-mobile .bh-show > .label').text('Show Info');
 				
-				$('aside.sidebar-mobile').removeClass('open').animate({
+				$('aside.sidebar-mobile').removeClass('open');
 
-					'height': '2.4em',
-					'border-radius': 50
-
-				}, 500);
+				TweenMax.to('.eb-container aside.sidebar-mobile', 0.7,{css: {'border-radius': 50, 'height': '2.4em'}, ease:Strong.easeOut});
 
 			}
 
 		}
 
-		if(!show) {
+		if(!flagMobileInfo) {
 
-			show = 1;
+			flagMobileInfo = 1;
 
-			showHideInfo('show');
+			showHideMobileInfo('show');
 
 		} else {
 
-			show = 0;
+			flagMobileInfo = 0;
 
-			showHideInfo('hide');
+			showHideMobileInfo('hide');
 
 		}
 
@@ -1042,6 +1042,59 @@ $.fn.embedYourBehance = function( options ) {
 
 
 
+
+
+	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
+	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
+	//::::::::::::::::::::::::: TOGGLE INFO INSIDE A PROJECT - DESKTOP ::::::::::::::::::::::::::://
+	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
+	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
+
+	// show / hide info on desktop version
+	var flagDesktopInfo = 0;
+
+	$('body').on('click', '.sidebar-desktop .eb-desktop-info', function(){
+	
+		function showHideDesktopInfo(action) {
+
+			
+
+			// show the info
+			if(action == 'show') {
+
+				TweenMax.set('.eb-container .wrap-headings, .eb-container .box-inner-main',{ 'width': 'calc(100% - 0px)', 'margin-left': 0});
+
+				TweenMax.to('.eb-container .sidebar-desktop', 0.7,{'left': 0, ease:Strong.easeOut});
+				TweenMax.to('.eb-container .wrap-headings, .eb-container .box-inner-main', 0.7,{ 'width': 'calc(100% - 320px)', 'margin-left': 320, ease:Strong.easeOut});
+
+				$('.eb-container .sidebar-desktop').addClass('info-open');
+
+			} else if (action == 'hide') {
+				console.log(flagDesktopInfo);
+				TweenMax.to('.eb-container .sidebar-desktop', 0.7,{'left': -320, ease:Strong.easeOut});
+				TweenMax.to('.eb-container .wrap-headings, .eb-container .box-inner-main', 0.7,{ 'width': 'calc(100% - 0px)', 'margin-left': 0, ease:Strong.easeOut});
+
+				$('.eb-container .sidebar-desktop').removeClass('info-open');
+
+			}
+
+		}
+
+		if(!flagDesktopInfo) {
+
+			flagDesktopInfo = 1;
+
+			showHideDesktopInfo('show');
+
+		} else {
+
+			flagDesktopInfo = 0;
+
+			showHideDesktopInfo('hide');
+
+		}
+
+	});
 
 
 
