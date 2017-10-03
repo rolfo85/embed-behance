@@ -65,7 +65,7 @@ $.fn.embedYourBehance = function( options ) {
 	var dataExtracted = []; // the data extracted from the json call, already wrapped into divs
 	var html = ''; // it wraps all the data with outer containers and make the actual layout structure
 	var scrollBarPosition; // it stores the scrollbar position
-
+	var style = [];
 
 	// ::::::::::: FLAGS ::::::::::::::://
 
@@ -188,7 +188,9 @@ $.fn.embedYourBehance = function( options ) {
 
 	function dataExtractedParams(token = false, value = false) {
 
-		
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
+		//:::::::::::: CONTENT DATA EXTRACTOR for PROJECT DETAIL and LIST ::::::::::://
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
 
 		dataExtracted[token] = {
 
@@ -209,13 +211,138 @@ $.fn.embedYourBehance = function( options ) {
 			
 		};
 
-		// if it's detail, I'm storing the project background-color 
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
+		//:::::::::::::::::: STYLE DATA EXTRACTOR for PROJECT DETAIL :::::::::::::::://
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
+
 		if(isDetail == true) {
 
-			dataExtracted[token]['backgroundColor'] = '#' + value.styles.background.color
-			
-		}
+			function applyCSS(){	
 
+				style['title'] = 	'.eb-container .box-inner-main .title {\n\t' +
+											
+											'font-family: ' 	+ 	value.styles.text.title.font_family 		+ ';\n\t' +
+											'font-weight: ' 	+ 	value.styles.text.title.font_weight 		+ ';\n\t' +
+											'color: '			+	value.styles.text.title.color 				+ ';\n\t' +
+											'text-align: ' 		+	value.styles.text.title.text_align 			+ ';\n\t' +
+											'line-height:  '	+	value.styles.text.title.line_height 		+ ';\n\t' +
+											'font-size: '		+	value.styles.text.title.font_size 			+ ';\n\t' +
+											'text-decoration: ' +	value.styles.text.title.text_decoration 	+ ';\n\t' +
+											'font-style: ' 		+	value.styles.text.title.font_style 			+ ';\n\t' +
+											'display: ' 		+	value.styles.text.title.display 			+ ';\n\t' +
+											'text-transform: ' 	+	value.styles.text.title.text_transform 		+ ';\n'   +
+									'}',		
+
+				
+				style['subtitle'] = '.eb-container .box-inner-main .sub-title {\n\t' +
+
+											'font-family: ' 	+ 	value.styles.text.subtitle.font_family 		+ ';\n\t' +
+											'font-weight: ' 	+ 	value.styles.text.subtitle.font_weight 		+ ';\n\t' +
+											'color: '			+	value.styles.text.subtitle.color 			+ ';\n\t' +
+											'text-align: ' 		+	value.styles.text.subtitle.text_align 		+ ';\n\t' +
+											'line-height:  '	+	value.styles.text.subtitle.line_height 		+ ';\n\t' +
+											'font-size: '		+	value.styles.text.subtitle.font_size 		+ ';\n\t' +
+											'text-decoration: ' +	value.styles.text.subtitle.text_decoration 	+ ';\n\t' +
+											'font-style: ' 		+	value.styles.text.subtitle.font_style 		+ ';\n\t' +
+											'display: ' 		+	value.styles.text.subtitle.display 			+ ';\n\t' +
+											'text-transform: ' 	+	value.styles.text.subtitle.text_transform 	+ ';\n'   +
+									'}',
+
+
+				style['paragraph'] = '.eb-container .box-inner-main .main-text {\n\t' +
+
+											'font-family: ' 	+ 	value.styles.text.paragraph.font_family 	+ ';\n\t' +
+											'font-weight: ' 	+ 	value.styles.text.paragraph.font_weight 	+ ';\n\t' +
+											'color: '			+	value.styles.text.paragraph.color 			+ ';\n\t' +
+											'text-align: ' 		+	value.styles.text.paragraph.text_align 		+ ';\n\t' +
+											'line-height:  '	+	value.styles.text.paragraph.line_height 	+ ';\n\t' +
+											'font-size: '		+	value.styles.text.paragraph.font_size 		+ ';\n\t' +
+											'text-decoration: ' +	value.styles.text.paragraph.text_decoration + ';\n\t' +
+											'font-style: ' 		+	value.styles.text.paragraph.font_style 		+ ';\n\t' +
+											'display: ' 		+	value.styles.text.paragraph.display 		+ ';\n\t' +
+											'text-transform: ' 	+	value.styles.text.paragraph.text_transform 	+ ';\n'   +
+									'}',
+
+
+				style['caption'] = '.eb-container .box-inner-main .caption {\n\t' +
+
+											'font-family: ' 	+ 	value.styles.text.caption.font_family 		+ ';\n\t' +
+											'font-weight: ' 	+ 	value.styles.text.caption.font_weight 		+ ';\n\t' +
+											'color: '			+	value.styles.text.caption.color 			+ ';\n\t' +
+											'text-align: ' 		+	value.styles.text.caption.text_align 		+ ';\n\t' +
+											'line-height:  '	+	value.styles.text.caption.line_height 		+ ';\n\t' +
+											'font-size: '		+	value.styles.text.caption.font_size 		+ ';\n\t' +
+											'text-decoration: ' +	value.styles.text.caption.text_decoration 	+ ';\n\t' +
+											'font-style: ' 		+	value.styles.text.caption.font_style 		+ ';\n\t' +
+											'display: ' 		+	value.styles.text.caption.display 			+ ';\n\t' +
+											'text-transform: ' 	+	value.styles.text.caption.text_transform 	+ ';\n'   +
+									'}',
+
+
+				style['link'] = '.eb-container .box-inner-main a {\n\t' +
+
+											'font-family: ' 	+ 	value.styles.text.link.font_family 			+ ';\n\t' +
+											'font-weight: ' 	+ 	value.styles.text.link.font_weight 			+ ';\n\t' +
+											'color: '			+	value.styles.text.link.color 				+ ';\n\t' +
+											'text-align: ' 		+	value.styles.text.link.text_align 			+ ';\n\t' +
+											'line-height:  '	+	value.styles.text.link.line_height 			+ ';\n\t' +
+											'font-size: '		+	value.styles.text.link.font_size 			+ ';\n\t' +
+											'text-decoration: ' +	value.styles.text.link.text_decoration 		+ ';\n\t' +
+											'font-style: ' 		+	value.styles.text.link.font_style 			+ ';\n\t' +
+											'display: ' 		+	value.styles.text.link.display 				+ ';\n\t' +
+											'text-transform: ' 	+	value.styles.text.link.text_transform 		+ ';\n'   +
+									'}',	
+
+			
+				style['background'] =	'.eb-container .box-inner-main {\n\t' +
+									
+											'background-color: #' + value.styles.background 					+ ';\n\t' +
+										'}',
+
+
+				style['bottom_margin'] ='.eb-container .box-inner-main .spacer {\n\t' +
+									
+											'height:' + value.styles.spacing.modules.bottom_margin			+ ';\n\t' +
+										'}',
+
+				style['top_margin']	  ='.eb-container .box-inner-main {\n\t' +
+									
+											'padding-top:' + value.styles.spacing.project.top_margin			+ ';\n\t' +
+										'}',
+
+				style['link'] = '.eb-container .box-inner-main .spacer .divider {\n\t' +
+
+
+											'font-size':   		+ 	value.styles.dividers.font_size,			+ ';\n\t' +
+											'line-height':   	+ 	value.styles.dividers.line_height,			+ ';\n\t' +
+											'height':   		+ 	value.styles.dividers.height,				+ ';\n\t' +
+											'border-color':   	+ 	value.styles.dividers.border_color,			+ ';\n\t' +
+											'margin':   		+ 	value.styles.dividers.margin,				+ ';\n\t' +
+											'position':   		+ 	value.styles.dividers.position,				+ ';\n\t' +
+											'top':   			+ 	value.styles.dividers.top,					+ ';\n\t' +
+											'border-width':   	+ 	value.styles.dividers.border_width,			+ ';\n\t' +
+											'border-style':   	+ 	value.styles.dividers.border_style			+ ';\n\t' +
+									'}',
+
+				
+				//:::::::::::::::::: PRINT THE STYLES :::::::::::::::://
+
+				$('head').append(	'<style type="text/css">' 	+ '\n\t' + 
+
+										style['title'] 			+ '\n' +
+										style['subtitle'] 		+ '\n' +
+										style['paragraph']		+ '\n' +
+										style['link']			+ '\n' +
+										style['caption']		+ '\n' +
+										style['background']		+ '\n\t' +
+									
+									'</style>');
+
+			}
+
+			applyCSS(); // fire the function that applys the dynamic CSS styles to projects
+
+		}
 
 	}
 	
@@ -569,7 +696,7 @@ $.fn.embedYourBehance = function( options ) {
 		html += '</div>';
 		
 		// main column
-		html += '<main class="box-inner-main" style="background-color: ' + dataExtracted[0]['backgroundColor'] + ';">';
+		html += '<main class="box-inner-main">';
 
 			html += dataExtracted[0]['works'];
 
