@@ -576,29 +576,29 @@ body.eb-detail-modal-active{
 }
 
 /* detail format */
-.eb-container .box-project main .wrap-values > li{
-	margin-bottom: 5vh;
-}
 
 .eb-container .box-project main .wrap-values > li:last-child {
     margin-bottom: 0;
 }
 
 .eb-container .box-project .wrap-values > li.single-text{
-	padding: 3vh 5%;
 	line-height: 1.5;
+	margin: 0 auto;
+	max-width: 50em;
+	word-wrap: break-word;
 }
 
-.eb-container .box-project .caption{
-	padding-top: 1em;
-	padding-bottom: 1em;
-	font-style: italic;
-	text-align: left;
-	text-align: center;
-}
 .eb-container .box-project .bold{
 	font-weight: bold;
 }
+.eb-container .box-project .italic{
+	font-style: italic;
+}
+.eb-container .box-project .underline{
+	text-decoration: underline;
+}
+
+
 
 /* :::::::::::::::::::: media queries :::::::::::::::::::: */
 
@@ -726,7 +726,7 @@ body.eb-detail-modal-active{
 
 	.eb-container aside.sidebar-desktop{
 		border-radius: 0;
-		position: absolute;
+		position: fixed;
 		top: 0;
 		left: 0;
 		-webkit-box-ordinal-group: initial;
@@ -734,8 +734,13 @@ body.eb-detail-modal-active{
 		order: initial;
 		height: 100%;
 		border: 0;
-		overflow: visible;
 		border-right: 1px solid #e8e8e8;
+		overflow: visible;
+	}
+
+	.eb-container aside.sidebar-desktop > div.box-overflow {
+		overflow-y: auto;
+		height: 100%;
 	}
 
 	.eb-container aside.sidebar-desktop .eb-desktop-info {

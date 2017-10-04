@@ -229,7 +229,6 @@ $.fn.embedYourBehance = function( options ) {
 											'font-size: '		+	value.styles.text.title.font_size 			+ ';\n\t' +
 											'text-decoration: ' +	value.styles.text.title.text_decoration 	+ ';\n\t' +
 											'font-style: ' 		+	value.styles.text.title.font_style 			+ ';\n\t' +
-											'display: ' 		+	value.styles.text.title.display 			+ ';\n\t' +
 											'text-transform: ' 	+	value.styles.text.title.text_transform 		+ ';\n'   +
 									'}',		
 
@@ -244,7 +243,6 @@ $.fn.embedYourBehance = function( options ) {
 											'font-size: '		+	value.styles.text.subtitle.font_size 		+ ';\n\t' +
 											'text-decoration: ' +	value.styles.text.subtitle.text_decoration 	+ ';\n\t' +
 											'font-style: ' 		+	value.styles.text.subtitle.font_style 		+ ';\n\t' +
-											'display: ' 		+	value.styles.text.subtitle.display 			+ ';\n\t' +
 											'text-transform: ' 	+	value.styles.text.subtitle.text_transform 	+ ';\n'   +
 									'}',
 
@@ -259,7 +257,6 @@ $.fn.embedYourBehance = function( options ) {
 											'font-size: '		+	value.styles.text.paragraph.font_size 		+ ';\n\t' +
 											'text-decoration: ' +	value.styles.text.paragraph.text_decoration + ';\n\t' +
 											'font-style: ' 		+	value.styles.text.paragraph.font_style 		+ ';\n\t' +
-											'display: ' 		+	value.styles.text.paragraph.display 		+ ';\n\t' +
 											'text-transform: ' 	+	value.styles.text.paragraph.text_transform 	+ ';\n'   +
 									'}',
 
@@ -274,7 +271,6 @@ $.fn.embedYourBehance = function( options ) {
 											'font-size: '		+	value.styles.text.caption.font_size 		+ ';\n\t' +
 											'text-decoration: ' +	value.styles.text.caption.text_decoration 	+ ';\n\t' +
 											'font-style: ' 		+	value.styles.text.caption.font_style 		+ ';\n\t' +
-											'display: ' 		+	value.styles.text.caption.display 			+ ';\n\t' +
 											'text-transform: ' 	+	value.styles.text.caption.text_transform 	+ ';\n'   +
 									'}',
 
@@ -289,52 +285,53 @@ $.fn.embedYourBehance = function( options ) {
 											'font-size: '		+	value.styles.text.link.font_size 			+ ';\n\t' +
 											'text-decoration: ' +	value.styles.text.link.text_decoration 		+ ';\n\t' +
 											'font-style: ' 		+	value.styles.text.link.font_style 			+ ';\n\t' +
-											'display: ' 		+	value.styles.text.link.display 				+ ';\n\t' +
 											'text-transform: ' 	+	value.styles.text.link.text_transform 		+ ';\n'   +
 									'}',	
 
 			
 				style['background'] =	'.eb-container .box-inner-main {\n\t' +
 									
-											'background-color: #' + value.styles.background 					+ ';\n\t' +
+											'background-color: #' + value.styles.background.color 					+ ';\n\t' +
 										'}',
 
 
 				style['bottom_margin'] ='.eb-container .box-inner-main .spacer {\n\t' +
 									
-											'height:' + value.styles.spacing.modules.bottom_margin			+ ';\n\t' +
+											'height: ' + value.styles.spacing.modules.bottom_margin			+ 'px;\n\t' +
 										'}',
 
 				style['top_margin']	  ='.eb-container .box-inner-main {\n\t' +
 									
-											'padding-top:' + value.styles.spacing.project.top_margin			+ ';\n\t' +
+											'padding-top: ' + value.styles.spacing.project.top_margin			+ 'px;\n\t' +
 										'}',
 
-				style['link'] = '.eb-container .box-inner-main .spacer .divider {\n\t' +
+				style['dividers'] = '.eb-container .box-inner-main .spacer .divider {\n\t' +
 
-
-											'font-size':   		+ 	value.styles.dividers.font_size,			+ ';\n\t' +
-											'line-height':   	+ 	value.styles.dividers.line_height,			+ ';\n\t' +
-											'height':   		+ 	value.styles.dividers.height,				+ ';\n\t' +
-											'border-color':   	+ 	value.styles.dividers.border_color,			+ ';\n\t' +
-											'margin':   		+ 	value.styles.dividers.margin,				+ ';\n\t' +
-											'position':   		+ 	value.styles.dividers.position,				+ ';\n\t' +
-											'top':   			+ 	value.styles.dividers.top,					+ ';\n\t' +
-											'border-width':   	+ 	value.styles.dividers.border_width,			+ ';\n\t' +
-											'border-style':   	+ 	value.styles.dividers.border_style			+ ';\n\t' +
+											'font-size: '   	+ 	value.styles.dividers.font_size				+ ';\n\t' +
+											'line-height: '   	+ 	value.styles.dividers.line_height			+ ';\n\t' +
+											'height: '   		+ 	value.styles.dividers.height				+ ';\n\t' +
+											'border-color: '   	+ 	value.styles.dividers.border_color			+ ';\n\t' +
+											'margin: '   		+ 	value.styles.dividers.margin				+ ';\n\t' +
+											'position: '   		+ 	value.styles.dividers.position				+ ';\n\t' +
+											'top: '   			+ 	value.styles.dividers.top					+ ';\n\t' +
+											'border-width: '   	+ 	value.styles.dividers.border_width			+ ';\n\t' +
+											'border-style: '   	+ 	value.styles.dividers.border_style			+ ';\n\t' +
 									'}',
 
 				
 				//:::::::::::::::::: PRINT THE STYLES :::::::::::::::://
 
-				$('head').append(	'<style type="text/css">' 	+ '\n\t' + 
+				$('head').append(	'<style type="text/css" data-css="embed-behance">' 	+ '\n\t' + 
 
 										style['title'] 			+ '\n' +
 										style['subtitle'] 		+ '\n' +
 										style['paragraph']		+ '\n' +
 										style['link']			+ '\n' +
 										style['caption']		+ '\n' +
-										style['background']		+ '\n\t' +
+										style['background']		+ '\n' +
+										style['bottom_margin']	+ '\n' +
+										style['top_margin']		+ '\n' +
+										style['dividers']		+ '\n\t' +
 									
 									'</style>');
 
@@ -444,8 +441,8 @@ $.fn.embedYourBehance = function( options ) {
 				$.each(value.modules, function(key, value) {
 
 					function caption() {
-						if ('caption_plain' in value && settings.imageCaption == true) {
-							return '<div class="caption">' + value['caption'] + '</div>';
+						if ('caption' in value && settings.imageCaption == true) {
+							return '<li class="caption">' + value['caption'] + '</li>';
 						} else {
 							return '';
 						}
@@ -460,18 +457,36 @@ $.fn.embedYourBehance = function( options ) {
 								dataWrapper += '<source media="(min-width: 30em)" srcset="' + value['sizes']['original'] + '">';
 								dataWrapper += '<img src="' + value['sizes']['disp'] + '" alt="' + imgAlt + '" />';
 							dataWrapper += '</picture>'; 
-						
-							dataWrapper += caption();
 
-						dataWrapper + '</li>';
+						dataWrapper += '</li>';
+
+						// behance spacer (mandatory on after any project module)
+						dataWrapper += caption();
+
+						// behance spacer (mandatory on after any project module)
+						dataWrapper += '<li class="spacer"><div class="divider"></div></li>';
+
 						break;
 
 						case 'text':
-						dataWrapper += '<li class="single-text">' + value['text'] + caption() + '</li>';
+						dataWrapper += '<li class="single-text">' + value['text'] + '</li>';
+
+						// behance spacer (mandatory on after any project module)
+						dataWrapper += caption();
+
+						// behance spacer (mandatory on after any project module)
+						dataWrapper += '<li class="spacer"><div class="divider"></div></li>';
+
 						break;
 
 						case 'embed':
-						dataWrapper += '<li class="single-embed">' + value['embed'] + caption() + '</li>';
+						dataWrapper += '<li class="single-embed">' + value['embed'] + '</li>';
+
+						// behance spacer (mandatory on after any project module)
+						dataWrapper += caption();
+
+						// behance spacer (mandatory on after any project module)
+						dataWrapper += '<li class="spacer"><div class="divider"></div></li>';
 					}
 
 				});
@@ -909,7 +924,7 @@ $.fn.embedYourBehance = function( options ) {
 	function openProject(){
 
 		TweenMax.to('div.project-detail-outer', 1.5,{'top': 0, alpha:1, ease:Strong.easeOut, onComplete: function(){
-			$('.sidebar-desktop').css('position', 'fixed');
+			//$('.sidebar-desktop').css('position', 'fixed');
 		}});
 
 		TweenMax.to('div.eb-total-inner-container', 0.5,{alpha:0.3});
@@ -938,8 +953,6 @@ $.fn.embedYourBehance = function( options ) {
 	function closeProject() {
 
 		TweenMax.to('div.project-detail-outer', 0.5,{'top': '10em', alpha:0, ease:Strong.easeIn, onComplete: function(){
-			
-			console.log('chiudo');
 
 			$('div.project-detail-outer').remove();
 			$('.eb-detail-modal-active .eb-total-outer-container').css('position', 'relative');
@@ -947,7 +960,8 @@ $.fn.embedYourBehance = function( options ) {
 			$(window).scrollTop(scrollBarPosition);
 			$('body').removeClass('.eb-detail-modal-active');
 
-			// wait 300ms before isDetail becomes false to prevent an infinitePagination
+			$('style[data-css="embed-behance"]').remove();
+
 			isDetail = false;		
 
 		}});
