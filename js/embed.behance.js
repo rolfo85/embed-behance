@@ -289,7 +289,7 @@ $.fn.embedYourBehance = function( options ) {
 									'}',	
 
 			
-				style['background'] =	'.eb-container .box-inner-main {\n\t' +
+				style['background'] =	'.eb-container .box-inner-main .wrap-works-outer {\n\t' +
 									
 											'background-color: #' + value.styles.background.color 					+ ';\n\t' +
 										'}',
@@ -300,7 +300,7 @@ $.fn.embedYourBehance = function( options ) {
 											'height: ' + value.styles.spacing.modules.bottom_margin			+ 'px;\n\t' +
 										'}',
 
-				style['top_margin']	  ='.eb-container .box-inner-main {\n\t' +
+				style['top_margin']	  ='.eb-container .box-inner-main .wrap-works-outer {\n\t' +
 									
 											'padding-top: ' + value.styles.spacing.project.top_margin			+ 'px;\n\t' +
 										'}',
@@ -448,11 +448,21 @@ $.fn.embedYourBehance = function( options ) {
 						}
 					}
 
+					function fullBleed(){
+
+						if( value.full_bleed == 1 ){
+							return ' full-bleed';
+						} else {
+							return '';
+						}
+					}
+
 					switch(value['type']) {
 
 						case 'image':
-						dataWrapper += '<li class="single-image">';
-							
+
+							dataWrapper += '<li class="single-image' + fullBleed() + '">';
+					
 							dataWrapper += '<picture>';
 								dataWrapper += '<source media="(min-width: 30em)" srcset="' + value['sizes']['original'] + '">';
 								dataWrapper += '<img src="' + value['sizes']['disp'] + '" alt="' + imgAlt + '" />';
@@ -480,7 +490,7 @@ $.fn.embedYourBehance = function( options ) {
 						break;
 
 						case 'embed':
-						dataWrapper += '<li class="single-embed">' + value['embed'] + '</li>';
+						dataWrapper += '<li class="single-embed' + fullBleed() + '"><div class="inner">' + value['embed'] + '</div></li>';
 
 						// behance spacer (mandatory on after any project module)
 						dataWrapper += caption();
@@ -704,10 +714,15 @@ $.fn.embedYourBehance = function( options ) {
 
 		html += '<div class="wrap-headings">';
 
-			html += '<div class="close-project"></div>';
+			html += '<div class="inner">';
 
-			html += dataExtracted[0]['title'];
-			html += dataExtracted[0]['description'];
+				html += '<div class="close-project"></div>';
+
+				html += dataExtracted[0]['title'];
+				html += dataExtracted[0]['description'];
+
+			html += '</div>';	
+
 		html += '</div>';
 		
 		// main column
@@ -923,16 +938,25 @@ $.fn.embedYourBehance = function( options ) {
 	// function for opening the detail */
 	function openProject(){
 
-		TweenMax.to('div.project-detail-outer', 1.5,{'top': 0, alpha:1, ease:Strong.easeOut, onComplete: function(){
-			//$('.sidebar-desktop').css('position', 'fixed');
-		}});
+		TweenMax.to('div.project-detail-outer', 1.5,{'top': 0, alpha:1, ease:Strong.easeOut});
+		
+		//get the header height
+		function getHeaderHeight(){
 
-		TweenMax.to('div.eb-total-inner-container', 0.5,{alpha:0.3});
+			var headingHeight = $('.eb-container .wrap-headings').outerHeight(true);
+			$('.eb-container .box-project main').css('margin-top', headingHeight);
+			$('.eb-desktop-info').css('height', headingHeight);
+			$('.eb-container .box-project aside .wrap-owners-outer').css('min-height', headingHeight);
 
-		var headingHeight = $('.eb-container .wrap-headings').outerHeight(true);
-		$('.eb-container .box-project main').css('margin-top', headingHeight);
-		$('.eb-desktop-info').css('height', headingHeight);
-		$('.eb-container .box-project aside .wrap-owners-outer').css('min-height', headingHeight);
+		}
+
+		// get the header height on resize
+		$(window).resize(function(){
+			setTimeout(getHeaderHeight, 500);
+		});
+
+		// get the header height on page load
+		getHeaderHeight();
 
 	}
 
@@ -1197,8 +1221,6 @@ $.fn.embedYourBehance = function( options ) {
 	$('body').on('click', '.sidebar-desktop .eb-desktop-info', function(){
 	
 		function showHideDesktopInfo(action) {
-
-			
 
 			// show the info
 			if(action == 'show') {
