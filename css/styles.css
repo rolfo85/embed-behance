@@ -12,14 +12,6 @@
 	text-size-adjust: none;
 }
 
-.eb-pagination-button{
-	margin-top: 2em;
-}
-.eb-pagination-button.active{
-	background: url('../images/loading.svg') no-repeat center right 1.4em / 1.5em auto;
-	text-indent: -1.5em;
-}
-
 .eb-pagination-button, .eb-container aside .wrap-project-url a{
 	border-radius: 5px;
 	padding: 1em 2em;
@@ -34,11 +26,18 @@
 	transition: background-color 0.3s;
 }
 
+.eb-pagination-button span{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.eb-pagination-button span svg{
+	width: 1.6em;
+}
+
 .eb-loadingicon{
-	width: 40px;
-	height: 40px;
-	background: url('../images/loading.svg') no-repeat center center;
-	background-size: 25px;
+	width: 3.5em;
+	height: 3.5em;
 	position: fixed;
 	top: 0;
 	bottom:0;
@@ -47,22 +46,28 @@
 	display: block;
 	margin:auto !important;
 	z-index: 350;
-	margin-top: 12px;
-	padding: 1em;
 	background-color: rgba(0,0,0,0.7);
 	border-radius: 50%;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
 }
 
-.eb-container h1, .eb-container h2 {
-	line-height: normal;
+.eb-loadingicon svg{
+	width: 50%;
 }
 
-.eb-container h1 {
-	font-size: 2em;
-	font-weight: 300;
+.eb-loadingicon svg path{
+	fill: #fff;
 }
 
-.eb-container h2 {
+.eb-container .wrap-title {
 	font-size: 1.2em;
 	font-weight: 900;
 }
@@ -88,8 +93,10 @@
 .eb-container .wrap-views-outer .wrap-value, 
 .eb-container .wrap-projects li .wrap-appreciations-outer,
 .eb-container .wrap-projects li .wrap-views-outer {
-	display: inline-block;
-	vertical-align: top;	
+	display: -webkit-inline-box;
+	display: -ms-inline-flexbox;
+	display: inline-flex;
+	vertical-align: middle;
 }
 
 /* icons spacing */
@@ -103,13 +110,6 @@
 .eb-container .wrap-tags-outer .wrap-label {
 	padding-top: 0.3em;
 	padding-bottom: 0.3em;
-}
-
-.eb-container .wrap-appreciations-outer .wrap-label,
-.eb-container .wrap-views-outer .wrap-label,
-.eb-container .wrap-fields-outer .wrap-label,
-.eb-container .wrap-tags-outer .wrap-label {
-	padding-left: 2em;
 }
 
 /* list */
@@ -157,11 +157,6 @@
 	margin-right: 2em;
 }
 
-.eb-container .wrap-projects li .wrap-appreciations-outer .wrap-label,
-.eb-container .wrap-projects li .wrap-views-outer .wrap-label {
-	text-indent: -9999px;
-}
-
 /* list: cover  */
 .eb-container .wrap-projects li .wrap-cover{
 	margin-bottom: 1.3em;
@@ -197,9 +192,13 @@
     transition: all 0.3s;
 }
 
-.eb-container .wrap-projects li .wrap-cover .fields-in-cover > li:first-child{
-	background: url(../images/tag-icon.svg) no-repeat top center / 1.5em auto;
-	padding-top: 2em; 
+.eb-container .wrap-projects li .wrap-cover .fields-in-cover > svg{
+	width: 2em;
+    margin: 0 auto;
+    height: 2.7em;
+}
+.eb-container .wrap-projects li .wrap-cover .fields-in-cover > svg path{
+	fill: #fff !important;
 }
 
 .eb-container .wrap-projects li .wrap-cover .fields-in-cover > li{
@@ -212,33 +211,37 @@
 	transition: color 0.3s;
 }
 
+/* global: labels */
+.eb-container .wrap-label{
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-ms-flex-line-pack: center;
+	align-content: center;
+}
+
+.eb-container .wrap-label svg{
+	width: 1.2em;
+	margin-right: 0.5em;
+}
+
 /* list: owners */
 .eb-container .wrap-owners-outer .wrap-label{
 	margin-right: 0.5em;
 }
 
-.eb-container .wrap-projects li .wrap-owners-outer .single .owner-full-name {
-	background: url(../images/owner-icon.svg) no-repeat left center / 0.8em auto;
-	padding-left: 1em;
+.eb-container .wrap-projects li .wrap-owners-outer .single .owner-full-name svg {
+	width: 0.8em;
+	margin:0 0.3em;
 }
 
 /* global: tags */
-.eb-container .wrap-tags-outer .wrap-label {
-	background: url(../images/tag-icon.svg) no-repeat left top 4px / 1.3em auto;
-}
-
 /* global: fields */
-.eb-container .wrap-fields-outer .wrap-label {
-	background: url(../images/field-icon.svg) no-repeat left -1px top 6px / 1.5em auto;
-}
-
-/* global: appreciations & views */
-.eb-container .wrap-appreciations-outer .wrap-label {
-	background: url(../images/like-icon.svg) no-repeat left center / 1.3em auto;
-}
-
-.eb-container .wrap-views-outer .wrap-label {
-	background: url(../images/view-icon.svg) no-repeat left center / 1.3em auto;
+.eb-container .wrap-fields-outer .wrap-label svg, .eb-container .wrap-tags-outer .wrap-label svg{
+	width: 1.35em;
 }
 
 /* global: owner */
@@ -248,11 +251,14 @@
 	display: flex;
 }
 
-.eb-container .wrap-owners-outer .single .owner-full-name a {
-	background: url(../images/chevron-icon-rt.svg) no-repeat right 0.5em / 0.8em auto;
-	padding-right: 1em;
+.eb-container .wrap-owners-outer .single .owner-full-name > svg{
+	display: none;
 }
 
+.eb-container .wrap-owners-outer .single .owner-full-name > a > svg{
+	width: 0.8em;
+	margin-left: 0.3em;
+}
 
 /* :::::::::::::::::::: detail :::::::::::::::::::: */
 
@@ -266,6 +272,7 @@ body.eb-detail-modal-active{
 	left: 0;
 	min-width: 100%;
 	min-height: 100vh;
+	width: 100%;
 }
 
 .eb-detail-modal-active .eb-total-outer-container > .eb-total-inner-container{
@@ -302,7 +309,6 @@ body.eb-detail-modal-active{
 }
 
 .eb-container .close-project{
-	background: url(../images/close-icon.svg) no-repeat center center / 45% auto;
 	position: fixed;
 	right: 3%;
 	cursor: pointer;
@@ -313,6 +319,23 @@ body.eb-detail-modal-active{
 	height: 1.8em;
 	transition: all 0.3s;
 	top: 1.4em;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+}
+
+.eb-container .close-project svg{
+	width: 0.8em;
+}
+
+.eb-container .close-project svg path{
+	fill: #fff;
 }
 
 /* headings */
@@ -326,15 +349,16 @@ body.eb-detail-modal-active{
 	margin: 0 auto;
 }
 
-.eb-container .wrap-headings h2 {
+.eb-container .wrap-headings .wrap-title {
 	font-size: 1.8em;
 	font-weight: 300;
-	margin-bottom: 0.2em;
+	margin-bottom: 0.3em;
 	width: calc(100% - 1.5em);
 	color: #333;
+	line-height: normal;
 }
 
-.eb-container .wrap-headings h3 {
+.eb-container .wrap-headings .wrap-description {
 	font-weight: 700;
 	font-size: 1em;
 	color: #c3c3c3;
@@ -514,14 +538,6 @@ body.eb-detail-modal-active{
 	width: 0.8em;
 	height: 0.5em;
 	margin-left: 0.3em;
-	background-color: #fff;
-	background-size: 0.8em auto;
-	mask-repeat: no-repeat;
-	-webkit-mask-repeat: no-repeat;
-	background-position: right 0.5em;
-	-webkit-mask-image: url(../images/chevron-icon-dw.svg);
-	mask-image: url(../images/chevron-icon-dw.svg);
-
 }
 
 .eb-container aside.open .bh-show {
@@ -529,10 +545,8 @@ body.eb-detail-modal-active{
 	background-color: #f8f8f8;
 }
 
-.eb-container aside.open .bh-show span.icon-chevron {
-	background-color: #2183ee;
-	-webkit-mask-image: url(../images/chevron-icon-up.svg);
-	mask-image: url(../images/chevron-icon-up.svg);
+.eb-container aside:not(.open) .bh-show span.icon-chevron svg path{
+	fill:#fff !important;
 }
 
 .eb-container aside:not(.open) .bh-show:hover span.label{
@@ -639,8 +653,9 @@ body.eb-detail-modal-active{
 @media screen and (min-width: 30em) {
 
 	.eb-pagination-button {
-		width: 10em;
+		width: 11em;
 		margin: 0 auto;
+		padding: 1em;
 	}
 
 }
@@ -798,12 +813,6 @@ body.eb-detail-modal-active{
 	}
 	
 	.eb-container aside.sidebar-desktop .eb-desktop-info span.icon {
-		background-color: #fff;
-		background-size: contain;
-		mask-repeat: no-repeat;
-		-webkit-mask-repeat: no-repeat;
-		-webkit-mask-image: url(../images/chevron-icon-rt.svg);
-		mask-image: url(../images/chevron-icon-rt.svg);
 		width: 1.3em;
 		height: 1em;
 		display: inline-block;
@@ -827,10 +836,12 @@ body.eb-detail-modal-active{
 		background-color: #f6f6f6;
 	}
 
-	.eb-container aside.sidebar-desktop.info-open .eb-desktop-info span.icon {
-		background-color: #2183ee;
-		-webkit-mask-image: url(../images/chevron-icon-lt.svg);
-		mask-image: url(../images/chevron-icon-lt.svg);
+	.eb-container aside.sidebar-desktop:not(.info-open) .eb-desktop-info span.icon svg{
+		width: 1em;
+	}
+
+	.eb-container aside.sidebar-desktop:not(.info-open) .eb-desktop-info span.icon svg path{
+		fill: #fff !important;
 	}
 
 	.eb-container aside.sidebar-desktop.info-open .eb-desktop-info span.label {

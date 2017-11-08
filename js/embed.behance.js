@@ -27,11 +27,12 @@ $.fn.embedYourBehance = function( options ) {
 		apiKey: '',
 		itemsPerPage: '6',
 		userName: '',
-		infiniteScrolling: true,
+		infiniteScrolling: false,
 		imageCaption: true,
 		ownerLink: true,
 		description: true,
-		tags: true
+		tags: true,
+		themeColor: '#2183EE'
 
 	}, options );
 
@@ -97,6 +98,8 @@ $.fn.embedYourBehance = function( options ) {
 
 	// create the main container that hosts the projects list
 	$(behanceContainer).html('<ul class="wrap-projects"></ul>');
+
+	$('body').append(iconsSet('<div class="eb-loadingicon">' + iconsSet('loading') + '</div>'));
 	
 
 
@@ -116,7 +119,7 @@ $.fn.embedYourBehance = function( options ) {
 	// ajax call to fetch the behance data to build the projects list
 	var callBehanceProjectsList = function() {
 
-		$('body').append('<div class="eb-loadingicon"></div>');
+		$('body').append('<div class="eb-loadingicon">' + iconsSet('loading') + '</div>');
 
 		// create urlListNext to check for the next pagination
 		urlListNext = urlList;
@@ -157,7 +160,7 @@ $.fn.embedYourBehance = function( options ) {
 	// ajax call to fetch the behance data to build the project detail
 	var callBehanceProjectDetail = function(urlDetail) {
 
-		$(behanceContainer).append('<div class="eb-loadingicon"></div>');
+		$(behanceContainer).append('<div class="eb-loadingicon">' + iconsSet('loading') + '</div>');
 
 		// reset dataextracted
 		dataExtracted = [];
@@ -384,7 +387,7 @@ $.fn.embedYourBehance = function( options ) {
 
 			if(settings.owners == true) {
 
-				dataWrapper += '<div class="wrap-label">By:</div>';
+				dataWrapper += '<div class="wrap-label">By: </div>';
 				dataWrapper += '<ul class="wrap-values">';
 
 					$.each(value.owners, function(key, value) {
@@ -406,10 +409,10 @@ $.fn.embedYourBehance = function( options ) {
 							}
 
 							// print the full name
-							dataWrapper += '<div class="owner-full-name">';
+							dataWrapper += '<div class="owner-full-name">' + iconsSet('owner');
 
 								if(settings.ownerLink == true) {
-									dataWrapper += '<a href="' + value['url'] + '" target="_blank">' + value['display_name'] + '</a>';
+									dataWrapper += '<a href="' + value['url'] + '" target="_blank">' + value['display_name'] + iconsSet('chevronRight') + '</a>';
 								} else {
 									dataWrapper += value['display_name'];
 								}
@@ -512,7 +515,7 @@ $.fn.embedYourBehance = function( options ) {
 			
 			if(settings.appreciations == true) {
 
-				dataWrapper += '<div class="wrap-label">Appreciations:</div>';
+				dataWrapper += '<div class="wrap-label">' + iconsSet('thumbsUp') + '</div>';
 				dataWrapper += '<div class="wrap-value">' + value.stats.appreciations  + '</div>';
 				dataWrapper =  '<div class="wrap-appreciations-outer">' + dataWrapper + '</div>';
 
@@ -528,7 +531,7 @@ $.fn.embedYourBehance = function( options ) {
 
 			if(settings.views == true) {
 			
-				dataWrapper += '<div class="wrap-label">Wiews:</div>';
+				dataWrapper += '<div class="wrap-label">' + iconsSet('views') + '</div>';
 				dataWrapper += '<div class="wrap-value">' + value.stats['views']  + '</div>';
 				dataWrapper =  '<div class="wrap-views-outer">' + dataWrapper + '</div>';
 
@@ -547,7 +550,7 @@ $.fn.embedYourBehance = function( options ) {
 
 				if(settings.fields == true) {
 
-					dataWrapper += '<ul class="fields-in-cover">';
+					dataWrapper += '<ul class="fields-in-cover">' + iconsSet('fields');
 
 					$.each(value.fields, function(key, value) {
 						dataWrapper += '<li class="single">' + value + '</li>';
@@ -565,7 +568,7 @@ $.fn.embedYourBehance = function( options ) {
 			// title
 			case 'title':
 
-			dataWrapper += '<h2 class="wrap-title">' + value.name + '</h2>';
+			dataWrapper += '<div class="wrap-title">' + value.name + '</div>';
 			
 			break;
 
@@ -615,7 +618,7 @@ $.fn.embedYourBehance = function( options ) {
 
 			if(settings.fields == true) {
 
-				dataWrapper += '<div class="wrap-label">Fields:</div>';
+				dataWrapper += '<div class="wrap-label">' + iconsSet('fields') + 'Fields:</div>';
 				dataWrapper += '<ul class="wrap-values">';
 
 					$.each(value.fields, function(key, value) {
@@ -638,7 +641,7 @@ $.fn.embedYourBehance = function( options ) {
 
 			if(settings.tags == true) {
 
-				dataWrapper += '<div class="wrap-label">Tags:</div>';
+				dataWrapper += '<div class="wrap-label">' + iconsSet('tags') + 'Tags:</div>';
 				dataWrapper += '<ul class="wrap-values">';
 
 					$.each(value.tags, function(key, value) {
@@ -661,7 +664,7 @@ $.fn.embedYourBehance = function( options ) {
 
 			if(settings.description == true && value.description !== '') {
 
-				dataWrapper += '<h3 class="wrap-description">' + value.description + '</h3>';
+				dataWrapper += '<div class="wrap-description">' + value.description + '</div>';
 
 			}
 
@@ -716,7 +719,7 @@ $.fn.embedYourBehance = function( options ) {
 
 			html += '<div class="inner">';
 
-				html += '<div class="close-project"></div>';
+				html += '<div class="close-project">' + iconsSet('close') + '</div>';
 
 				html += dataExtracted[0]['title'];
 				html += dataExtracted[0]['description'];
@@ -740,14 +743,14 @@ $.fn.embedYourBehance = function( options ) {
 
 				printAsideContent();
 
-				html += '<a class="bh-show"><span class="label">Show Info</span><span class="icon-chevron"></span></a>';
+				html += '<a class="bh-show"><span class="label">Show Info</span><span class="icon-chevron">' + iconsSet('chevronDown') + '</span></a>';
 
 			html += '</aside>';
 
 			// sidebar for desktop
 			html += '<aside class="box-inner-sidebar sidebar-desktop">';
 
-				html += '<div class="eb-desktop-info"><span class="icon"></span><span class="label">Info</span></div>';
+				html += '<div class="eb-desktop-info"><span class="icon">' + iconsSet('chevronRight') + '</span><span class="label">Info</span></div>';
 
 				printAsideContent();
 
@@ -852,7 +855,8 @@ $.fn.embedYourBehance = function( options ) {
 				} else {
 					
 					// the content is shown 
-		       		TweenMax.to('ul.wrap-projects li', 1,{alpha:1});
+					$('ul.wrap-projects li').animate({opacity:1}),
+		       		//TweenMax.to('ul.wrap-projects li', 1,{alpha:1});
 
 		       		// check if there is another page
 					pagination(urlListNext);
@@ -966,11 +970,14 @@ $.fn.embedYourBehance = function( options ) {
 	// ::::::::::::::::::trigger for closing the project detail :::::::::::::::::: //
 	// :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
 
-	$('body').on('click', '.close-project', function(){
-
-		closeProject();
-
+	$('body').on('click', '.eb-container .box-inner-main, .eb-container .close-project svg', function(e){
+		// click on the dark background or on the close button, to close a project
+		if(e.target == this){
+			closeProject();
+		}
 	});
+
+
 
 
 	// function for closing the detail */
@@ -1013,6 +1020,7 @@ $.fn.embedYourBehance = function( options ) {
 	$(behanceContainer).on('click', '.eb-pagination-button:not(.active)', function(event){
 		
 		$(this).addClass('active');
+		$(this).children('.icon-loading').html(iconsSet('loading'));
 
 		if (!isPaging) {
 
@@ -1044,7 +1052,7 @@ $.fn.embedYourBehance = function( options ) {
 			// if there are other results to load I build the pagination button (if the infiniteScrolling is set to FALSE)
 			if(action == 'show' && settings.infiniteScrolling == false) {
 
-				$(behanceContainer).append('<div class="eb-pagination-button">Load More</div>');
+				$(behanceContainer).append('<div class="eb-pagination-button"><span>Load More</span> <span class="icon-loading"></span> </div>');
 
 			} else if (action == 'remove') {
 				
@@ -1173,6 +1181,7 @@ $.fn.embedYourBehance = function( options ) {
 				$('.sidebar-mobile .bh-show > .label').text('Hide Info');
 
 				$('.eb-container aside.sidebar-mobile').addClass('open');
+				$('.eb-container aside.sidebar-mobile .icon-chevron').html(iconsSet('chevronUp'));
 				
 				TweenMax.to('.eb-container aside.sidebar-mobile', 0.7,{css: {'border-radius': 15, 'height': asideHeight}, ease:Strong.easeOut});
 
@@ -1182,6 +1191,7 @@ $.fn.embedYourBehance = function( options ) {
 				$('.sidebar-mobile .bh-show > .label').text('Show Info');
 				
 				$('aside.sidebar-mobile').removeClass('open');
+				$('.eb-container aside.sidebar-mobile .icon-chevron').html(iconsSet('chevronDown'));
 
 				TweenMax.to('.eb-container aside.sidebar-mobile', 0.7,{css: {'border-radius': 50, 'height': '2.4em'}, ease:Strong.easeOut});
 
@@ -1231,13 +1241,14 @@ $.fn.embedYourBehance = function( options ) {
 				TweenMax.to('.eb-container .wrap-headings, .eb-container .box-inner-main', 0.7,{ 'width': 'calc(100% - 320px)', 'margin-left': 320, ease:Strong.easeOut});
 
 				$('.eb-container .sidebar-desktop').addClass('info-open');
+				$('.eb-container .sidebar-desktop .eb-desktop-info .icon').html(iconsSet('chevronLeft'));
 
 			} else if (action == 'hide') {
-				console.log(flagDesktopInfo);
 				TweenMax.to('.eb-container .sidebar-desktop', 0.7,{'left': -320, ease:Strong.easeOut});
 				TweenMax.to('.eb-container .wrap-headings, .eb-container .box-inner-main', 0.7,{ 'width': 'calc(100% - 0px)', 'margin-left': 0, ease:Strong.easeOut});
 
 				$('.eb-container .sidebar-desktop').removeClass('info-open');
+				$('.eb-container .sidebar-desktop .eb-desktop-info .icon').html(iconsSet('chevronRight'));
 
 			}
 
@@ -1263,6 +1274,222 @@ $.fn.embedYourBehance = function( options ) {
 
 
 
+	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
+	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
+	//:::::::::::::::::::::::::::::::::::::::: ICONS ::::::::::::::::::::::::::::::::::::::::::::://
+	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
+	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
+
+
+	function iconsSet(name) {
+
+		switch(name) {
+
+			// icon thumbs up
+			case 'thumbsUp':
+
+				var thumbsUp =	'<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 478.2 478.2" style="enable-background:new 0 0 478.2 478.2;" xml:space="preserve"> \n' + 
+									'<g> \n' + 
+										'<path style="fill: ' + settings.themeColor + '" class="st0" d="M457.6,325.1c9.8-12.5,14.5-25.9,13.9-39.7c-0.6-15.2-7.4-27.1-13-34.4c6.5-16.2,9-41.7-12.7-61.5c-15.9-14.5-42.9-21-80.3-19.2c-26.3,1.2-48.3,6.1-49.2,6.3h-0.1c-5,0.9-10.3,2-15.7,3.2c-0.4-6.4,0.7-22.3,12.5-58.1c14-42.6,13.2-75.2-2.6-97C293.8,1.8,267.3,0,259.5,0c-7.5,0-14.4,3.1-19.3,8.8c-11.1,12.9-9.8,36.7-8.4,47.7c-13.2,35.4-50.2,122.2-81.5,146.3c-0.6,0.4-1.1,0.9-1.6,1.4c-9.2,9.7-15.4,20.2-19.6,29.4c-5.9-3.2-12.6-5-19.8-5h-61c-23,0-41.6,18.7-41.6,41.6v162.5c0,23,18.7,41.6,41.6,41.6h61c8.9,0,17.2-2.8,24-7.6l23.5,2.8c3.6,0.5,67.6,8.6,133.3,7.3c11.9,0.9,23.1,1.4,33.5,1.4c17.9,0,33.5-1.4,46.5-4.2c30.6-6.5,51.5-19.5,62.1-38.6c8.1-14.6,8.1-29.1,6.8-38.3c19.9-18,23.4-37.9,22.7-51.9C461.3,337.1,459.5,330.2,457.6,325.1z M48.3,447.3c-8.1,0-14.6-6.6-14.6-14.6V270.1c0-8.1,6.6-14.6,14.6-14.6h61c8.1,0,14.6,6.6,14.6,14.6v162.5c0,8.1-6.6,14.6-14.6,14.6L48.3,447.3L48.3,447.3z M432,313.4c-4.2,4.4-5,11.1-1.8,16.3c0,0.1,4.1,7.1,4.6,16.7c0.7,13.1-5.6,24.7-18.8,34.6c-4.7,3.6-6.6,9.8-4.6,15.4c0,0.1,4.3,13.3-2.7,25.8c-6.7,12-21.6,20.6-44.2,25.4c-18.1,3.9-42.7,4.6-72.9,2.2c-0.4,0-0.9,0-1.4,0c-64.3,1.4-129.3-7-130-7.1h-0.1l-10.1-1.2c0.6-2.8,0.9-5.8,0.9-8.8V270.1c0-4.3-0.7-8.5-1.9-12.4c1.8-6.7,6.8-21.6,18.6-34.3c44.9-35.6,88.8-155.7,90.7-160.9c0.8-2.1,1-4.4,0.6-6.7c-1.7-11.2-1.1-24.9,1.3-29c5.3,0.1,19.6,1.6,28.2,13.5c10.2,14.1,9.8,39.3-1.2,72.7c-16.8,50.9-18.2,77.7-4.9,89.5c6.6,5.9,15.4,6.2,21.8,3.9c6.1-1.4,11.9-2.6,17.4-3.5c0.4-0.1,0.9-0.2,1.3-0.3c30.7-6.7,85.7-10.8,104.8,6.6c16.2,14.8,4.7,34.4,3.4,36.5c-3.7,5.6-2.6,12.9,2.4,17.4c0.1,0.1,10.6,10,11.1,23.3C444.9,295.3,440.7,304.4,432,313.4z"/> \n' + 
+									'</g>' + 
+								'</svg>';
+
+				return thumbsUp;
+
+			break;
+
+			// icon chevron down
+			case 'chevronDown':
+
+				var chevronDown = 	'<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 311.2 203.3" style="enable-background:new 0 0 311.2 203.3;" xml:space="preserve"> \n ' +
+										'<g> \n' +
+											'<g> \n' +
+												'<path style="fill: ' + settings.themeColor + '" class="st0" d="M155.6,110L263.5,0l47.7,45.6L155.6,203.3L0,47.8L45.6,0.1L155.6,110z"/> \n' +
+											'</g> \n' +
+										'</g> \n' +
+									'</svg>';
+
+				return chevronDown;
+
+			break;
+
+			// icon chevron up
+			case 'chevronUp':
+
+				var chevronUp = 	'<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 311.2 203.3" style="enable-background:new 0 0 311.2 203.3;" xml:space="preserve"> \n ' +
+										'<g> \n' +
+											'<g> \n' +
+												'<path style="fill: ' + settings.themeColor + '" class="st0" d="M155.6,93.3l-107.9,110L0,157.7L155.6,0l155.6,155.5l-45.6,47.7L155.6,93.3z"/> \n' +
+											'</g> \n' +
+										'</g> \n' +
+									'</svg>';
+
+				return chevronUp;
+
+			break;
+
+			// icon chevron right
+			case 'chevronRight':
+
+				var chevronRight = 	'<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 475.7 316.4" style="enable-background:new 0 0 475.7 316.4;" xml:space="preserve"> \n ' +
+										'<g> \n' +
+											'<g> \n' +
+												'<path style="fill: ' + settings.themeColor + '" class="st0" d="M246.8,158.9L136.8,51l45.6-47.7l157.7,155.6L184.6,314.5l-47.7-45.6L246.8,158.9z"/> \n' +
+											'</g> \n' +
+										'</g> \n' +
+									'</svg>';
+
+				return chevronRight;
+
+			break;
+
+			// icon chevron left
+			case 'chevronLeft':
+
+				var chevronLeft = 	'<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 475.7 316.4" style="enable-background:new 0 0 475.7 316.4;" xml:space="preserve"> \n ' +
+										'<g> \n' +
+											'<g> \n' +
+												'<path style="fill: ' + settings.themeColor + '" class="st0" d="M340,268.9l-47.7,45.6L136.8,158.9L294.5,3.3L340.1,51l-110,107.9L340,268.9z"/> \n' +
+											'</g> \n' +
+										'</g> \n' +
+									'</svg>';
+
+				return chevronLeft;
+
+			break;
+
+			// icon field
+			case 'fields':
+
+				var fields = 	'<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 570.3 385.6" style="enable-background:new 0 0 570.3 385.6;" xml:space="preserve"> \n ' +
+										'<g> \n' +
+											'<g> \n' +
+												'<path style="fill: ' + settings.themeColor + '" class="st0" d="M544.8,100.4c-2-4.8-6.6-7.7-11.6-7.7h-59.1l68.2-69c3.6-3.7,4.7-9.1,2.7-13.7c-2-4.8-6.6-7.7-11.6-7.7H210.1c-3.3,0-6.6,1.3-9.1,3.8L28.9,180.4c-3.6,3.7-4.7,9.1-2.7,13.7c2,4.8,6.6,7.7,11.6,7.7h59.1l-68,69.1c-3.6,3.7-4.7,9.1-2.7,13.7c2,4.8,6.6,7.7,11.6,7.7h323.1c3.3,0,6.6-1.3,9.1-3.8l79.1-80.2h53.8L355.6,357.8h-287l29.1-28.9c2.5-2.3,3.7-5.5,3.7-9c0-3.4-1.3-6.6-3.7-9c-2.3-2.5-5.5-3.7-9-3.7l0,0c-3.3,0-6.5,1.3-9,3.7L29,361.5c-3.7,3.7-4.8,9.1-2.8,13.9s6.6,7.8,11.6,7.8h323.1c3.3,0,6.6-1.3,9.1-3.8l172.3-174.6c3.6-3.7,4.7-9.1,2.7-13.7c-2-4.8-6.6-7.7-11.6-7.7h-59.2l68.2-69.3C545.8,110.6,546.9,105.2,544.8,100.4z M355.6,267.2H68.2l64.4-65.2H361c3.3,0,6.6-1.3,9.1-3.8l79.1-80.2H503L355.6,267.2zM355.6,176.6H68.2L215.5,27.3H503L355.6,176.6z"/> \n' +
+											'</g> \n' +
+										'</g> \n' +
+									'</svg>';
+
+				return fields;
+
+			break;
+
+			// icon owner
+			case 'owner':
+
+				var owner = 	'<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 265.3 311.5" style="enable-background:new 0 0 265.3 311.5;" xml:space="preserve"> \n ' +
+									'<g> \n' +
+										'<g> \n' +
+											'<g> \n' +
+												'<path style="fill: ' + settings.themeColor + '" class="st0" d="M132.7,163.8c-35.5,0-64.3-55.7-64.3-92c0-35.4,28.8-64.3,64.3-64.3S197,36.3,197,71.8C196.9,108.1,168.1,163.8,132.7,163.8z M132.7,18.4c-29.5,0-53.4,24-53.4,53.4c0,30.6,25,81.1,53.4,81.1c28.5,0,53.4-50.6,53.4-81.1C186.1,42.3,162.1,18.4,132.7,18.4z"/> \n' +
+												'<path style="fill: ' + settings.themeColor + '" class="st0" d="M132.7,171.3c-41,0-71.8-60.3-71.8-99.5C60.9,32.2,93.1,0,132.7,0s71.8,32.2,71.8,71.8C204.4,110.9,173.6,171.3,132.7,171.3z M132.7,25.9c-25.3,0-45.9,20.6-45.9,45.9c0,14,5.9,32.9,15,48.2c9.6,16.2,20.9,25.4,30.9,25.4s21.3-9.3,30.9-25.4c9.1-15.3,15-34.2,15-48.2C178.6,46.5,158,25.9,132.7,25.9z"/> \n' +
+											'<g> \n' +
+										'</g> \n' +
+										'<g> \n' +
+											'<g> \n' +
+												'<path style="fill: ' + settings.themeColor + '" class="st0" d="M252.4,304c-3,0-5.4-2.4-5.4-5.4c0-58.5-51.3-106.1-114.3-106.1S18.4,240.1,18.4,298.6c0,3-2.4,5.4-5.4,5.4s-5.4-2.4-5.4-5.4c0-64.5,56.1-116.9,125.2-116.9S258,234.2,258,298.6C257.8,301.5,255.4,304,252.4,304z"/> \n' +
+												'<path style="fill: ' + settings.themeColor + '" class="st0" d="M252.4,311.5c-7.1,0-12.9-5.8-12.9-12.9c0-54.4-47.9-98.6-106.8-98.6S25.9,244.2,25.9,298.6c0,7.1-5.8,12.9-12.9,12.9s-13-5.8-13-13c0-68.6,59.5-124.4,132.7-124.4c73.1,0,132.7,55.8,132.7,124.4C265.3,305.7,259.5,311.5,252.4,311.5z"/> \n' +
+											'<g> \n' +
+										'</g> \n' +
+									'</g> \n' +
+								'</svg>';
+
+				return owner;
+
+			break;
+
+			// icon tag
+			case 'tags':
+
+				var tags =	'<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 463.55 463.34"> \n' +
+								'<path style="fill: ' + settings.themeColor + '" class="cls-1" d="M445.75,256.35l-179.9-180a50.17,50.17,0,0,0-35.6-14.8c-1.1,0-2.2,0-3.3.1l-130.1,8.6a28.39,28.39,0,0,0-26.4,26.4l-3.1,46.2a89.66,89.66,0,0,1-18.6-14.3c-13.9-13.9-22.5-31.2-24.3-48.8-1.7-16.7,3.1-31.6,13.5-42,22.1-22.1,62.8-17.2,90.9,10.8a12,12,0,0,0,17-17c-37.6-37.3-93.6-42.1-125-10.7C5.25,36.45-1.95,58.15.45,82.25c2.3,23.1,13.4,45.6,31.2,63.4a111.67,111.67,0,0,0,33.9,23.3l-3.8,57.9a50.29,50.29,0,0,0,14.7,39l180,180a59.74,59.74,0,0,0,42.6,17.6h0a60.16,60.16,0,0,0,42.6-17.6L446,341.55A60.11,60.11,0,0,0,445.75,256.35Zm-16.9,68.1-104.4,104.4a36,36,0,0,1-25.6,10.6h0a36,36,0,0,1-25.6-10.6l-180-180a26.35,26.35,0,0,1-7.7-20.4l3.5-52.4c2,0.3,4,.6,6,0.8,3,0.3,6,.5,8.9.5,20.5,0,38.8-7.2,52.4-20.8a12,12,0,0,0-17-17c-10.4,10.4-25.3,15.2-42,13.5-2.3-.2-4.5-0.6-6.7-1l3.6-53.6a4.41,4.41,0,0,1,4.1-4.1l130.1-8.6c0.6,0,1.2-.1,1.8-0.1a26.57,26.57,0,0,1,18.7,7.7l179.9,179.9A36.21,36.21,0,0,1,428.85,324.45Z" transform="translate(0 -0.11)"/> \n' +
+							'</svg>';
+
+				return tags;
+
+			break;
+
+			// icon views
+			case 'views':
+
+				var views =	'<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 475.7 316.4" style="enable-background:new 0 0 475.7 316.4;" xml:space="preserve"> \n' +
+								'<g> \n' +
+									'<g> \n' +
+										'<path style="fill: ' + settings.themeColor + '" class="st0" d="M237.8,316.4c-70.8,0-130.1-36.6-167.3-67.3C31,216.5,0,176.5,0,158.2s31-58.3,70.5-90.9C107.8,36.6,167,0,237.8,0c70.8,0,130.1,36.6,167.3,67.3c39.5,32.6,70.5,72.5,70.5,90.9s-31,58.3-70.5,90.9C367.9,279.8,308.7,316.4,237.8,316.4z M24.4,158.2C26,165.9,47,198.7,88.2,232c33.8,27.4,87.1,60,149.7,60s115.9-32.6,149.7-60c41.1-33.4,62.2-66.2,63.7-73.8c-1.6-7.7-22.6-40.5-63.7-73.8c-33.8-27.4-87.1-60-149.7-60S121.9,57,88.2,84.4C47,117.7,26,150.5,24.4,158.2z M451.3,158.5L451.3,158.5L451.3,158.5z M451.3,157.8L451.3,157.8L451.3,157.8z"/> \n' +
+									'</g> \n' +
+									'<g> \n' +
+										'<path style="fill: ' + settings.themeColor + '" class="st0" d="M237.8,250c-50.6,0-91.8-41.2-91.8-91.8s41.2-91.8,91.8-91.8s91.8,41.2,91.8,91.8S288.5,250,237.8,250zM237.8,90.7c-37.2,0-67.5,30.3-67.5,67.5c0,37.2,30.3,67.5,67.5,67.5c37.2,0,67.5-30.3,67.5-67.5C305.3,121,275,90.7,237.8,90.7z"/> \n' +
+									'</g> \n' +
+								'</g> \n' +
+							'</svg>';
+
+				return views;
+
+			break;
+
+			// icon close
+			case 'close':
+
+				var close =	'<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 470.1 470.1" style="enable-background:new 0 0 470.1 470.1;" xml:space="preserve"> \n' +
+								'<g> \n' +
+									'<g> \n' +
+										'<path id="clse-2" class="st0" d="M337.2,30.7L235,133.2L132.9,30.7C109.3-2.2,63.6-9.9,30.7,13.7S-9.8,83,13.7,115.9c4.7,6.6,10.4,12.3,17,17L132.9,235L30.7,337.2c-32.9,23.5-40.5,69.3-17,102.2s69.3,40.5,102.2,17c6.6-4.7,12.3-10.4,17-17L235,337.2l102.2,102.2c23.5,32.9,69.3,40.5,102.2,17s40.5-69.3,17-102.2c-4.7-6.6-10.4-12.3-17-17L337.2,235l102.2-102.2c32.9-23.5,40.5-69.3,17-102.2s-69.3-40.5-102.2-17C347.7,18.4,341.9,24.1,337.2,30.7z"/> \n' +
+									'</g> \n' +
+								'</g> \n' +
+							'</svg>';
+
+				return close;
+
+			break;
+
+			// icon loading
+			case 'loading':
+
+				var loading =	'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="uil-default"> \n' +
+									'<rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect> \n' +
+									'<rect  x="46.5" y="40" width="7" height="20" rx="5" ry="5" fill="#ffffff" transform="rotate(0 50 50) translate(0 -30)"> \n' +
+										'<animate attributeName="opacity" from="1" to="0" dur="1s" begin="-1s" repeatCount="indefinite"/> \n' +
+									'</rect> \n' +
+									'<rect  x="46.5" y="40" width="7" height="20" rx="5" ry="5" fill="#ffffff" transform="rotate(30 50 50) translate(0 -30)"> \n' +
+										'<animate attributeName="opacity" from="1" to="0" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"/> \n' +
+									'</rect> \n' +
+									'<rect  x="46.5" y="40" width="7" height="20" rx="5" ry="5" fill="#ffffff" transform="rotate(60 50 50) translate(0 -30)"> \n' +
+										'<animate attributeName="opacity" from="1" to="0" dur="1s" begin="-0.8333333333333334s" repeatCount="indefinite"/> \n' +
+									'</rect> \n' +
+									'<rect  x="46.5" y="40" width="7" height="20" rx="5" ry="5" fill="#ffffff" transform="rotate(90 50 50) translate(0 -30)"> \n' +
+										'<animate attributeName="opacity" from="1" to="0" dur="1s" begin="-0.75s" repeatCount="indefinite"/> \n' +
+									'</rect> \n' +
+									'<rect  x="46.5" y="40" width="7" height="20" rx="5" ry="5" fill="#ffffff" transform="rotate(120 50 50) translate(0 -30)"> \n' +
+										'<animate attributeName="opacity" from="1" to="0" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"/> \n' +
+									'</rect> \n' +
+									'<rect  x="46.5" y="40" width="7" height="20" rx="5" ry="5" fill="#ffffff" transform="rotate(150 50 50) translate(0 -30)"> \n' +
+										'<animate attributeName="opacity" from="1" to="0" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"/> \n' +
+									'</rect> \n' +
+									'<rect  x="46.5" y="40" width="7" height="20" rx="5" ry="5" fill="#ffffff" transform="rotate(180 50 50) translate(0 -30)"> \n' +
+										'<animate attributeName="opacity" from="1" to="0" dur="1s" begin="-0.5s" repeatCount="indefinite"/> \n' +
+									'</rect> \n' +
+									'<rect  x="46.5" y="40" width="7" height="20" rx="5" ry="5" fill="#ffffff" transform="rotate(210 50 50) translate(0 -30)"> \n' +
+										'<animate attributeName="opacity" from="1" to="0" dur="1s" begin="-0.4166666666666667s" repeatCount="indefinite"/> \n' +
+									'</rect> \n' +
+									'<rect  x="46.5" y="40" width="7" height="20" rx="5" ry="5" fill="#ffffff" transform="rotate(240 50 50) translate(0 -30)"> \n' +
+										'<animate attributeName="opacity" from="1" to="0" dur="1s" begin="-0.3333333333333333s" repeatCount="indefinite"/> \n' +
+									'</rect> \n' +
+									'<rect  x="46.5" y="40" width="7" height="20" rx="5" ry="5" fill="#ffffff" transform="rotate(270 50 50) translate(0 -30)"> \n' +
+										'<animate attributeName="opacity" from="1" to="0" dur="1s" begin="-0.25s" repeatCount="indefinite"/> \n' +
+									'</rect> \n' +
+									'<rect  x="46.5" y="40" width="7" height="20" rx="5" ry="5" fill="#ffffff" transform="rotate(300 50 50) translate(0 -30)"> \n' +
+										'<animate attributeName="opacity" from="1" to="0" dur="1s" begin="-0.16666666666666666s" repeatCount="indefinite"/> \n' +
+									'</rect> \n' +
+									'<rect  x="46.5" y="40" width="7" height="20" rx="5" ry="5" fill="#ffffff" transform="rotate(330 50 50) translate(0 -30)"> \n' +
+										'<animate attributeName="opacity" from="1" to="0" dur="1s" begin="-0.08333333333333333s" repeatCount="indefinite"/> \n' +
+									'</rect> \n' +
+								'</svg>';
+				return loading;
+
+		}
+	}
+
+
+
 
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
@@ -1270,6 +1497,12 @@ $.fn.embedYourBehance = function( options ) {
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
 
+
 	
 
 };
+
+
+
+
+
