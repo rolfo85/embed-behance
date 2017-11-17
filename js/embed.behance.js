@@ -32,7 +32,7 @@ $.fn.embedYourBehance = function( options ) {
 		ownerLink: true,
 		description: true,
 		tags: true,
-		themeColor: '#2183EE'
+		themeColor: '#2183ee'
 
 	}, options );
 
@@ -400,7 +400,7 @@ $.fn.embedYourBehance = function( options ) {
 								
 								// check if URL on the owner name is enabled (only in the detail)
 								if(settings.ownerLink == true) {
-									dataWrapper += '<a href="' + value['url'] + '" target="_blank"><img src="' + value['images']['100'] +  '" alt="' + value['display_name'] + ' profile picture" /></a>';	
+									dataWrapper += '<a style="color: ' + settings.themeColor + '" href="' + value['url'] + '" target="_blank"><img src="' + value['images']['100'] +  '" alt="' + value['display_name'] + ' profile picture" /></a>';	
 								} else {
 									dataWrapper += '<img src="' + value['images']['100'] +  '" alt="' + value['display_name'] + ' profile picture" />';
 								}
@@ -412,7 +412,7 @@ $.fn.embedYourBehance = function( options ) {
 							dataWrapper += '<div class="owner-full-name">' + iconsSet('owner');
 
 								if(settings.ownerLink == true) {
-									dataWrapper += '<a href="' + value['url'] + '" target="_blank">' + value['display_name'] + iconsSet('chevronRight') + '</a>';
+									dataWrapper += '<a style="color: ' + settings.themeColor + '" href="' + value['url'] + '" target="_blank">' + value['display_name'] + iconsSet('chevronRight') + '</a>';
 								} else {
 									dataWrapper += value['display_name'];
 								}
@@ -602,7 +602,7 @@ $.fn.embedYourBehance = function( options ) {
 
 			if(settings.projectUrl == true) {
 
-				dataWrapper += '<a href="' + value.url + '" title="' + value.name + '" target="_blank"> Appreciate it in Behance </a>';
+				dataWrapper += '<a style="background-color: ' + settings.themeColor + '" href="' + value.url + '" title="' + value.name + '" target="_blank"> Appreciate it in Behance </a>';
 				dataWrapper =  '<div class="wrap-project-url">' + dataWrapper + '</div>';
 
 				sidebarData = 1;
@@ -743,14 +743,14 @@ $.fn.embedYourBehance = function( options ) {
 
 				printAsideContent();
 
-				html += '<a class="bh-show"><span class="label">Show Info</span><span class="icon-chevron">' + iconsSet('chevronDown') + '</span></a>';
+				html += '<a class="bh-show" style="background-color: ' + settings.themeColor + '"><span class="label">Show Info</span><span class="icon-chevron">' + iconsSet('chevronDown') + '</span></a>';
 
 			html += '</aside>';
 
 			// sidebar for desktop
 			html += '<aside class="box-inner-sidebar sidebar-desktop">';
 
-				html += '<div class="eb-desktop-info"><span class="icon">' + iconsSet('chevronRight') + '</span><span class="label">Info</span></div>';
+				html += '<div class="eb-desktop-info" style="background-color: ' + settings.themeColor + '"><span class="icon">' + iconsSet('chevronRight') + '</span><span class="label">Info</span></div>';
 
 				printAsideContent();
 
@@ -970,7 +970,7 @@ $.fn.embedYourBehance = function( options ) {
 	// ::::::::::::::::::trigger for closing the project detail :::::::::::::::::: //
 	// :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
 
-	$('body').on('click', '.eb-container .box-inner-main, .eb-container .close-project svg', function(e){
+	$('body').on('click', '.eb-container .box-inner-main, .eb-container .close-project path', function(e){
 		// click on the dark background or on the close button, to close a project
 		if(e.target == this){
 			closeProject();
@@ -1052,7 +1052,7 @@ $.fn.embedYourBehance = function( options ) {
 			// if there are other results to load I build the pagination button (if the infiniteScrolling is set to FALSE)
 			if(action == 'show' && settings.infiniteScrolling == false) {
 
-				$(behanceContainer).append('<div class="eb-pagination-button"><span>Load More</span> <span class="icon-loading"></span> </div>');
+				$(behanceContainer).append('<div class="eb-pagination-button" style="background-color: ' + settings.themeColor + '"><span>Load More</span> <span class="icon-loading"></span> </div>');
 
 			} else if (action == 'remove') {
 				

@@ -16,14 +16,13 @@
 	border-radius: 5px;
 	padding: 1em 2em;
 	text-align: center;
-	background-color: #2183ee;
-	border: 1px solid #016ee5;
+	border: 1px solid rgba(0,0,0,0.2);
 	font-weight: 700;
 	text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
 	color: #fff;
 	cursor: pointer;
 	display: block;
-	transition: background-color 0.3s;
+	transition: opacity 0.3s;
 }
 
 .eb-pagination-button span{
@@ -82,7 +81,6 @@
 }
 
 .eb-container a {
-	color: #2183ee;
 	transition: color 0.3s;
 }
 
@@ -312,7 +310,7 @@ body.eb-detail-modal-active{
 	position: fixed;
 	right: 3%;
 	cursor: pointer;
-	z-index: 10;
+	z-index: 100;
 	background-color: rgba(0,0,0,0.2);
 	border-radius: 50%;
 	width: 1.8em;
@@ -433,7 +431,7 @@ body.eb-detail-modal-active{
 	content: '';
 	display: block;
 	height: 2px;
-	background-color: #2183ee;
+	background-color: #333;
 	position: absolute;
 	bottom: 0;
 	width: 2.7em;
@@ -527,7 +525,6 @@ body.eb-detail-modal-active{
 .eb-container aside .bh-show {
 	text-align: center;
 	padding: 0.7em 0;
-	background-color: #2183ee;
 	color: #fff;
 	cursor: pointer;
 	display: block;
@@ -541,7 +538,7 @@ body.eb-detail-modal-active{
 }
 
 .eb-container aside.open .bh-show {
-	color: inherit;
+	color: #f;
 	background-color: #f8f8f8;
 }
 
@@ -677,7 +674,7 @@ body.eb-detail-modal-active{
 
 	/* enable hover on links */
 	.eb-container a:hover {
-		color: #3b95f7;
+		opacity: 0.7;
 	}
 
 	/* enable hover effects */
@@ -688,11 +685,11 @@ body.eb-detail-modal-active{
 
 	.eb-container .close-project:hover{
 		transform: rotate(359deg);
-		background-color: #2183ee;
+		background-color: #333;
 	}
 
 	.eb-container .wrap-projects li:hover .wrap-title{
-		color: #3b95f7;
+		opacity: 0.7;
 	}
 	
 	.eb-container .wrap-projects li:hover .wrap-cover img{
@@ -703,11 +700,7 @@ body.eb-detail-modal-active{
 
 	.eb-pagination-button:hover, 
 	.eb-container aside .wrap-project-url a:hover {
-		background-color: #3b95f7;
-	}
-
-	.eb-container aside.sidebar-desktop .eb-desktop-info:hover {
-		background-color: #3b93f4;
+		opacity: 0.7;
 	}
 
 	.eb-container aside.sidebar-desktop .eb-desktop-info:hover span.icon {
@@ -803,7 +796,6 @@ body.eb-detail-modal-active{
 		right: calc(-2em - 1px);
 		text-align: center;
 		cursor: pointer;
-		background-color: #2183ee;
 		transition: background-color 0.3s;
 		display: flex;
 		flex-direction: row;
@@ -833,7 +825,7 @@ body.eb-detail-modal-active{
 	}
 
 	.eb-container aside.sidebar-desktop.info-open .eb-desktop-info {
-		background-color: #f6f6f6;
+		background-color: #f6f6f6 !important;
 	}
 
 	.eb-container aside.sidebar-desktop:not(.info-open) .eb-desktop-info span.icon svg{
