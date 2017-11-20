@@ -4,9 +4,6 @@
 $.fn.embedYourBehance = function( options ) {
 
 
-	$.getScript("https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/TweenMax.min.js");
-
-
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
 	//::::::::::::::::::::: PLUGIN OPTIONS :::::::::::::::::::::::://
@@ -14,7 +11,7 @@ $.fn.embedYourBehance = function( options ) {
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
 
 
-	// options allowed
+	// default options
 	var settings = $.extend({
 		
 		// default option values										
@@ -32,7 +29,9 @@ $.fn.embedYourBehance = function( options ) {
 		ownerLink: true,
 		description: true,
 		tags: true,
-		themeColor: '#2183ee'
+		themeColor: '#2183ee',
+		animationDuration: 1000,
+		animationEasing: 'easeInOutExpo'
 
 	}, options );
 
@@ -292,7 +291,7 @@ $.fn.embedYourBehance = function( options ) {
 									'}',	
 
 			
-				style['background'] =	'.eb-container .box-inner-main .wrap-works-outer {\n\t' +
+				style['background'] =	'.eb-container .box-inner-main {\n\t' +
 									
 											'background-color: #' + value.styles.background.color 					+ ';\n\t' +
 										'}',
@@ -715,48 +714,52 @@ $.fn.embedYourBehance = function( options ) {
 
 		html = '';
 
-		html += '<div class="wrap-headings">';
+		html += '<div class="wrap-content-detail">';
 
-			html += '<div class="inner">';
+			html += '<div class="wrap-headings">';
 
-				html += '<div class="close-project">' + iconsSet('close') + '</div>';
+				html += '<div class="inner">';
 
-				html += dataExtracted[0]['title'];
-				html += dataExtracted[0]['description'];
+					html += '<div class="close-project">' + iconsSet('close') + '</div>';
 
-			html += '</div>';	
+					html += dataExtracted[0]['title'];
+					html += dataExtracted[0]['description'];
+
+				html += '</div>';	
+
+			html += '</div>';
+			
+			// main column
+			html += '<main class="box-inner-main">';
+
+				html += dataExtracted[0]['works'];
+
+			html += '</main>';
+
+			// check if one of the sidebar fields is printed
+			if(sidebarData == true) {
+
+				// sidebar for mobile
+				html += '<aside class="box-inner-sidebar sidebar-mobile">';
+
+					printAsideContent();
+
+					html += '<a class="bh-show" style="background-color: ' + settings.themeColor + '"><span class="label">Show Info</span><span class="icon-chevron">' + iconsSet('chevronDown') + '</span></a>';
+
+				html += '</aside>';
+
+				// sidebar for desktop
+				html += '<aside class="box-inner-sidebar sidebar-desktop">';
+
+					html += '<div class="eb-desktop-info" style="background-color: ' + settings.themeColor + '"><span class="icon">' + iconsSet('chevronRight') + '</span><span class="label">Info</span></div>';
+
+					printAsideContent();
+
+				html += '</aside>';
+
+			}
 
 		html += '</div>';
-		
-		// main column
-		html += '<main class="box-inner-main">';
-
-			html += dataExtracted[0]['works'];
-
-		html += '</main>';
-
-		// check if one of the sidebar fields is printed
-		if(sidebarData == true) {
-
-			// sidebar for mobile
-			html += '<aside class="box-inner-sidebar sidebar-mobile">';
-
-				printAsideContent();
-
-				html += '<a class="bh-show" style="background-color: ' + settings.themeColor + '"><span class="label">Show Info</span><span class="icon-chevron">' + iconsSet('chevronDown') + '</span></a>';
-
-			html += '</aside>';
-
-			// sidebar for desktop
-			html += '<aside class="box-inner-sidebar sidebar-desktop">';
-
-				html += '<div class="eb-desktop-info" style="background-color: ' + settings.themeColor + '"><span class="icon">' + iconsSet('chevronRight') + '</span><span class="label">Info</span></div>';
-
-				printAsideContent();
-
-			html += '</aside>';
-
-		}
 
 		// wrap all the data belongs to one project and append the wrapper
 		html = '<div class="box-project">' + html + '</div>';	
@@ -856,7 +859,6 @@ $.fn.embedYourBehance = function( options ) {
 					
 					// the content is shown 
 					$('ul.wrap-projects li').animate({opacity:1}),
-		       		//TweenMax.to('ul.wrap-projects li', 1,{alpha:1});
 
 		       		// check if there is another page
 					pagination(urlListNext);
@@ -942,7 +944,7 @@ $.fn.embedYourBehance = function( options ) {
 	// function for opening the detail */
 	function openProject(){
 
-		TweenMax.to('div.project-detail-outer', 1.5,{'top': 0, alpha:1, ease:Strong.easeOut});
+		$('div.project-detail-outer').animate({top: 0, opacity: 1}, settings.animationDuration, settings.animationEasing);
 		
 		//get the header height
 		function getHeaderHeight(){
@@ -983,7 +985,7 @@ $.fn.embedYourBehance = function( options ) {
 	// function for closing the detail */
 	function closeProject() {
 
-		TweenMax.to('div.project-detail-outer', 0.5,{'top': '10em', alpha:0, ease:Strong.easeIn, onComplete: function(){
+		$('div.project-detail-outer').animate({top: 160, opacity: 0}, settings.animationDuration, settings.animationEasing, function(){
 
 			$('div.project-detail-outer').remove();
 			$('.eb-detail-modal-active .eb-total-outer-container').css('position', 'relative');
@@ -995,9 +997,9 @@ $.fn.embedYourBehance = function( options ) {
 
 			isDetail = false;		
 
-		}});
+		});
 
-		TweenMax.to('.eb-total-inner-container', 0.5,{alpha:1});
+		$('.eb-total-inner-container').animate({opacity: 1}, settings.animationDuration, settings.animationEasing);
 
 	}
 	
@@ -1183,7 +1185,7 @@ $.fn.embedYourBehance = function( options ) {
 				$('.eb-container aside.sidebar-mobile').addClass('open');
 				$('.eb-container aside.sidebar-mobile .icon-chevron').html(iconsSet('chevronUp'));
 				
-				TweenMax.to('.eb-container aside.sidebar-mobile', 0.7,{css: {'border-radius': 15, 'height': asideHeight}, ease:Strong.easeOut});
+				$('.eb-container aside.sidebar-mobile').animate({height: asideHeight}, settings.animationDuration, settings.animationEasing).css('border-radius', 15);
 
 			// hide the info
 			} else if (action == 'hide') {
@@ -1193,7 +1195,7 @@ $.fn.embedYourBehance = function( options ) {
 				$('aside.sidebar-mobile').removeClass('open');
 				$('.eb-container aside.sidebar-mobile .icon-chevron').html(iconsSet('chevronDown'));
 
-				TweenMax.to('.eb-container aside.sidebar-mobile', 0.7,{css: {'border-radius': 50, 'height': '2.4em'}, ease:Strong.easeOut});
+				$('.eb-container aside.sidebar-mobile').animate({height: 38}, settings.animationDuration, settings.animationEasing).css('border-radius', 50);
 
 			}
 
@@ -1235,17 +1237,14 @@ $.fn.embedYourBehance = function( options ) {
 			// show the info
 			if(action == 'show') {
 
-				TweenMax.set('.eb-container .wrap-headings, .eb-container .box-inner-main',{ 'width': 'calc(100% - 0px)', 'margin-left': 0});
-
-				TweenMax.to('.eb-container .sidebar-desktop', 0.7,{'left': 0, ease:Strong.easeOut});
-				TweenMax.to('.eb-container .wrap-headings, .eb-container .box-inner-main', 0.7,{ 'width': 'calc(100% - 320px)', 'margin-left': 320, ease:Strong.easeOut});
+				$('.eb-container .sidebar-desktop').animate({left: 0}, settings.animationDuration, settings.animationEasing);
 
 				$('.eb-container .sidebar-desktop').addClass('info-open');
 				$('.eb-container .sidebar-desktop .eb-desktop-info .icon').html(iconsSet('chevronLeft'));
 
 			} else if (action == 'hide') {
-				TweenMax.to('.eb-container .sidebar-desktop', 0.7,{'left': -320, ease:Strong.easeOut});
-				TweenMax.to('.eb-container .wrap-headings, .eb-container .box-inner-main', 0.7,{ 'width': 'calc(100% - 0px)', 'margin-left': 0, ease:Strong.easeOut});
+
+				$('.eb-container .sidebar-desktop').animate({left: -320}, settings.animationDuration, settings.animationEasing);
 
 				$('.eb-container .sidebar-desktop').removeClass('info-open');
 				$('.eb-container .sidebar-desktop .eb-desktop-info .icon').html(iconsSet('chevronRight'));

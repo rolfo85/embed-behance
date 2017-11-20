@@ -281,16 +281,11 @@ body.eb-detail-modal-active{
 	width: 100%;
 	position: relative;
 	left: 0;
-	top: 10em;
+	top: 5em;
 	opacity: 0;
 	box-sizing: border-box;
 }
 .eb-container.project-detail-outer .box-project {
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	-ms-flex-wrap:wrap;
-	flex-wrap:wrap;
 	background-color: #fff;
 }
 
@@ -337,6 +332,17 @@ body.eb-detail-modal-active{
 }
 
 /* headings */
+.eb-container .wrap-content-detail{
+	max-width: 1400px;
+    margin: 0 auto;
+    display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-wrap:wrap;
+	flex-wrap:wrap;
+	background-color: #fff;
+}
+
 .eb-container .wrap-headings .inner {
 	width: 100%;
 	height: auto;
@@ -524,7 +530,7 @@ body.eb-detail-modal-active{
 
 .eb-container aside .bh-show {
 	text-align: center;
-	padding: 0.7em 0;
+	padding: 0.8em 0;
 	color: #fff;
 	cursor: pointer;
 	display: block;
@@ -580,8 +586,7 @@ body.eb-detail-modal-active{
 	width: 100%;
 }
 .eb-container main .wrap-works-outer{
-	max-width: 1400px;
-	margin: 0 auto 2em auto;
+	margin: 0 0 2em 0;
 	border-top: 1px solid #e8e8e8;
 }
 
@@ -742,9 +747,6 @@ body.eb-detail-modal-active{
 	
 
 	.eb-container.project-detail-outer .box-project{
-		-webkit-box-pack: end;
-		-ms-flex-pack: end;
-		justify-content: flex-end;
 		background-color: rgba(0,0,0,0.85);
 	}
 
