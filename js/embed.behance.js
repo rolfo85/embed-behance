@@ -159,7 +159,7 @@ $.fn.embedYourBehance = function( options ) {
 	// ajax call to fetch the behance data to build the project detail
 	var callBehanceProjectDetail = function(urlDetail) {
 
-		$(behanceContainer).append('<div class="eb-loadingicon">' + iconsSet('loading') + '</div>');
+		$('body').append('<div class="eb-loadingicon">' + iconsSet('loading') + '</div>');
 
 		// reset dataextracted
 		dataExtracted = [];
@@ -712,63 +712,57 @@ $.fn.embedYourBehance = function( options ) {
 
 		}
 
-		html = '';
+		html = '';		
 
-		html += '<div class="wrap-content-detail">';
+		html += '<div class="wrap-headings">';
 
-			html += '<div class="wrap-headings">';
+			html += '<div class="inner">';
 
-				html += '<div class="inner">';
+				html += '<div class="close-project">' + iconsSet('close') + '</div>';
 
-					html += '<div class="close-project">' + iconsSet('close') + '</div>';
+				html += dataExtracted[0]['title'];
+				html += dataExtracted[0]['description'];
 
-					html += dataExtracted[0]['title'];
-					html += dataExtracted[0]['description'];
-
-				html += '</div>';	
-
-			html += '</div>';
-			
-			// main column
-			html += '<main class="box-inner-main">';
-
-				html += dataExtracted[0]['works'];
-
-			html += '</main>';
-
-			// check if one of the sidebar fields is printed
-			if(sidebarData == true) {
-
-				// sidebar for mobile
-				html += '<aside class="box-inner-sidebar sidebar-mobile">';
-
-					printAsideContent();
-
-					html += '<a class="bh-show" style="background-color: ' + settings.themeColor + '"><span class="label">Show Info</span><span class="icon-chevron">' + iconsSet('chevronDown') + '</span></a>';
-
-				html += '</aside>';
-
-				// sidebar for desktop
-				html += '<aside class="box-inner-sidebar sidebar-desktop">';
-
-					html += '<div class="eb-desktop-info" style="background-color: ' + settings.themeColor + '"><span class="icon">' + iconsSet('chevronRight') + '</span><span class="label">Info</span></div>';
-
-					printAsideContent();
-
-				html += '</aside>';
-
-			}
+			html += '</div>';	
 
 		html += '</div>';
+		
+		// main column
+		html += '<main class="box-inner-main">';
+
+			html += dataExtracted[0]['works'];
+
+		html += '</main>';
+
+		// check if one of the sidebar fields is printed
+		if(sidebarData == true) {
+
+			// sidebar for mobile
+			html += '<aside class="box-inner-sidebar sidebar-mobile">';
+
+				printAsideContent();
+
+				html += '<a class="bh-show" style="background-color: ' + settings.themeColor + '"><span class="label">Show Info</span><span class="icon-chevron">' + iconsSet('chevronDown') + '</span></a>';
+
+			html += '</aside>';
+
+			// sidebar for desktop
+			html += '<aside class="box-inner-sidebar sidebar-desktop">';
+
+				html += '<div class="eb-desktop-info" style="background-color: ' + settings.themeColor + '"><span class="icon">' + iconsSet('chevronRight') + '</span><span class="label">Info</span></div>';
+
+				printAsideContent();
+
+			html += '</aside>';
+
+		}
+
 
 		// wrap all the data belongs to one project and append the wrapper
-		html = '<div class="box-project">' + html + '</div>';	
+		html = '<div class="box-project eb-container">' + html + '</div>';	
 
 		// print all the content into the div
 		$(html).insertAfter($('.eb-total-outer-container'));
-
-		// a further wrapper is applied to all the projects
-		$('.box-project').wrapAll( $('<div>').addClass('project-detail-outer eb-container'));
 
 		
 		// if there is the sidebar
@@ -938,13 +932,18 @@ $.fn.embedYourBehance = function( options ) {
 
 		$('.eb-detail-modal-active .eb-total-outer-container > .eb-total-inner-container').css({'top': -scrollBarPosition});
 		$('.eb-detail-modal-active .eb-total-outer-container').css('position', 'fixed');
+
+		// print overlay
+		$('body').append('<div class="eb-project-overlay"></div>');
+		//show overlay
+		$('.eb-project-overlay').animate({opacity: 1}, settings.animationDuration, settings.animationEasing);
 	}
 
 
 	// function for opening the detail */
 	function openProject(){
 
-		$('div.project-detail-outer').animate({top: 0, opacity: 1}, settings.animationDuration, settings.animationEasing);
+		$('div.box-project').animate({top: 0, opacity: 1}, settings.animationDuration, settings.animationEasing);
 		
 		//get the header height
 		function getHeaderHeight(){
@@ -972,11 +971,16 @@ $.fn.embedYourBehance = function( options ) {
 	// ::::::::::::::::::trigger for closing the project detail :::::::::::::::::: //
 	// :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
 
-	$('body').on('click', '.eb-container .box-inner-main, .eb-container .close-project path', function(e){
-		// click on the dark background or on the close button, to close a project
+	// click on the dark overlay, to close the project
+	$('body').on('click', '.box-project.eb-container + .eb-project-overlay', function(e){
 		if(e.target == this){
 			closeProject();
 		}
+	});
+
+	// click on close button, to close the project
+	$('body').on('click', '.eb-container .close-project', function(){
+		closeProject();
 	});
 
 
@@ -985,11 +989,13 @@ $.fn.embedYourBehance = function( options ) {
 	// function for closing the detail */
 	function closeProject() {
 
-		$('div.project-detail-outer').animate({top: 160, opacity: 0}, settings.animationDuration, settings.animationEasing, function(){
+		$('div.box-project').animate({top: 50, opacity: 0}, settings.animationDuration, settings.animationEasing, function(){
 
-			$('div.project-detail-outer').remove();
+			$(this).remove();
+
 			$('.eb-detail-modal-active .eb-total-outer-container').css('position', 'relative');
 			$('.eb-detail-modal-active .eb-total-outer-container > .eb-total-inner-container').css('top', 'auto');
+			
 			$(window).scrollTop(scrollBarPosition);
 			$('body').removeClass('.eb-detail-modal-active');
 
@@ -997,6 +1003,11 @@ $.fn.embedYourBehance = function( options ) {
 
 			isDetail = false;		
 
+		});
+
+		// remove overlay
+		$('.eb-project-overlay').animate({opacity: 0}, settings.animationDuration, settings.animationEasing, function(){
+			$(this).remove();
 		});
 
 		$('.eb-total-inner-container').animate({opacity: 1}, settings.animationDuration, settings.animationEasing);
@@ -1195,7 +1206,7 @@ $.fn.embedYourBehance = function( options ) {
 				$('aside.sidebar-mobile').removeClass('open');
 				$('.eb-container aside.sidebar-mobile .icon-chevron').html(iconsSet('chevronDown'));
 
-				$('.eb-container aside.sidebar-mobile').animate({height: 38}, settings.animationDuration, settings.animationEasing).css('border-radius', 50);
+				$('.eb-container aside.sidebar-mobile').animate({height: 42}, settings.animationDuration, settings.animationEasing).css('border-radius', 50);
 
 			}
 
@@ -1242,12 +1253,22 @@ $.fn.embedYourBehance = function( options ) {
 				$('.eb-container .sidebar-desktop').addClass('info-open');
 				$('.eb-container .sidebar-desktop .eb-desktop-info .icon').html(iconsSet('chevronLeft'));
 
+				// print overlay
+				$('<div class="eb-project-overlay"></div>').insertBefore('.eb-container .wrap-headings');
+				//show overlay
+				$('.box-project.eb-container > .eb-project-overlay').animate({opacity: 1}, settings.animationDuration, settings.animationEasing);
+
 			} else if (action == 'hide') {
 
 				$('.eb-container .sidebar-desktop').animate({left: -320}, settings.animationDuration, settings.animationEasing);
 
 				$('.eb-container .sidebar-desktop').removeClass('info-open');
 				$('.eb-container .sidebar-desktop .eb-desktop-info .icon').html(iconsSet('chevronRight'));
+
+				//remove overlay
+				$('.box-project.eb-container > .eb-project-overlay').animate({opacity: 0}, settings.animationDuration, settings.animationEasing, function(){
+					$(this).remove();
+				});
 
 			}
 
@@ -1267,7 +1288,19 @@ $.fn.embedYourBehance = function( options ) {
 
 		}
 
+
+		// click on the dark overlay, to close the project info
+		$('body').on('click', '.box-project.eb-container > .eb-project-overlay', function(e){
+			if(e.target == this){
+
+				flagDesktopInfo = 0;
+				
+				showHideDesktopInfo('hide');
+			}
+		});
+
 	});
+
 
 
 
