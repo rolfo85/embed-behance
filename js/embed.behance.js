@@ -949,7 +949,7 @@ $.fn.embedYourBehance = function( options ) {
 		function getHeaderHeight(){
 
 			var headingHeight = $('.eb-container .wrap-headings').outerHeight(true);
-			$('.eb-container .box-project main').css('margin-top', headingHeight);
+			$('.eb-container .box-inner-main').css('margin-top', headingHeight);
 			$('.eb-desktop-info').css('height', headingHeight);
 			$('.eb-container .box-project aside .wrap-owners-outer').css('min-height', headingHeight);
 
