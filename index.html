@@ -1,127 +1,162 @@
+
+<!--
+
+MIT License
+
+Copyright (c) [2017] [Rodolfo Ferro Casagrande]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE. 
+
+-->
+
+
+
+
+
+
 <!DOCTYPE html>
 <html>
-
 	<head>
-	<meta charset="UTF-8">
-	
-	<title>Embed Behance</title>
+		<meta charset="UTF-8">
+		
+		<title>Embed Behance</title>
 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="shortcut icon" href="favicon.ico">
-	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" media="all" href="css/styles.css"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="shortcut icon" href="favicon.ico">
+		<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+		
+		<!-- Embed Behance Styles -->
+		<link rel="stylesheet" type="text/css" media="all" href="css/styles.css"/>
 
-	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
-	<script type="text/javascript" src="js/embed.behance.js"></script>
+		<!-- jQuery lib -->
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
 
-	<style type="text/css">
+		<!-- jQuery Easing lib (optional) -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
 
-		/* setup */
-		html, body {
-			height: 100%;
-		}
-		body {
-			font-family: 'Lato', sans-serif;
-			min-height:100%;
-			position:relative;
-			line-height:1em;
-			font-size:100%;
-			color: #666;
-		}
+		<!-- Embed Behance Javascript -->
+		<script type="text/javascript" src="js/embed.behance.js"></script>
 
-		*, *:before, *:after{
-			box-sizing:border-box;
-			margin: 0;
-			padding: 0;
-			outline: 0;
-		}
+		<style type="text/css">
 
-		/* layout structure */
-		.container {
-			padding: 5%;
-		}
-		.content {
-			margin: 0 auto;
-		}
-		.titles{
-			margin-bottom: 6em;
-			text-align: center;
-			position: relative;
-		}
-		.titles:after{
-			content: '';
-			display: block;
-			width: 2em;
-			height: 3px;
-			background-color: #d6d6d6;
-			margin-top: 1.5em;
-			position: absolute;
-			bottom: -1.8em;
-			left: 0;
-			right: 0;
-			margin: 0 auto;
-		}
-		h1.page-title {
-			font-weight: 900;
-			font-size: 2.5em;
-			color: #2183ee;
-			text-transform: uppercase;
-		}
-		h2.sub-title{
-			font-weight: 500;
-    		color: #d6d6d6;
-			font-size: 1.2em;
-			margin-top: 0.6em;
-		}
-		h1, h2, h3{
-			line-height: normal;
-			font-weight: normal;
-			color: #333;
-			margin: 0;
-		}
+			/* setup */
+			html, body {
+				height: 100%;
+			}
+			body {
+				font-family: 'Lato', sans-serif;
+				min-height:100%;
+				position:relative;
+				line-height:1em;
+				font-size:100%;
+				color: #666;
+			}
 
-	</style>
+			*, *:before, *:after{
+				box-sizing:border-box;
+				margin: 0;
+				padding: 0;
+				outline: 0;
+			}
 
-</head>
+			/* layout structure */
+			.container {
+				padding: 5%;
+			}
+			.content {
+				margin: 0 auto;
+			}
+			.headings{
+				margin-bottom: 6em;
+				text-align: center;
+				position: relative;
+			}
+			.headings:after{
+				content: '';
+				display: block;
+				width: 2em;
+				height: 3px;
+				background-color: #d6d6d6;
+				margin-top: 1.5em;
+				position: absolute;
+				bottom: -1.8em;
+				left: 0;
+				right: 0;
+				margin: 0 auto;
+			}
+			h1.page-title {
+				font-weight: 900;
+				font-size: 2.5em;
+				color: #2183ee;
+				text-transform: uppercase;
+			}
+			h2.sub-title{
+				font-weight: 500;
+	    		color: #d6d6d6;
+				font-size: 1.2em;
+				margin-top: 0.6em;
+			}
+			h1, h2, h3{
+				line-height: normal;
+				font-weight: normal;
+				color: #333;
+				margin: 0;
+			}
 
-<body>
+		</style>
 
-	<div class="container">
+	</head>
 
-		<div class="content">
-			
-			<div class="titles">
-				<h1 class="page-title">Embed your Behance Portfolio</h1>
-				<h2 class="sub-title">A simple jQuery plugin to embed your design works in your website.... for free!</h2>
+	<body>
+
+		<div class="container">
+
+			<div class="content">
+				
+				<div class="headings">
+					<h1 class="page-title">Embed your Behance Portfolio</h1>
+					<h2 class="sub-title">A simple jQuery plugin to embed your design works in your website.... for free!</h2>
+				</div>
+
+				<!-- THE BEHANCE PORTFOLIO WILL BE PRINTED IN HERE -->
+				<div class="behance-container"></div>
+
 			</div>
-
-			<!-- THE BEHANCE PORTFOLIO WILL BE PRINTED IN HERE -->
-			<div class="behance-container"></div>
-
 		</div>
-	</div>
 
-	<script>
+		<script>
 
-		$(document).ready(function(){
+			$(document).ready(function(){
 
-			 $('.behance-container').embedYourBehance({
+				 $('.behance-container').embedBehance({
 
-				apiKey: 'Zb0XWEqAvBua4lmCbfb6derptH2tp4cc',
-				userName: 'rolfo85'
+				 	// behance API Key
+					apiKey: 'Zb0XWEqAvBua4lmCbfb6derptH2tp4cc',
 
+					// Behance Username
+					userName: 'rolfo85'
+
+				});
+				
 			});
-			
-		});
 
-	</script>
+		</script>
 
-
-	
-
-
-
-</body>
-
+	</body>
 </html>

@@ -1,7 +1,34 @@
-// JSON VIEWER PERMALINK PROJECT LIST: http://codebeautify.org/jsonviewer/cb77941a
-// JSON VIEWER PERMALINK DOTCOM RESTYLE DETAIL PROJECT http://codebeautify.org/jsonviewer/cb1d2136, 
+/*
 
-$.fn.embedYourBehance = function( options ) {
+MIT License
+
+Copyright (c) [2017] [Rodolfo Ferro Casagrande]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+
+
+
+
+$.fn.embedBehance = function( options ) {
 
 
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
@@ -25,7 +52,7 @@ $.fn.embedYourBehance = function( options ) {
 		itemsPerPage: '6',
 		userName: '',
 		infiniteScrolling: false,
-		imageCaption: true,
+		imageCaption: false,
 		ownerLink: true,
 		description: true,
 		tags: true,
@@ -38,6 +65,34 @@ $.fn.embedYourBehance = function( options ) {
 
 
 
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
+	//:::::::::::::::::::::: DISPLAY ERRORS ::::::::::::::::::::::://
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
+
+	function showErrorMessage(error) {
+
+		$('.eb-loadingicon').remove();
+
+		var errorHtml;
+
+		errorHtml = '<div class="eb-error-container"><pre class="eb-error">';
+
+		errorHtml += '<h3>Embed Behance</h3><h1>OPS, SOMETHING WENT WRONG!</h1>';
+
+			for(var prop in error) {
+				
+				errorHtml += '<span>' + prop + ': ' + error[prop] + '</span><br>';
+				
+			}
+
+		errorHtml += '</pre></div>';
+
+		$('body').append(errorHtml);
+
+	}
+
 
 
 
@@ -47,11 +102,6 @@ $.fn.embedYourBehance = function( options ) {
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
 
-
-	//:::::::::::::::::::::::::::::: Behance API call ::::::::::::::::::::::::::::::: //
-	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
-
-	var urlList = ['https://api.behance.net/v2/users/', settings.userName, '/projects?client_id=', settings.apiKey, '&per_page=', settings.itemsPerPage, '&page=', page];
 
 	
 	// ::::::::::: PAGINATION ::::::::::::::://
@@ -75,6 +125,13 @@ $.fn.embedYourBehance = function( options ) {
 	var infinitePaginationOnGoing = 0; // it checks if an infinitePagination request has been already made
 
 
+
+
+
+	//:::::::::::::::::::::::::::::: Behance API call ::::::::::::::::::::::::::::::: //
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
+
+	var urlList = ['https://api.behance.net/v2/users/', settings.userName, '/projects?client_id=', settings.apiKey, '&per_page=', settings.itemsPerPage, '&page=', page];
 
 
 
@@ -148,6 +205,9 @@ $.fn.embedYourBehance = function( options ) {
 			},
 			error: function(error) {
 				console.log('ERROR: ', error);
+
+				// display error on the page
+				showErrorMessage(error);
 			}
 
 		});
@@ -178,6 +238,9 @@ $.fn.embedYourBehance = function( options ) {
 			},
 			error: function(error) {
 				console.log('ERROR: ', error);
+
+				// display error on the page
+				showErrorMessage(error);
 			}
 
 		});
@@ -293,13 +356,13 @@ $.fn.embedYourBehance = function( options ) {
 			
 				style['background'] =	'.eb-container .box-inner-main {\n\t' +
 									
-											'background-color: #' + value.styles.background.color 					+ ';\n\t' +
+											'background-color: #' + value.styles.background.color 				+ ';\n\t' +
 										'}',
 
 
 				style['bottom_margin'] ='.eb-container .box-inner-main .spacer {\n\t' +
 									
-											'height: ' + value.styles.spacing.modules.bottom_margin			+ 'px;\n\t' +
+											'height: ' + value.styles.spacing.modules.bottom_margin				+ 'px;\n\t' +
 										'}',
 
 				style['top_margin']	  ='.eb-container .box-inner-main .wrap-works-outer {\n\t' +
@@ -915,8 +978,6 @@ $.fn.embedYourBehance = function( options ) {
 		
 		isDetail = 1;
 
-		console.log(urlDetail);
-
 		callBehanceProjectDetail(urlDetail);
 
 		projectOpeningAnimation();
@@ -968,7 +1029,7 @@ $.fn.embedYourBehance = function( options ) {
 
 
 	// :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
-	// ::::::::::::::::::trigger for closing the project detail :::::::::::::::::: //
+	// :::::::::::::::::: trigger for closing the project detail :::::::::::::::::://
 	// :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
 
 	// click on the dark overlay, to close the project
@@ -1533,8 +1594,3 @@ $.fn.embedYourBehance = function( options ) {
 	
 
 };
-
-
-
-
-
