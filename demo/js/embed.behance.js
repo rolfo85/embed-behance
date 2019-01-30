@@ -31,7 +31,7 @@ $.fn.embedBehance = function( options ) {
 		itemsPerPage: '6',
 		userName: '',
 		infiniteScrolling: false,
-		imageCaption: false,
+		dataCaption: true,
 		ownerLink: true,
 		description: true,
 		tags: true,
@@ -213,6 +213,9 @@ $.fn.embedBehance = function( options ) {
 
 				/* template function for printing data extracted */
 				printContentForDetail();
+
+				console.log(urlDetail);
+				
 
 			},
 			error: function(error) {
@@ -485,7 +488,7 @@ $.fn.embedBehance = function( options ) {
 				$.each(value.modules, function(key, value) {
 
 					function caption() {
-						if ('caption' in value && settings.imageCaption == true) {
+						if ('caption' in value && settings.dataCaption == true) {
 							return '<li class="caption">' + value['caption'] + '</li>';
 						} else {
 							return '';
@@ -535,6 +538,17 @@ $.fn.embedBehance = function( options ) {
 
 						case 'embed':
 						dataWrapper += '<li class="single-embed' + fullBleed() + '"><div class="inner">' + value['embed'] + '</div></li>';
+
+						// behance spacer (mandatory on after any project module)
+						dataWrapper += caption();
+
+						// behance spacer (mandatory on after any project module)
+						dataWrapper += '<li class="spacer"><div class="divider"></div></li>';
+
+						break;
+
+						case 'video':
+						dataWrapper += '<li class="single-video' + fullBleed() + '"><div class="inner">' + value['embed'] + '</div></li>';
 
 						// behance spacer (mandatory on after any project module)
 						dataWrapper += caption();
