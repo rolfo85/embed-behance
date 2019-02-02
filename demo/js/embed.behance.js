@@ -214,7 +214,7 @@ $.fn.embedBehance = function( options ) {
 				/* template function for printing data extracted */
 				printContentForDetail();
 
-				console.log(urlDetail);
+				//console.log(urlDetail);
 				
 
 			},
@@ -487,6 +487,26 @@ $.fn.embedBehance = function( options ) {
 				// loop through all the projects type (image, text, embed)
 				$.each(value.modules, function(key, value) {
 
+					// function that returns the grid photo collection
+					function renderMediaCollection(value) {
+						
+						var htmlPhotoGrid = '<ul class="wrap-grid">'
+
+							// loop through grid images 
+							$.each(value.components, function(key, component) {
+
+								htmlPhotoGrid +=	'<li class="item-grid" style="width:' + component.flex_width + 'px;">' + '\n' +
+														'<img src="' + component.sizes.source + '" >' + '\n' +
+													'</li>'
+
+							});
+
+						htmlPhotoGrid += '</ul>'						
+
+						return htmlPhotoGrid;
+
+					}
+
 					function caption() {
 						if ('caption' in value && settings.dataCaption == true) {
 							return '<li class="caption">' + value['caption'] + '</li>';
@@ -552,6 +572,13 @@ $.fn.embedBehance = function( options ) {
 
 						// behance spacer (mandatory on after any project module)
 						dataWrapper += caption();
+
+						// behance spacer (mandatory on after any project module)
+						dataWrapper += '<li class="spacer"><div class="divider"></div></li>';
+
+						case 'media_collection':
+						
+						dataWrapper += '<li class="media-collection' + fullBleed() + '"><div class="inner">' + renderMediaCollection(value) + '</div></li>';
 
 						// behance spacer (mandatory on after any project module)
 						dataWrapper += '<li class="spacer"><div class="divider"></div></li>';
@@ -902,7 +929,7 @@ $.fn.embedBehance = function( options ) {
 	       		// if I'm loading the detail
 	       		if(isDetail == true) {
 
-	       			openProject(); // ******** SHOW THE DETAIL *********
+					   openProject(); // ******** SHOW THE DETAIL *********
 
 	       		// if I'm loading the list 
 				} else {
@@ -925,7 +952,8 @@ $.fn.embedBehance = function( options ) {
 
 	    if(isDetail == true) {
 		    // find all images coming from the json call (in the detail)
-		    var images = $('.box-project img');
+			var images = $('.box-project img');
+			
 		} else {
 
 		    // find all images coming from the json call (in the list)
@@ -936,7 +964,7 @@ $.fn.embedBehance = function( options ) {
 	    var counter = images.length;
 
 	    images.each(function() {
-	        
+
 	        if(this.complete) {
 	            imageLoaded();
 	        } else { 
@@ -996,6 +1024,26 @@ $.fn.embedBehance = function( options ) {
 
 	// function for opening the detail */
 	function openProject(){
+
+		// function to adjust the picture in the photo grid
+		function adjustPhotoGrid() {
+			var itemGridWidth = $('.wrap-grid > .item-grid:last-child img').width();
+			var containerWidth = $('.wrap-works-outer').width();
+			
+			if( itemGridWidth ==  containerWidth ) { 
+				$.each($('.wrap-grid > .item-grid'), function (index, value) {
+					var widthItem = $(value).attr('style');
+						widthItem = widthItem.replace( /^\D+/g, '');
+						widthItem = widthItem.replace( 'px;', '');
+					
+					$(value).css('width', (widthItem - 50) + 'px');
+
+				});
+			}
+		}
+
+		//adjust picture photo grid
+		adjustPhotoGrid();
 
 		$('div.box-project').animate({top: 0, opacity: 1}, settings.animationDuration, settings.animationEasing);
 		

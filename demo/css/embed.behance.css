@@ -697,6 +697,25 @@ body.eb-detail-modal-active{
 	text-decoration: underline;
 }
 
+/* grid layout */
+.eb-container main .wrap-grid{
+	display: flex;
+	flex-wrap: wrap;
+	width: calc(100% + 0.5em);
+	margin-left: -0.25em;
+}
+.eb-container main .wrap-grid .item-grid{
+	flex-grow: 1;
+	margin: 0.25em;
+	flex-shrink: 1;
+}
+
+.eb-container main .wrap-grid .item-grid img{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
 
 
 /* :::::::::::::::::::: media queries :::::::::::::::::::: */
